@@ -1,0 +1,73 @@
+authorname: "Tim Gummer"
+draft: false
+
+project:
+  type: website
+  output-dir: _site_rendered
+  
+  
+  resources:
+    - "img/**"
+
+  preview: 
+    port: 22222
+    browser: true
+    watch-inputs: true
+    navigate: true
+
+title-meta: "Tim Gummer"
+description-meta: "Associate Actuary (AIAA) | R Enthusiast"
+
+website:
+  title: "Tim Gummer"
+  description: "Associate Actuary (AIAA) | R Enthusiast"
+  site-url: https://t-gummer.netlify.app
+  
+  repo-url: "https://github.com/t-gummer/t-gummer.netlify.app"
+  repo-branch: master
+  
+  search:
+    location: navbar
+    type: textbox
+    
+  navbar:
+    pinned: true
+    left:
+      - text: Goals
+        href: goals/index.qmd    
+    right:
+      - icon: github
+        href: https://github.com/t-gummer
+      - icon: linkedin
+        href: https://www.linkedin.com/in/timothy-gummer/
+      - icon: envelope
+        aria-label: email
+        href: "mailto:mail.timothy.gummer@gmail.com"
+    
+  page-footer: 
+    left: |
+      <span class="faux-block">{{< fa copyright >}} 2023 Tim Gummer</span>
+      <span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app">{{< fa brands github >}} Source Code</a></span>
+    center: |
+      <span class="faux-block">Welcome to my webiste!</span>
+    right: |
+      <span class="faux-block"> Designed with {{< fa heart >}}</span>
+      <span class="faux-block"> Built with <a href="https://quarto.org/">Quarto</a></span>
+
+execute:
+  freeze: true    
+
+format:
+  html:
+    fontsize: 1.1em
+    theme: 
+      light: [www/styles.scss, flatly]
+      dark: [www/styles.scss, darkly]
+    toc: false
+    anchor-sections: true
+    fig-cap-location: margin
+    reference-location: margin
+    footnotes-hover: true
+    highlight-style: monokai
+    
+editor: source
