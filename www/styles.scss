@@ -1,0 +1,59 @@
+/*-- scss:defaults --*/
+// code from https://github.com/marvinschmitt/marvinschmitt-dot-com/blob/5c3669ec0d57d5ff656b09b9706573ca12d7da33/html/styles.scss
+.nav-footer {
+    align-items: flex-start;  // Align all flex items to the top
+    flex-wrap: wrap;
+    border: 0 !important;
+    min-height: 3em;
+    //font-family: $footer-font-family;
+
+    a {
+        color: $orange;
+    }
+
+    .faux-block {
+        display: block;
+        padding-bottom: 0.4em;
+    }
+
+    // In the default Quarto template, .nav-footer-center has position: absolute 
+    // turned on, which makes the div not be a flex item
+    // This changes that so that it *is* a flex item
+    .nav-footer-center {
+        text-align: center;
+        position: inherit;
+        margin-top: 0;
+
+//        @media (max-width: map-get($grid-breakpoints, md)) {
+//            margin-top: 0.5em;
+//            margin-bottom: 1.5em;
+//        }
+//    }
+
+    // When the screen is medium or smaller, make each footer chunk be 100% width 
+    // and centered; otherwise make them be 33% width and left/right/centerd
+    .nav-footer-left,
+    .nav-footer-right,
+    .nav-footer-center {
+        text-align: center;
+        width: 100%;
+        min-height: 2em;
+    }
+
+//    @media (min-width: map-get($grid-breakpoints, md)) {
+//        .nav-footer-left {
+//            text-align: left;
+//        }
+
+        .nav-footer-right {
+            text-align: right;
+        }
+
+        .nav-footer-left,
+        .nav-footer-right,
+        .nav-footer-center {
+            flex: 1 1 33%;
+        }
+    }
+  
+}

@@ -1,0 +1,46 @@
+---
+about:
+  template: jolla
+  id: about-block
+  image: "img/headshot.jfif"
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/t-gummer
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/timothy-gummer-19b481123/
+    - icon: envelope
+      text: Email
+      href: "mailto:timothy.gummer@gmail.com"
+---
+
+::: {#about-block}
+:::
+
+# Welcome to my website!
+
+You have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA) with a technical inclination. I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.
+
+I have built this website as a fun project. I would like to use it to conical some of my side projects while I am taking my leave of absence. 
+
+## What to Expect
+
+The content of this site will mix and match combinations of some of my particular interests/skills listed below:
+
+  * Tools/Languages:
+    
+      - R
+      - VBA
+      - Excel
+      - $\LaTeX$
+    
+  * Methods:
+  
+      - Statistics
+      - Data Science (Collection, Visualisation, Modelling)
+      - Mathematics
+  
+  * Applications:
+  
+      - Sport (Australian Rules Football, Cricket)
