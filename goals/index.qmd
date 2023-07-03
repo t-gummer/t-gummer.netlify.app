@@ -1,6 +1,13 @@
 ---
 Title: Goals
+execute:
+  echo: false
+  warning: false
+format:
+  html:
+    page-layout: full
 ---
+
 
 # Goals
 
@@ -9,16 +16,59 @@ On this page I intend on listing my past, present and future goals. I would also
 
 Make it since graduating high school so no need to go too far back.
 
-```{r}
+```{r load packages}
 library(googlesheets4)
 library(dplyr)
+library(glue)
+library(reactable)
 
 ```
 
+```{r user-defined functions}
+# https://glin.github.io/reactable/articles/cookbook/cookbook.html#merge-cells
+reactable_merged <- function(column) {
+  JS(glue("function(rowInfo, column, state) {
+          const firstSorted = state.sorted[0]
+          // Merge cells if unsorted or sorting by <<column>>
+          if (!firstSorted || firstSorted.id === '<<column>>') {
+            const prevRow = state.pageRows[rowInfo.viewIndex - 1]
+            if (prevRow && rowInfo.values['<<column>>'] === prevRow['<<column>>']) {
+              return { visibility: 'hidden' }
+            }
+          }
+        }", .open = "<<", .close = ">>"))
+  
+}
+
+
+```
+
+
+```{r get data}
+ss <- gs4_get("https://docs.google.com/spreadsheets/d/1kRK0zWsGz7GOHhtWSaV_9SlZ2zRxns_pVEh4YMJtsLQ/edit#gid=0")
+goals_tb <- read_sheet(ss, sheet = "Goals") %>% 
+  filter(!is.na(goal))
+sub_goals_tb <- read_sheet(ss, sheet = "Sub-Goals") %>% 
+  filter(!is.na(goal))
+
+combined_tb <- left_join(goals_tb, sub_goals_tb, by = "goal") %>% 
+  select(category, goal_label, start_date, completion_date, sub_goal) %>% 
+  arrange(category, start_date) %>%
+  select(-start_date, -completion_date) 
+
+```
 
 ```{r}
-# ss <- googlesheets4::gs4_get("https://docs.google.com/spreadsheets/d/1kRK0zWsGz7GOHhtWSaV_9SlZ2zRxns_pVEh4YMJtsLQ/edit#gid=0")
-# goals_tb <- googlesheets4::read_sheet(ss, sheet = "Goals")
-# groups_tb <- googlesheets4::read_sheet(ss, sheet = "Groups")
+combined_tb %>% 
+  reactable(
+    groupBy = c("category", "goal_label"),
+    columns = list(
+      category = colDef(
+        style = reactable_merged("category")
+        )
+      ),
+    pagination = FALSE
+    )
 
 ```
+

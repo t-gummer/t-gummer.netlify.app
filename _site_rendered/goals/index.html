@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -97,6 +63,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+<script src="../site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="../site_libs/react-17.0.0/react.min.js"></script>
+<script src="../site_libs/react-17.0.0/react-dom.min.js"></script>
+<script src="../site_libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="../site_libs/reactable-0.4.4/reactable.css" rel="stylesheet">
+<script src="../site_libs/reactable-binding-0.4.4/reactable.js"></script>
 
 
 </head>
@@ -162,27 +136,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>On this page I intend on listing my past, present and future goals. I would also like to include my <em>failures</em> here as to break away from only showing successes (as one might on a resume or social media). I would like to do this as a reminder that not all ventures succeed but it is from failures that we often learn the most and without risking failure, we will never dare to do anything bold.</p>
 <p>Make it since graduating high school so no need to go too far back.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
 
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ss &lt;- googlesheets4::gs4_get("https://docs.google.com/spreadsheets/d/1kRK0zWsGz7GOHhtWSaV_9SlZ2zRxns_pVEh4YMJtsLQ/edit#gid=0")</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># goals_tb &lt;- googlesheets4::read_sheet(ss, sheet = "Goals")</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># groups_tb &lt;- googlesheets4::read_sheet(ss, sheet = "Groups")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e4dd661de08cf8a16fc3" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e4dd661de08cf8a16fc3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"category":["Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Personal Projects","Professional","Professional","Professional","Professional","Professional","Study","Study","Study","Study","Study","Study","Study","Study","Study","Study","Study","This Website","This Website","This Website","This Website","This Website","This Website","This Website","This Website","This Website"],"goal_label":["Get an R Package Published to CRAN","AFL Tipping Model","AFL Tipping Model","AFL Tipping Model","AFL Fantasy R Shiny Dashboard","AFL Fantasy R Shiny Dashboard","Make an Actuarial Office JS Add-in","Make an Actuarial Office JS Add-in","Make an Actuarial Office JS Add-in","Contribute to the R community","Contribute to the AFL stats community","Teaching at Curtin University","Teaching at Curtin University","Get internship(s) during university","Get internship(s) during university","Get a grad job","Bachelor of Science (Actuarial Science)","Bachelor of Science (Actuarial Science)","Become an Associate (AIAA)","Become an Associate (AIAA)","Become an Associate (AIAA)","Bachelor of Science (Actuarial Science) (Honours)","Bachelor of Science (Actuarial Science) (Honours)","Become a Fellow (FIAA)","Become a Fellow (FIAA)","Become a Fellow (FIAA)","Become a Fellow (FIAA)","Contribute to open source","Contribute to open source","Contribute to open source","Contribute to open source","Put my CV on this website","Put my CV on this website","Put my CV on this website","Start a blog on this website","Start a blog on this website"],"sub_goal":["Created my first R package","Build a model","Share the model results on my website","Get model published on Squiggle.com.au","Build an initial proof of concept","Continue to iterate and productionise it","Have an initial go at it","Build an actuarial add-in","Get a microsoft add-in published on the microsoft store","Get a blog post published on R-weekly","Turn bit-in-that into something more visible","Private tutoring of university students","Sessional tutor during honours year","End of Second Year: Innovation Central","End of Third Year: AMSI Summer School","Finity","All Part I exemptions","Awards","Foundations Program","Actuary Program","Work Experience Requirement (1 Years)","First Class Honours","Exemption from Control Cycle and ALM","Work Experience Requirement (2 Years)","Data Science Applications","GIHV","GIHPPA","Contribute to the RStudio IDE","Contribute to a CRAN package","Publish an R package to CRAN","Contribute more data sources to the fitzRoy R package","Turn resume/CV into automated R Markdown","Create a more comprehensive CV without personal info","Create a CV page of my website","Write my first article","Post new articles regularly during my leave of absence"]},"columns":[{"id":"category","name":"category","type":"character","style":"function(rowInfo, column, state) {\n  const firstSorted = state.sorted[0]\n  // Merge cells if unsorted or sorting by category\n  if (!firstSorted || firstSorted.id === 'category') {\n    const prevRow = state.pageRows[rowInfo.viewIndex - 1]\n    if (prevRow && rowInfo.values['category'] === prevRow['category']) {\n      return { visibility: 'hidden' }\n    }\n  }\n}"},{"id":"goal_label","name":"goal_label","type":"character"},{"id":"sub_goal","name":"sub_goal","type":"character"}],"groupBy":["category","goal_label"],"pagination":false,"dataKey":"bc11466132a9531d7721d0e2c48e698e"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.0.style"],"jsHooks":[]}</script>
+</div>
 </div>
 
 
