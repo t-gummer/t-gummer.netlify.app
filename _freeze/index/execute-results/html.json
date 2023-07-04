@@ -1,0 +1,14 @@
+{
+  "hash": "975dcd239caf33f75d7896e3afcf1579",
+  "result": {
+    "markdown": "---\nabout:\n  template: jolla\n  id: about-block\n  image: \"img/headshot.jfif\"\n  links:\n    - icon: github\n      text: Github\n      href: https://github.com/t-gummer\n    - icon: linkedin\n      text: LinkedIn\n      href: https://www.linkedin.com/in/timothy-gummer-19b481123/\n    - icon: envelope\n      text: Email\n      href: \"mailto:timothy.gummer@gmail.com\"\ninclude-after-body:\n  text: |\n    <script>\n    // https://stackoverflow.com/questions/56393880/how-do-i-detect-dark-mode-using-javascript\n    console.log(\"hello\");\n    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {\n    // dark mode\n      window.quartoToggleColorScheme();\n    }\n    </script>\n---\n\n::: {.cell}\n\n:::\n\n\n\n::: {#about-block}\n:::\n\n# Welcome to my website!\n\nYou have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA) with a technical inclination. I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\n\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. \n\n## What to Expect\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\n  * Tools/Languages:\n    \n      - R\n      - VBA\n      - Excel\n      - $\\LaTeX$\n    \n  * Methods:\n  \n      - Statistics\n      - Data Science (Collection, Visualisation, Modelling)\n      - Mathematics\n  \n  * Applications:\n  \n      - Sport (Australian Rules Football, Cricket)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

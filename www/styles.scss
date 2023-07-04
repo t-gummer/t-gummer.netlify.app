@@ -1,19 +1,82 @@
 /*-- scss:defaults --*/
-// code from https://github.com/marvinschmitt/marvinschmitt-dot-com/blob/5c3669ec0d57d5ff656b09b9706573ca12d7da33/html/styles.scss
+
+
+// imports:
+@import 'https://fonts.googleapis.com/css?family=PT+Sans:400,700';
+@import 'https://fonts.googleapis.com/css?family=PT+Serif:400,700';
+@import 'https://fonts.googleapis.com/css?family=PT+Mono';
+// Fonts
+
+// stylelint-disable-next-line value-keyword-case
+$font-family-sans-serif: "PT Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-serif: "PT Serif", sans-serif !default;
+$font-family-monospace:       "PT Mono", SFMono-Regular, Consolas, monospace !default;
+
+$headings-font-family:        $font-family-serif !default;
+
+$h1-font-size:                3rem !default;
+$h2-font-size:                2.5rem !default;
+$h3-font-size:                2rem !default;
+
+// footer
+$footer-font-family: $font-family-sans-serif !default; 
+
+
+// Navs
+
+
+$nav-link-padding-y:                .5rem !default;
+$nav-link-padding-x:                2rem !default;
+
+// Navbar
+$navbar-padding-y:                  1rem !default;
+
+// Breadcrumbs
+
+$breadcrumb-padding-y:              .375rem !default;
+$breadcrumb-padding-x:              .75rem !default;
+$breadcrumb-border-radius:          .25rem !default;
+
+
+// Pagination
+$pagination-border-width:           0 !default;
+
+/*-- scss:rules --*/
+
+.navbar-title {
+  font-family: $font-family-serif;
+}
+
+// footer styles copied from:
+// - https://github.com/andrewheiss/ath-quarto/blob/main/html/ath.scss
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
 .nav-footer {
     align-items: flex-start;  // Align all flex items to the top
     flex-wrap: wrap;
     border: 0 !important;
     min-height: 3em;
-    //font-family: $footer-font-family;
+    font-family: $footer-font-family;
 
     a {
-        color: $orange;
+        color: $link-color;
     }
 
     .faux-block {
         display: block;
         padding-bottom: 0.4em;
+    }
+
+    .fingerprint {
+        font-family: $font-family-monospace;
+        font-size: 0.8em;
     }
 
     // In the default Quarto template, .nav-footer-center has position: absolute 
@@ -24,11 +87,11 @@
         position: inherit;
         margin-top: 0;
 
-//        @media (max-width: map-get($grid-breakpoints, md)) {
-//            margin-top: 0.5em;
-//            margin-bottom: 1.5em;
-//        }
-//    }
+        @media (max-width: map-get($grid-breakpoints, md)) {
+            margin-top: 0.5em;
+            margin-bottom: 1.5em;
+        }
+    }
 
     // When the screen is medium or smaller, make each footer chunk be 100% width 
     // and centered; otherwise make them be 33% width and left/right/centerd
@@ -40,10 +103,10 @@
         min-height: 2em;
     }
 
-//    @media (min-width: map-get($grid-breakpoints, md)) {
-//        .nav-footer-left {
-//            text-align: left;
-//        }
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        .nav-footer-left {
+            text-align: left;
+        }
 
         .nav-footer-right {
             text-align: right;
@@ -55,5 +118,4 @@
             flex: 1 1 33%;
         }
     }
-  
 }
