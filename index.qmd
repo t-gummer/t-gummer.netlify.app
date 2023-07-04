@@ -13,6 +13,16 @@ about:
     - icon: envelope
       text: Email
       href: "mailto:timothy.gummer@gmail.com"
+include-after-body:
+  text: |
+    <script>
+    // https://stackoverflow.com/questions/56393880/how-do-i-detect-dark-mode-using-javascript
+    console.log("hello");
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // dark mode
+      window.quartoToggleColorScheme();
+    }
+    </script>
 ---
 
 ::: {#about-block}

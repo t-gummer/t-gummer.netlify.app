@@ -6,41 +6,60 @@ execute:
 format:
   html:
     page-layout: full
+    code-link: true
+    code-line-numbers: true
 ---
 
 
 # Goals
 
-On this page I intend on listing my past, present and future goals. I would also like to include my *failures* here as to break away from only showing successes (as one might on a resume or social media). I would like to do this as a reminder that not all ventures succeed but it is from failures that we often learn the most and without risking failure, we will never dare to do anything bold.
+This page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.
 
 
-Make it since graduating high school so no need to go too far back.
+::: {.callout-tip}
 
-```{r load packages}
+## Non-linearity
+
+I would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some *roadblocks* and *failures* I have experience along the way.
+
+This is my attempt to run counter to what one might see on a resume or social media (successes only). I am also doing this as a reminder that:
+
+* Not all ventures succeed (and this is okay).
+* It is from failures that we often learn the most.
+* Without risking failure, we will never dare to do anything bold.
+
+:::
+
+
+
+
+```{r setup}
+source("../scripts/reactable-theming.R")
 library(googlesheets4)
 library(dplyr)
 library(glue)
 library(reactable)
+library(reactablefmtr)
+library(tippy)
+library(htmltools)
+
 
 ```
 
-```{r user-defined functions}
-# https://glin.github.io/reactable/articles/cookbook/cookbook.html#merge-cells
-reactable_merged <- function(column) {
-  JS(glue("function(rowInfo, column, state) {
-          const firstSorted = state.sorted[0]
-          // Merge cells if unsorted or sorting by <<column>>
-          if (!firstSorted || firstSorted.id === '<<column>>') {
-            const prevRow = state.pageRows[rowInfo.viewIndex - 1]
-            if (prevRow && rowInfo.values['<<column>>'] === prevRow['<<column>>']) {
-              return { visibility: 'hidden' }
-            }
-          }
-        }", .open = "<<", .close = ">>"))
+
+
+```{r}
+display_text_as_tooltip <- function(value, index) {
+  
+
+  if(is.na(value)) {
+    return("")
+  } else {
+    return(tippy("Hover for detail", interactive = TRUE, tooltip = value))
+    
+  }
   
 }
-
-
 ```
 
 
@@ -52,23 +71,53 @@ sub_goals_tb <- read_sheet(ss, sheet = "Sub-Goals") %>%
   filter(!is.na(goal))
 
 combined_tb <- left_join(goals_tb, sub_goals_tb, by = "goal") %>% 
-  select(category, goal_label, start_date, completion_date, sub_goal) %>% 
+  select(category, goal_label, start_date, completion_date, sub_goal, sub_goal_start_date, sub_goal_completion_date, sub_goal_description, sub_goal_completed_flag) %>% 
   arrange(category, start_date) %>%
   select(-start_date, -completion_date) 
 
 ```
 
 ```{r}
+#| column: page
 combined_tb %>% 
-  reactable(
+  reactable_themed(
     groupBy = c("category", "goal_label"),
+    defaultExpanded = FALSE,
     columns = list(
       category = colDef(
-        style = reactable_merged("category")
-        )
+        name = "Category"
+        # ,
+        # style = reactable_merged("category")
+        ),
+      goal_label = colDef(
+        name = "Goal"
+        # ,
+        # style = reactable_merged("goal_label")
+        ),
+      sub_goal = colDef(
+        name = "Sub-Goal"
+        ),
+      sub_goal_start_date = colDef(
+        name = "Start Date",
+        aggregate = "min",
+        format = colFormat(date = TRUE)
+      ),
+      sub_goal_completion_date = colDef(
+        name = "Completion Date",
+        aggregate = "max",
+        format = colFormat(date = TRUE)
+      ),
+      sub_goal_description = colDef(
+        name = "Description",
+        cell = display_text_as_tooltip
+      ),
+      sub_goal_completed_flag = colDef(
+        name = "Completed"
+      )
       ),
     pagination = FALSE
     )
+
 
 ```
 

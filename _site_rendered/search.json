@@ -4,14 +4,7 @@
     "href": "goals/index.html",
     "title": "Goals",
     "section": "",
-    "text": "Goals\nOn this page I intend on listing my past, present and future goals. I would also like to include my failures here as to break away from only showing successes (as one might on a resume or social media). I would like to do this as a reminder that not all ventures succeed but it is from failures that we often learn the most and without risking failure, we will never dare to do anything bold.\nMake it since graduating high school so no need to go too far back."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome to my website!",
-    "section": "",
-    "text": "Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email"
+    "text": "Goals\nThis page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.\n\n\n\n\n\n\nNon-linearity\n\n\n\nI would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some roadblocks and failures I have experience along the way.\nThis is my attempt to run counter to what one might see on a resume or social media (successes only). I am also doing this as a reminder that:\n\nNot all ventures succeed (and this is okay).\nIt is from failures that we often learn the most.\nWithout risking failure, we will never dare to do anything bold."
   },
   {
     "objectID": "index.html#what-to-expect",
@@ -19,5 +12,12 @@
     "title": "Welcome to my website!",
     "section": "What to Expect",
     "text": "What to Expect\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages:\n\nR\nVBA\nExcel\n\\(\\LaTeX\\)\n\nMethods:\n\nStatistics\nData Science (Collection, Visualisation, Modelling)\nMathematics\n\nApplications:\n\nSport (Australian Rules Football, Cricket)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to my website!",
+    "section": "",
+    "text": "Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email"
   }
 ]

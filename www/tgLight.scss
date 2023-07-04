@@ -119,4 +119,6 @@ $footer-bg: $gray-800 !default;
 $footer-fg: $white !default; 
 
 /*-- scss:rules --*/
-
+// https://debruine.github.io/quarto_demo/dark_mode.html#setup
+.light-mode { display: block !important; }
+.dark-mode { display: none !important; }
