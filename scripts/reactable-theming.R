@@ -1,18 +1,18 @@
-reactableTheme_dark <- function(primary_colour = "#00FF00") { # could try pink as an alternative
+reactableTheme_dark <- function(primary_colour = "#0F0") { # could try pink as an alternative
   reactable::reactableTheme(
     color = "white",
     backgroundColor = "#191918",
     borderColor = primary_colour,
     headerStyle = list(
       color = primary_colour,
-      "background-color" = "black"
+      "background-color" = "#060708"
       )
     )
 }
 
 reactableTheme_light <- function(primary_colour = "#FF7415") { # could try maroon or blue as an alternative
   reactable::reactableTheme(
-    color = "black",
+    color = "#060708",
     backgroundColor = "white",
     borderColor = primary_colour,
     headerStyle = list(

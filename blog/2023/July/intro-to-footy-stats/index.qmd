@@ -9,7 +9,7 @@ categories:
   - Data
 image: fitzroy-lions-logo.png
 reference-location: margin
-draft: false
+draft: true
 title-block-banner: AFL-logo.jpg
 
 # format:
