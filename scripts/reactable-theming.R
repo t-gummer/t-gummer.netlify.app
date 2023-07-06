@@ -1,4 +1,4 @@
-reactableTheme_dark <- function(primary_colour = "#49F149") { # could try pink as an alternative
+reactableTheme_dark <- function(primary_colour = "#00FF00") { # could try pink as an alternative
   reactable::reactableTheme(
     color = "white",
     backgroundColor = "#191918",

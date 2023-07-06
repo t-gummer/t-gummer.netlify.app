@@ -33,8 +33,6 @@ website:
   navbar:
     pinned: true
     left:
-      - text: Blog
-        href: blog/index.qmd
       - text: Goals
         href: goals/index.qmd    
     right:
@@ -62,7 +60,6 @@ execute:
 format:
   html:
     fontsize: 1.1em
-    code-link: true
 #    page-layout: full # https://quarto.org/docs/output-formats/page-layout.html
     theme:
       light: [www/styles.scss, www/tgLight.scss] # flatly

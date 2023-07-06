@@ -6,11 +6,12 @@ execute:
 format:
   html:
     page-layout: full
-title-block-banner: true
+    code-link: true
+    code-line-numbers: true
 ---
 
-# Goals
 
+# Goals
 
 This page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.
 
@@ -28,8 +29,6 @@ This is my attempt to run counter to what one might see on a resume or social me
 * Without risking failure, we will never dare to do anything bold.
 
 :::
-
-
 
 
 
@@ -78,8 +77,8 @@ combined_tb <- left_join(goals_tb, sub_goals_tb, by = "goal") %>%
 
 ```
 
-
 ```{r}
+#| column: page
 combined_tb %>% 
   reactable_themed(
     groupBy = c("category", "goal_label"),
