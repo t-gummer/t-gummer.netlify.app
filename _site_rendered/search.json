@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "blog/2023/July/intro-to-footy-stats/index.html",
+    "href": "blog/2023/July/intro-to-footy-stats/index.html",
+    "title": "An Introduction to AFL Stats in R",
+    "section": "",
+    "text": "Heading\n\nlibrary(fitzRoy)\nprint(\"hello world\")\n\n[1] \"hello world\""
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Welcome to my blog. I will be posting articles here about my various interests such as R, footy and data science."
+  },
+  {
+    "objectID": "blog/index.html#section",
+    "href": "blog/index.html#section",
+    "title": "Blog",
+    "section": "2023",
+    "text": "2023\n\n\n\n\n  \n\n\n\n\nAn Introduction to AFL Stats in R\n\n\n\n\n\n\n\nSport\n\n\nFooty\n\n\nR\n\n\nData\n\n\n\n\nInspired by attending a shocking and miserable game of football.\n\n\n\n\n\n\n7 July 2023\n\n\nTim Gummer\n\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "goals/index.html",
     "href": "goals/index.html",
     "title": "Goals",

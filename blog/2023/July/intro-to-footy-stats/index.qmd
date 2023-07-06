@@ -1,0 +1,28 @@
+---
+title: "An Introduction to AFL Stats in R"
+description: "Inspired by attending a shocking and miserable game of football."
+date: 2023-07-07
+categories: 
+  - Sport
+  - Footy
+  - R
+  - Data
+image: fitzroy-lions-logo.png
+reference-location: margin
+draft: false
+title-block-banner: AFL-logo.jpg
+
+# format:
+#   html:
+#     include-before-body: ../../html/margin_image.html
+#     include-after-body: ../../html/blog_footer.html
+---
+
+# Heading
+
+
+```{r}
+library(fitzRoy)
+print("hello world")
+```
+
