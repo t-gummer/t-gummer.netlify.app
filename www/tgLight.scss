@@ -17,7 +17,7 @@ $theme: "tgLight" !default;
 // Color system
 //
 
-$white:    #fff !default;
+$white:    #FFFFFF !default;
 $gray-100: #E1E1DE !default;
 $gray-200: #CCCCCA !default;
 $gray-300: #B2B2B0 !default;
@@ -27,7 +27,7 @@ $gray-600: #666664 !default;
 $gray-700: #4C4C4B !default;
 $gray-800: #323231 !default;
 $gray-900: #191918 !default;
-$black:    #000 !default;
+$black:    #060708 !default;
 
 $blue:    #2B54F0 !default;
 $indigo:  #6610f2 !default;
@@ -115,7 +115,7 @@ $btn-close-opacity:          .4 !default;
 $btn-close-hover-opacity:    1 !default;
 
 // footer
-$footer-bg: $gray-800 !default; 
+$footer-bg: $primary !default; 
 $footer-fg: $white !default; 
 
 /*-- scss:rules --*/

@@ -10,7 +10,6 @@ format:
     code-line-numbers: true
 ---
 
-
 # Goals
 
 This page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.

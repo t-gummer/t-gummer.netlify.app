@@ -1,0 +1,23 @@
+---
+title: "Blog"
+description-meta: "Tim Gummer's blog"
+listing:
+  - id: posts_2023
+    contents: "2023/**/index.qmd"
+    sort: "date desc"
+    categories: true
+title-block-banner: false
+page-layout: full
+# toc-title: Year
+toc-location: right
+date-format: "D MMMM YYYY"
+code-tools: false
+comments: false
+---
+
+Welcome to my blog. I will be posting articles here about my various interests such as R, footy and data science.
+
+## 2023
+
+:::{#posts_2023}
+:::

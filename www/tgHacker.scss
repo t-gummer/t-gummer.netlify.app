@@ -12,7 +12,7 @@ $theme: "tgHacker" !default;
 // Color system
 //
 
-$white:    #fff !default;
+$white:    #FFFFFF !default;
 $gray-100: #E1E1DE !default;
 $gray-200: #CCCCCA !default;
 $gray-300: #B2B2B0 !default;
@@ -22,7 +22,7 @@ $gray-600: #666664 !default;
 $gray-700: #4C4C4B !default;
 $gray-800: #323231 !default;
 $gray-900: #191918 !default;
-$black:    #000 !default;
+$black:    #060708 !default;
 
 $blue:    #2B54F0 !default;
 $indigo:  #6610f2 !default;
@@ -31,7 +31,7 @@ $pink:    #E11B8D !default;
 $red:     #800000 !default;
 $orange:  #FF7415 !default;
 $yellow:  #FFFF00 !default;
-$green:   #00FF00 !default;
+$green:   #00FF00 !default; //#49F149
 $teal:    #09f09c !default;
 $cyan:    #39ffec !default;
 
@@ -118,7 +118,7 @@ $btn-close-opacity:          .4 !default;
 $btn-close-hover-opacity:    1 !default;
 
 // footer
-$footer-bg: $gray-800 !default; 
+$footer-bg: $primary !default; 
 $footer-fg: $white !default; 
 
 
@@ -126,3 +126,29 @@ $footer-fg: $white !default;
 // https://debruine.github.io/quarto_demo/dark_mode.html#setup
 .dark-mode { display: block !important; }
 .light-mode { display: none !important; }
+
+@mixin text-glow($color) {
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 1px #9F0, 0 0 2px #9F0, 0 0 3px #9F0; // Adjust the shadow sizes to control the glow effect
+    }
+    
+    to {
+      text-shadow: 0 0 1.5px $color, 0 0 3px $color, 0 0 4.5px $color; // Adjust the shadow sizes to control the glow effect
+    }
+  
+  
+  }
+  
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+
+h1, h2, h3, h4, h5, h6, .navbar, .about-links {
+    @include text-glow($headings-color); // Apply the glow effect to all headings
+}
+.quarto-listing-category-title, #toc-title {
+  animation: none;
+}
+
+
