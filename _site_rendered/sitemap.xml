@@ -2,10 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://t-gummer.netlify.app/goals/index.html</loc>
-    <lastmod>2023-07-04T07:21:06.318Z</lastmod>
+    <lastmod>2023-07-06T05:20:35.466Z</lastmod>
   </url>
   <url>
     <loc>https://t-gummer.netlify.app/index.html</loc>
-    <lastmod>2023-07-04T07:21:06.921Z</lastmod>
+    <lastmod>2023-07-05T08:21:26.200Z</lastmod>
+  </url>
+  <url>
+    <loc>https://t-gummer.netlify.app/blog/index.html</loc>
+    <lastmod>2023-07-06T06:34:20.831Z</lastmod>
+  </url>
+  <url>
+    <loc>https://t-gummer.netlify.app/blog/2023/July/intro-to-footy-stats/index.html</loc>
+    <lastmod>2023-07-06T05:52:20.111Z</lastmod>
   </url>
 </urlset>
