@@ -121,8 +121,15 @@ $btn-close-hover-opacity:    1 !default;
 $footer-bg: $primary !default; 
 $footer-fg: $white !default; 
 
+$font-family-monospace: "PT Mono", SFMono-Regular, Consolas, monospace !default;
+// $font-family-sans-serif: $font-family-monospace;
+$headings-font-family: $font-family-monospace !default;
 
 /*-- scss:rules --*/
+.navbar-title {
+  font-family: $font-family-monospace;
+}
+
 // https://debruine.github.io/quarto_demo/dark_mode.html#setup
 .dark-mode { display: block !important; }
 .light-mode { display: none !important; }
@@ -134,13 +141,13 @@ $footer-fg: $white !default;
     }
     
     to {
-      text-shadow: 0 0 1.5px $color, 0 0 3px $color, 0 0 4.5px $color; // Adjust the shadow sizes to control the glow effect
+      text-shadow: 0 0 2px $color, 0 0 4px $color, 0 0 6px $color; // Adjust the shadow sizes to control the glow effect
     }
   
   
   }
   
-  animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1.5s ease-in-out infinite alternate;
 }
 
 
@@ -151,4 +158,14 @@ h1, h2, h3, h4, h5, h6, .navbar, .about-links {
   animation: none;
 }
 
+$bg-colour-selection: rgba($secondary, 0.7); 
+$text-colour-selection: $primary;
 
+::selection {
+  background: $bg-colour-selection; /* WebKit/Blink Browsers */
+  color: $text-colour-selection;
+}
+::-moz-selection {
+  background: $bg-colour-selection; /* Gecko Browsers */
+  color: $text-colour-selection;
+}

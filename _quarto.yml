@@ -50,11 +50,14 @@ website:
     left: |
       <span class="faux-block">{{< fa regular copyright >}} 2023 Tim Gummer</span>
       <span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app" target="_blank">{{< fa brands github >}} Source Code</a></span>
-# center: |
-#      <span class="faux-block">Welcome to my webiste!</span>
+    center: |
+      <span class="faux-block light-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Initiate hacker mode!"><i class="fa-solid fa-toggle-off"></i></a> icon in the navigation bar</span>
+      <span class="faux-block light-mode"> to initiate dark (hacker) mode 😁</span>
+      <span class="faux-block dark-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Return to normie mode?"><i class="fa-solid fa-toggle-on"></i></a> icon  in the navigation bar</span>
+      <span class="faux-block dark-mode"> to return to light (normie) mode 😞</span>
     right: |
-      <span class="faux-block"> Designed with {{< fa heart >}}</span>
-      <span class="faux-block"> using <a href="https://www.r-project.org" target="_blank">{{< fa brands r-project >}}</a> and <a href="https://quarto.org" target="_blank">Quarto</a></span>
+      <span class="faux-block"> Designed with {{< fa heart >}} using</span>
+      <span class="faux-block"> <a href="https://www.r-project.org" target="_blank">{{< fa brands r-project >}}</a> and <a href="https://quarto.org" target="_blank">Quarto</a></span>
 
 execute:
   freeze: true    
