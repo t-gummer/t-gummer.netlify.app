@@ -43,6 +43,16 @@ JS_return_first_value <- reactable::JS("
     }
   ")
 
+JS_aggregate_other_value <- function(other_column_name) {
+  reactable::JS(
+  glue::glue("function(values, rows) { 
+  return rows[0]['<<other_column_name>>']
+             }", .open = "<<", .close = ">>"
+             ))
+  
+}
+
+
 
 
 # https://glin.github.io/reactable/articles/cookbook/cookbook.html#merge-cells

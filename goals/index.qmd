@@ -108,6 +108,12 @@ goals_table_category <- function(category_label) {
       groupBy = info1_label,
       pagination = FALSE,
       columns = list(
+        goal = colDef(name = "Goal"),
+        goal_completed_flag = colDef(
+          name = "Complete", 
+          aggregate = JS_aggregate_other_value("completed_flag")
+          ),
+        completed_flag = colDef(show = FALSE)
       ) |> 
         c(info_col_spec)
       )
