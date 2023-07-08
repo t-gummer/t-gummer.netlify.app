@@ -2,7 +2,7 @@
 title: Tim Gummer
 description: |
   <blockquote class="blockquote">
-  Those who have seen me recently may have noticed that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
+  Those who have seen me recently might observe that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
   </blockquote>
 about:
   template: trestles
@@ -29,28 +29,49 @@ format:
 
 You have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.
 
-I have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. 
+I have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).
 
-### What to Expect
+### My interests
 
 The content of this site will mix and match combinations of some of my particular interests/skills listed below:
 
-  * Tools/Languages:
+  * Tools/Languages: R,  VBA, Excel, $\LaTeX$
     
-      - R
-      - VBA
-      - Excel
-      - $\LaTeX$
-    
-  * Methods:
+  * Methods:  Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics
   
-      - Statistics
-      - Data Science (Collection, Visualisation, Modelling)
-      - Mathematics
-  
-  * Applications:
-  
-      - Sport (Australian Rules Football, Cricket)
+  * Applications: Sport (Australian Rules Football, Cricket)
 
 :::
+
+
+# Contents
+
+* [goals](Goals): keeping track of my goals (prospective) and achievements (retrospective) as well as failure/road blocks along the way.
+
+* [blog](Blog): articles about my person projects and things that interest me.
+
+
+# Colophon
+
+> This section is inspired by the [section](https://r4ds.hadley.nz/intro.html#colophon){target="_blank"} of the same name in Hadley Whickham's *[R For Data Science](https://r4ds.hadley.nz){target="_blank"}* (I am unaware of where the concept originally came from).
+
+This website is built using [Quarto](https://quarto.org){target="_blank"}'s [static website generator](https://quarto.org/docs/websites/){target="_blank"}. As I am most familiar with R and am using Quarto coming from using [RMarkdown](https://bookdown.org/yihui/rmarkdown/){target="_blank"}, I am using [knitr](https://yihui.org/knitr/){target="_blank"} as my engine.
+
+
+::: {.callout-caution}
+
+## The three amigos
+
+> But don't thank Quarto, thank the web development family: HTML, CSS and JavaScript, [the three amigos](https://www.youtube.com/clip/UgkxcSHiSuPrAwey1tAcLisvcYFd7h65RmT4){target="_blank"}.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZZBHtCh69TY?controls=0&amp;clip=UgkxcSHiSuPrAwey1tAcLisvcYFd7h65RmT4&amp;clipt=EMjsBhjvmQc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+:::
+
+## Session info
+
+```{r}
+sessionInfo()
+Sys.time()
+```
 

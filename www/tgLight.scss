@@ -134,3 +134,26 @@ $text-colour-selection: $primary;
   background: $bg-colour-selection; /* Gecko Browsers */
   color: $text-colour-selection;
 }
+
+/* width */
+::-webkit-scrollbar {
+  background: $body-bg;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px $secondary; 
+  border: 2px solid $secondary; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $body-bg; 
+  border: 2px solid $primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba($secondary, 1); 
+}
+

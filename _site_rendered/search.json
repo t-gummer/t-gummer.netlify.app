@@ -18,20 +18,34 @@
     "href": "goals/index.html",
     "title": "Goals",
     "section": "",
-    "text": "Goals\nThis page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.\n\n\n\n\n\n\nNon-linearity\n\n\n\nI would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some roadblocks and failures I have experience along the way.\nThis is my attempt to run counter to what one might see on a resume or social media (successes only). I am also doing this as a reminder that:\n\nNot all ventures succeed (and this is okay).\nIt is from failures that we often learn the most.\nWithout risking failure, we will never dare to do anything bold."
+    "text": "Goals\nThis page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.\n\n\n\n\n\n\nNon-linearity\n\n\n\nI would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some roadblocks and failures I have experience along the way.\nThis is my attempt to run counter to what one might see on a resume or social media (successes only). I am also doing this as a reminder that:\n\nNot all ventures succeed (and this is okay).\nIt is from failures that we often learn the most.\nWithout risking failure, we will never dare to do anything bold.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStudy\nProfessional\nPersonal Projects\nExtracurricular Activities"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Tim Gummer",
     "section": "",
-    "text": "Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email\n  \n\n  \n  \n\n\nYou have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence.\n\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages:\n\nR\nVBA\nExcel\n\\(\\LaTeX\\)\n\nMethods:\n\nStatistics\nData Science (Collection, Visualisation, Modelling)\nMathematics\n\nApplications:\n\nSport (Australian Rules Football, Cricket)"
+    "text": "Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email\n  \n\n  \n  \n\nYou have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages: R, VBA, Excel, \\(\\LaTeX\\)\nMethods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics\nApplications: Sport (Australian Rules Football, Cricket)"
   },
   {
     "objectID": "index.html#welcome-to-my-website",
     "href": "index.html#welcome-to-my-website",
     "title": "Tim Gummer",
     "section": "",
-    "text": "You have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence.\n\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages:\n\nR\nVBA\nExcel\n\\(\\LaTeX\\)\n\nMethods:\n\nStatistics\nData Science (Collection, Visualisation, Modelling)\nMathematics\n\nApplications:\n\nSport (Australian Rules Football, Cricket)"
+    "text": "You have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages: R, VBA, Excel, \\(\\LaTeX\\)\nMethods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics\nApplications: Sport (Australian Rules Football, Cricket)"
+  },
+  {
+    "objectID": "index.html#session-info",
+    "href": "index.html#session-info",
+    "title": "Tim Gummer",
+    "section": "Session info",
+    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-08 23:03:57 AEST\""
+  },
+  {
+    "objectID": "goals/index.html#extracurricular-activities",
+    "href": "goals/index.html#extracurricular-activities",
+    "title": "Goals",
+    "section": "",
+    "text": ":::"
   }
 ]

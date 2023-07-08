@@ -31,8 +31,22 @@ reactable_themed <- function(data, ..., light_theme = reactableTheme_light(), da
 
 }
 
+JS_return_last_value <- reactable::JS("
+    function(values) {
+      return values[values.length - 1]
+    }
+  ")
+
+JS_return_first_value <- reactable::JS("
+    function(values) {
+      return values[0]
+    }
+  ")
+
+
+
 # https://glin.github.io/reactable/articles/cookbook/cookbook.html#merge-cells
-reactable_merged <- function(column) {
+reactable_style_merged <- function(column) {
   JS(glue("function(rowInfo, column, state) {
           const firstSorted = state.sorted[0]
           // Merge cells if unsorted or sorting by <<column>>
