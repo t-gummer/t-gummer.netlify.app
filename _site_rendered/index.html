@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="description" content="Associate Actuary (AIAA) | R Enthusiast">
-
 <title>Tim Gummer</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +18,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -41,8 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -61,19 +90,12 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Tim Gummer</span>
@@ -85,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="./blog/index.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
@@ -94,8 +116,8 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Goals</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
     <a class="nav-link" href="https://github.com/t-gummer" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
@@ -111,35 +133,45 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#welcome-to-my-website" id="toc-welcome-to-my-website" class="nav-link active" data-scroll-target="#welcome-to-my-website">Welcome to my website!</a>
+  <ul class="collapse">
+<li><a href="#my-interests" id="toc-my-interests" class="nav-link" data-scroll-target="#my-interests">My interests</a></li>
+  </ul>
+</li>
+  <li><a href="#contents" id="toc-contents" class="nav-link" data-scroll-target="#contents">Contents</a></li>
+  <li>
+<a href="#colophon" id="toc-colophon" class="nav-link" data-scroll-target="#colophon">Colophon</a>
+  <ul class="collapse">
+<li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session info</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
-
-
-
-<div class="quarto-about-trestles column-page">
+<main class="content column-page-left" id="quarto-document-content"><div class="quarto-about-trestles column-page-left">
   <div class="about-entity">
     <img src="img/headshot.jfif" class="about-image
   rounded " style="width: 20em;">
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Tim Gummer</h1>
 </div>
 <div>
   <div class="description">
     <blockquote class="blockquote">
-    Those who have seen me recently may have noticed that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
+    Those who have seen me recently might observe that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
     </blockquote>
   </div>
 </div>
@@ -162,43 +194,82 @@ ul.task-list li input[type="checkbox"] {
 </div>
   </div>
   <div class="about-contents"><div id="about-block">
-<section id="welcome-to-my-website" class="level2">
-<h2 data-anchor-id="welcome-to-my-website">Welcome to my website!</h2>
+<section id="welcome-to-my-website" class="level2"><h2 data-anchor-id="welcome-to-my-website">Welcome to my website!</h2>
 <p>You have reached the personal website of <strong>Tim Gummer</strong>. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.</p>
-<p>I have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence.</p>
-<section id="what-to-expect" class="level3">
-<h3 data-anchor-id="what-to-expect">What to Expect</h3>
+<p>I have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).</p>
+<section id="my-interests" class="level3"><h3 data-anchor-id="my-interests">My interests</h3>
 <p>The content of this site will mix and match combinations of some of my particular interests/skills listed below:</p>
 <ul>
-<li><p>Tools/Languages:</p>
-<ul>
-<li>R</li>
-<li>VBA</li>
-<li>Excel</li>
-<li><span class="math inline">\(\LaTeX\)</span></li>
-</ul></li>
-<li><p>Methods:</p>
-<ul>
-<li>Statistics</li>
-<li>Data Science (Collection, Visualisation, Modelling)</li>
-<li>Mathematics</li>
-</ul></li>
-<li><p>Applications:</p>
-<ul>
-<li>Sport (Australian Rules Football, Cricket)</li>
-</ul></li>
-</ul>
-</section>
-</section>
+<li><p>Tools/Languages: R, VBA, Excel, <span class="math inline">\(\LaTeX\)</span></p></li>
+<li><p>Methods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics</p></li>
+<li><p>Applications: Sport (Australian Rules Football, Cricket)</p></li>
+</ul></section></section>
 </div></div>
+</div>
+
+<section id="contents" class="level1"><h1>Contents</h1>
+<ul>
+<li><p><a href="Goals">goals</a>: keeping track of my goals (prospective) and achievements (retrospective) as well as failure/road blocks along the way.</p></li>
+<li><p><a href="Blog">blog</a>: articles about my person projects and things that interest me.</p></li>
+</ul></section><section id="colophon" class="level1"><h1>Colophon</h1>
+<blockquote class="blockquote">
+<p>This section is inspired by the <a href="https://r4ds.hadley.nz/intro.html#colophon" target="_blank">section</a> of the same name in Hadley Whickham’s <em><a href="https://r4ds.hadley.nz" target="_blank">R For Data Science</a></em> (I am unaware of where the concept originally came from).</p>
+</blockquote>
+<p>This website is built using <a href="https://quarto.org" target="_blank">Quarto</a>’s <a href="https://quarto.org/docs/websites/" target="_blank">static website generator</a>. As I am most familiar with R and am using Quarto coming from using <a href="https://bookdown.org/yihui/rmarkdown/" target="_blank">RMarkdown</a>, I am using <a href="https://yihui.org/knitr/" target="_blank">knitr</a> as my engine.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The three amigos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>But don’t thank Quarto, thank the web development family: HTML, CSS and JavaScript, <a href="https://www.youtube.com/clip/UgkxcSHiSuPrAwey1tAcLisvcYFd7h65RmT4" target="_blank">the three amigos</a>.</p>
+</blockquote>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZZBHtCh69TY?controls=0&amp;clip=UgkxcSHiSuPrAwey1tAcLisvcYFd7h65RmT4&amp;clipt=EMjsBhjvmQc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
+</div>
+</div>
+<section id="session-info" class="level2"><h2 data-anchor-id="session-info">Session info</h2>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.1 (2023-06-16 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 11 x64 (build 22621)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   
+[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      
+[5] LC_TIME=English_Australia.utf8    
+
+time zone: Australia/Sydney
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        
+ [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       
+ [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        
+[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    </code></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-07-08 23:03:57 AEST"</code></pre>
+</div>
 </div>
 
 
 
-
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -540,14 +611,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left"><span class="faux-block"><i class="fa-regular fa-copyright" aria-label="copyright"></i> 2023 Tim Gummer</span> <span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app" target="_blank"><i class="fa-brands fa-github" aria-label="github"></i> Source Code</a></span></div>   
     <div class="nav-footer-center"><span class="faux-block light-mode">Click the <a href="" class="" onclick="window.quartoToggleColorScheme(); return false;" title="Initiate hacker mode!"><i class="fa-solid fa-toggle-off"></i></a> icon in the navigation bar</span> <span class="faux-block light-mode"> to initiate dark (hacker) mode 😁</span> <span class="faux-block dark-mode">Click the <a href="" class="" onclick="window.quartoToggleColorScheme(); return false;" title="Return to normie mode?"><i class="fa-solid fa-toggle-on"></i></a> icon in the navigation bar</span> <span class="faux-block dark-mode"> to return to light (normie) mode 😞</span></div>
     <div class="nav-footer-right"><span class="faux-block"> Designed with <i class="fa-solid fa-heart" aria-label="heart"></i> using</span> <span class="faux-block"> <a href="https://www.r-project.org" target="_blank"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> and <a href="https://quarto.org" target="_blank">Quarto</a></span></div>
   </div>
 </footer>
-
 
 
 </body></html>

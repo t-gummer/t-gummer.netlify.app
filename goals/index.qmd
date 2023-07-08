@@ -37,6 +37,7 @@ source("../scripts/reactable-theming.R")
 library(googlesheets4)
 library(dplyr)
 library(glue)
+library(purrr)
 library(reactable)
 library(reactablefmtr)
 library(tippy)
@@ -64,21 +65,114 @@ display_text_as_tooltip <- function(value, index) {
 
 ```{r get data}
 ss <- gs4_get("https://docs.google.com/spreadsheets/d/1kRK0zWsGz7GOHhtWSaV_9SlZ2zRxns_pVEh4YMJtsLQ/edit#gid=0")
-goals_tb <- read_sheet(ss, sheet = "Goals") %>% 
-  filter(!is.na(goal))
-sub_goals_tb <- read_sheet(ss, sheet = "Sub-Goals") %>% 
-  filter(!is.na(goal))
+goals_tb <- read_sheet(ss, sheet = "Goals") |> 
+  filter(!is.na(project))
+projects_tb <- read_sheet(ss, sheet = "Projects") |> 
+  filter(!is.na(project))
+categories_tb <- read_sheet(ss, sheet = "Categories")
 
-combined_tb <- left_join(goals_tb, sub_goals_tb, by = "goal") %>% 
-  select(category, goal_label, start_date, completion_date, sub_goal, sub_goal_start_date, sub_goal_completion_date, sub_goal_description, sub_goal_completed_flag) %>% 
-  arrange(category, start_date) %>%
-  select(-start_date, -completion_date) 
+combined_tb <- left_join(projects_tb, goals_tb, by = "project") |> 
+  left_join(categories_tb, by = "category") |> 
+  select(category, info1,  info2, completed_flag, goal, goal_completed_flag)
 
 ```
 
+
+
+```{r}
+goals_table_category <- function(category_label) {
+  categories_tb |>
+    filter(category == category_label) -> categories_tb_filtered
+  
+  info1_label <- categories_tb_filtered$info1_label  
+  info2_label <- categories_tb_filtered$info2_label  
+  
+  renaming_list <- `names<-`(c("info1", "info2"), c(info1_label, info2_label))
+  
+  info_col_spec <- list(
+    colDef(
+      ),
+    colDef(
+        aggregate = JS_return_first_value,
+        cell = \(value, row_index, column_name) ""
+      )
+  ) |> 
+    `names<-`(value = c(info1_label, info2_label))
+  
+  
+  combined_tb |> 
+    filter(category == category_label) |> 
+    select(-category) |> 
+    rename(all_of(renaming_list)) |> 
+    reactable_themed(
+      groupBy = info1_label,
+      pagination = FALSE,
+      columns = list(
+        goal = colDef(name = "Goal"),
+        goal_completed_flag = colDef(
+          name = "Complete", 
+          aggregate = JS_aggregate_other_value("completed_flag")
+          ),
+        completed_flag = colDef(show = FALSE)
+      ) |> 
+        c(info_col_spec)
+      )
+  
+}
+
+
+```
+
+
+
+:::: {.column-screen}
+::: {.panel-tabset}
+
+## Study
+
+```{r}
+goals_table_category("Study")
+```
+
+
+## Professional
+
+```{r}
+goals_table_category("Professional")
+```
+
+
+
+
+## Personal Projects
+
+```{r}
+goals_table_category("Personal Projects")
+```
+
+## Extracurricular Activities
+
+
+```{r}
+goals_table_category("Extracurricular")
+```
+
+
+
+:::
+::::
+
+
 ```{r}
 #| column: page
-combined_tb %>% 
+#| eval: FALSE
+
+# combined_tb <- left_join(projects_tb, goals_tb, by = "project") |> 
+#   select(category, goal_label, start_date, completion_date, sub_goal, sub_goal_start_date, sub_goal_completion_date, sub_goal_description, sub_goal_completed_flag) |> 
+#   arrange(category, start_date) |>
+#   select(-start_date, -completion_date) 
+
+combined_tb |> 
   reactable_themed(
     groupBy = c("category", "goal_label"),
     defaultExpanded = FALSE,
@@ -119,4 +213,5 @@ combined_tb %>%
 
 
 ```
+
 

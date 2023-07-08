@@ -1,5 +1,6 @@
 ---
 title: "Blog"
+author: ""
 description-meta: "Tim Gummer's blog"
 listing:
   - id: posts_2023
