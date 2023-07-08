@@ -122,3 +122,15 @@ $footer-fg: $white !default;
 // https://debruine.github.io/quarto_demo/dark_mode.html#setup
 .light-mode { display: block !important; }
 .dark-mode { display: none !important; }
+
+$bg-colour-selection: rgba($secondary, 0.5); 
+$text-colour-selection: $primary;
+
+::selection {
+  background: $bg-colour-selection; /* WebKit/Blink Browsers */
+  color: $text-colour-selection;
+}
+::-moz-selection {
+  background: $bg-colour-selection; /* Gecko Browsers */
+  color: $text-colour-selection;
+}

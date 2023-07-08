@@ -1,6 +1,11 @@
 ---
+title: Tim Gummer
+description: |
+  <blockquote class="blockquote">
+  Those who have seen me recently may have noticed that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
+  </blockquote>
 about:
-  template: jolla
+  template: trestles
   id: about-block
   image: "img/headshot.jfif"
   links:
@@ -13,18 +18,20 @@ about:
     - icon: envelope
       text: Email
       href: "mailto:timothy.gummer@gmail.com"
+format:
+  html:
+    page-layout: full
 ---
 
 ::: {#about-block}
-:::
+## Welcome to my website!
 
-# Welcome to my website!
 
-You have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA) with a technical inclination. I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.
+You have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.
 
 I have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. 
 
-## What to Expect
+### What to Expect
 
 The content of this site will mix and match combinations of some of my particular interests/skills listed below:
 
@@ -44,3 +51,6 @@ The content of this site will mix and match combinations of some of my particula
   * Applications:
   
       - Sport (Australian Rules Football, Cricket)
+
+:::
+
