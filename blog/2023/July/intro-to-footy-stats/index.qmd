@@ -1,6 +1,6 @@
 ---
 title: "An Introduction to AFL Stats in R"
-description: "Inspired by attending a shocking and miserable game of football."
+description: "This blog post discusses  the statistical questions people frequently in pose while watching sport I will discuss how one can use R to answer some of these questions using some questions that were actually presented at a game I attended."
 date: 2023-07-08
 categories: 
   - Sport
@@ -9,8 +9,7 @@ categories:
   - Data
 image: fitzroy-lions-logo.png
 reference-location: margin
-draft: true
-title-block-banner: AFL-logo.jpg
+draft: false
 
 # format:
 #   html:
@@ -18,11 +17,94 @@ title-block-banner: AFL-logo.jpg
 #     include-after-body: ../../html/blog_footer.html
 ---
 
+
 # Heading
 
 
 ```{r}
 library(fitzRoy)
-print("hello world")
+# player_details_afl <- fitzRoy::fetch_player_details_afltables()
+
+
+
 ```
 
+
+```{r}
+if(file.exists("data/player_stats_afltables.RDS")) {
+  player_stats_afltables <- readRDS("data/player_stats_afltables.RDS")
+  
+} else {
+  player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
+  saveRDS(player_stats_afltables, "data/player_stats_afltables.RDS")
+}
+
+if(file.exists("data/results_afltables.RDS")) {
+  results_afltables <- readRDS("data/results_afltables.RDS")
+  
+} else {
+  results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
+  saveRDS(results_afltables, "data/results_afltables.RDS")
+}
+
+
+
+```
+
+
+# Prelude
+
+Since sport became a professional up taking, data and statistics have been recorded and opined on by teams, the media and spectators alike. More recently, in the advent of money ball in baseball, stats have gained even further notoriety as a key analytical tool in gaining an edge over the competition. My beloved sport of Australian Rules Football ("footy" - footnote about WA versus NSW use of this term) is no different, some have even called it the most data rich sport in the world.
+
+It is my observation that it is common for those attending live sport often ask questions like "what us record for the most [...]" or when was the last time "this [obscure event] happened?" (in block quotes). I believe this is likely influenced by the fact that they often ask such questions on the commentary but while they often get answered by the sport statistician hired by the media organisation in question, when attending live games, all but the most trivial of questions that can be answered by Google go unanswered. However in this post I hope to illuminate how one might find answers to these cintilating questions.
+
+I recently had the misfortune (as a West Coast fan) of attending a game live between Sydney and west coast with the following scoreline:
+
+It is also my observation that games like these where something out of the ordinary happens (in this case an exceptionally one sided game). That the aforementioned types of questions are often posed more frequently. Below are some questions that my friend posed to me during the match (and I will endeavour to answer using R below).
+
+# Getting the data
+
+## the Fitzroy package
+
+Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)
+
+Data sources[^FitzRoy]:
+
+[^FitzRoy]: **Source**: https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources
+
+
+## other R things
+
+I will be using native pipe (short spiel +link stack overflow post and some article which introduces it)
+
+RVest for webscraping data (some data just isn't immediately available via fitzRoy).
+
+# R working
+
+# summary of answers
+
+## The norm smith
+
+The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.
+
+While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).
+
+Unofficial source of older data
+https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.
+
+
+For official norm smith which ever of the following are easier:
+
+- https://www.afl.com.au/stats/leaders-awards/norm-smith-medal
+
+- https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients
+
+Make sure it lines up with the AFL data.
+
+Find the youngest player, player with least games
+
+# Notable afl Stats people
+
+- Jayden popowski
+- Squiggle
+- Guy who wrote Fitzroy (does he have a model ok squiggle)

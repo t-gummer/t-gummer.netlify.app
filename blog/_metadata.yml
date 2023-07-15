@@ -2,7 +2,7 @@
 date-format: "dddd, D MMMM YYYY"
 
 # Enable banner style title blocks
-# title-block-banner: "#170C3A"
+title-block-banner: "#4C4C4B"
 
 # Add blog-post class to the banner header area
 format: 
@@ -22,7 +22,7 @@ toc: true
 # toc-title: Contents
 toc-location: left
 
-freeze: true
+freeze: false
 
 # title-block-banner: "2023/July/intro-to-footy-stats/AFL-logo.png"
 
@@ -37,3 +37,7 @@ author:
   - name: Tim Gummer
     url: https://t-gummer.netlify.app/
     # orcid: 0000-0002-3948-3914
+    
+format: 
+  html:
+    page-layout: full

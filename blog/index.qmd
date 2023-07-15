@@ -1,5 +1,6 @@
 ---
 title: "Blog"
+description: "Welcome to my blog. I will be posting articles here about my various interests such as R, footy and data science."
 author: ""
 description-meta: "Tim Gummer's blog"
 listing:
@@ -7,16 +8,16 @@ listing:
     contents: "2023/**/index.qmd"
     sort: "date desc"
     categories: true
-title-block-banner: false
 page-layout: full
 # toc-title: Year
+# title-block-banner: "#4C4C4B"
 toc-location: right
 date-format: "D MMMM YYYY"
 code-tools: false
 comments: false
 ---
 
-Welcome to my blog. I will be posting articles here about my various interests such as R, footy and data science.
+
 
 ## 2023
 
