@@ -1,0 +1,62 @@
+---
+title: Curriculum Vitae
+description: "This is my Curriculum Vitae (CV), outlining my professional and education experiences to date. It is not tailored to any particular role and is rather a more detailed and verbose of all my experiences I believe to be pertinent to my career."
+execute:
+  echo: false
+  warning: false
+format:
+  html:
+    page-layout: full
+engine: knitr 
+cv:
+  pdf: "CV-TimothyGummer.pdf"
+---
+
+## View
+
+```{css echo=FALSE}
+.embed-container {
+    position: relative;
+    padding-bottom: 129%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+```
+
+```{=html}
+<p class="text-center">
+  <a class="btn btn-primary btn-lg cv-download" href="`r rmarkdown::metadata$cv$pdf`" target="_blank">
+    <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download current CV
+  </a>
+</p>
+<div class="embed-container">
+  <iframe src="`r rmarkdown::metadata$cv$pdf`" style="border: 0.5px"></iframe>
+</div>
+```
+
+
+## Colophon
+
+> How the CV(ausage) is made.
+
+My resume was built in a ["data-driven"](https://www.youtube.com/watch?v=cMlRAiQUdD8){target="_blank"} fashion using the [`vitae`](https://pkg.mitchelloharawild.com/vitae/){target="_blank"} R package and Excel[^1]. It uses the beautiful [Awesome CV](https://github.com/posquit0/Awesome-CV){target="_blank"} template which I previously used in pure $\LaTeX$.
+
+### Sharing
+
+It is currently in a private repository on GitHub as it has some private information in it. There is also a visually consistent template for writing (cover) letters as well. I am happy to share the code with anyone who is interested. It probably is best suited to those familiar with $\LaTeX$, R and Excel[^2].
+
+In the future I may make a clean template in a public repository to share with an accompanying blog post on how to use the template.
+
+[^1]: Note that the [linked](https://www.youtube.com/watch?v=cMlRAiQUdD8){target="_blank"} YouTube video does not use Excel but I do.
+
+[^2]: I am not sure how large the intersection between these skill sets is but I personally find the workflow and resulting look very satisfying.

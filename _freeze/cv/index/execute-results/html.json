@@ -1,0 +1,14 @@
+{
+  "hash": "85afd14e68e8e3569e2daf90926e4941",
+  "result": {
+    "markdown": "---\ntitle: Curriculum Vitae\ndescription: \"This is my Curriculum Vitae (CV), outlining my professional and education experiences to date. It is not tailored to any particular role and is rather a more detailed and verbose of all my experiences I believe to be pertinent to my career.\"\nexecute:\n  echo: false\n  warning: false\n  freeze: true  # never re-render during project render\nformat:\n  html:\n    page-layout: full\nengine: knitr \ncv:\n  pdf: \"CV-TimothyGummer.pdf\"\n---\n\n\n## View\n\n\n::: {.cell}\n<style type=\"text/css\">\n.embed-container {\n    position: relative;\n    padding-bottom: 129%;\n    height: 0;\n    overflow: hidden;\n    max-width: 100%;\n}\n.embed-container iframe,\n.embed-container object,\n.embed-container embed {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n}\n</style>\n:::\n\n```{=html}\n<p class=\"text-center\">\n  <a class=\"btn btn-primary btn-lg cv-download\" href=\"CV-TimothyGummer.pdf\" target=\"_blank\">\n    <i class=\"fa-solid fa-file-arrow-down\"></i>&ensp;Download current CV\n  </a>\n</p>\n<div class=\"embed-container\">\n  <iframe src=\"CV-TimothyGummer.pdf\" style=\"border: 0.5px\"></iframe>\n</div>\n```\n\n\n\n## Colophon\n\n> How the CV(ausage) is made.\n\nMy resume was built in a [\"data-driven\"](https://www.youtube.com/watch?v=cMlRAiQUdD8){target=\"_blank\"} fashion using the [`vitae`](https://pkg.mitchelloharawild.com/vitae/){target=\"_blank\"} R package and Excel[^1]. It uses the beautiful [Awesome CV](https://github.com/posquit0/Awesome-CV){target=\"_blank\"} template which I previously used in pure $\\LaTeX$.\n\n### Sharing\n\nIt is currently in a private repository on GitHub as it has some private information in it. There is also a visually consistent template for writing (cover) letters as well. I am happy to share the code with anyone who is interested. It probably is best suited to those familiar with $\\LaTeX$, R and Excel[^2].\n\nIn the future I may make a clean template in a public repository to share with an accompanying blog post on how to use the template.\n\n[^1]: Note that the [linked](https://www.youtube.com/watch?v=cMlRAiQUdD8){target=\"_blank\"} YouTube video does not use Excel but I do.\n\n[^2]: I am not sure how large the intersection between these skill sets is but I personally find the workflow and resulting look very satisfying.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

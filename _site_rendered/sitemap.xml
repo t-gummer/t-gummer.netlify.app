@@ -2,14 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://t-gummer.netlify.app/blog/index.html</loc>
-    <lastmod>2023-07-08T17:18:01.447Z</lastmod>
+    <lastmod>2023-07-19T08:20:32.083Z</lastmod>
+  </url>
+  <url>
+    <loc>https://t-gummer.netlify.app/cv/index.html</loc>
+    <lastmod>2023-07-19T08:20:34.619Z</lastmod>
   </url>
   <url>
     <loc>https://t-gummer.netlify.app/goals/index.html</loc>
-    <lastmod>2023-07-08T17:18:10.916Z</lastmod>
+    <lastmod>2023-07-19T08:20:37.866Z</lastmod>
   </url>
   <url>
     <loc>https://t-gummer.netlify.app/index.html</loc>
-    <lastmod>2023-07-08T17:18:14.864Z</lastmod>
+    <lastmod>2023-07-19T08:20:40.257Z</lastmod>
   </url>
 </urlset>

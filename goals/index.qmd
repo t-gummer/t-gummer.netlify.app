@@ -1,18 +1,21 @@
 ---
-Title: Goals
+title: Goals
+description: "This page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards."
+# Enable banner style title blocks
+title-block-banner: "#4C4C4B"
+title-block-style: default
 execute:
   echo: false
   warning: false
 format:
   html:
     page-layout: full
-    code-link: true
-    code-line-numbers: true
 ---
 
-# Goals
 
-This page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.
+
+
+
 
 
 ::: {.callout-tip}
@@ -21,7 +24,7 @@ This page is a collation of my goals (prospective) and achievements (retrospecti
 
 I would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some *roadblocks* and *failures* I have experience along the way.
 
-This is my attempt to run counter to what one might see on a resume or social media (successes only). I am also doing this as a reminder that:
+This is my attempt to run counter to what one might see on a resume or social media (predominately successes and seldom failures). I am also doing this as a reminder that:
 
 * Not all ventures succeed (and this is okay).
 * It is from failures that we often learn the most.

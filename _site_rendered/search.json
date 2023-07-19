@@ -4,21 +4,42 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Welcome to my blog. I will be posting articles here about my various interests such as R, footy and data science."
+    "text": "No matching items"
   },
   {
     "objectID": "blog/index.html#section",
     "href": "blog/index.html#section",
     "title": "Blog",
-    "section": "2023",
-    "text": "2023\n\n\n\n\n\nNo matching items"
+    "section": "",
+    "text": "No matching items"
+  },
+  {
+    "objectID": "cv/index.html",
+    "href": "cv/index.html",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "Download current CV"
+  },
+  {
+    "objectID": "cv/index.html#view",
+    "href": "cv/index.html#view",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "Download current CV"
+  },
+  {
+    "objectID": "cv/index.html#colophon",
+    "href": "cv/index.html#colophon",
+    "title": "Curriculum Vitae",
+    "section": "Colophon",
+    "text": "Colophon\n\nHow the CV(ausage) is made.\n\nMy resume was built in a “data-driven” fashion using the vitae R package and Excel1. It uses the beautiful Awesome CV template which I previously used in pure \\(\\LaTeX\\).1 Note that the linked YouTube video does not use Excel but I do.\nSharing\nIt is currently in a private repository on GitHub as it has some private information in it. There is also a visually consistent template for writing (cover) letters as well. I am happy to share the code with anyone who is interested. It probably is best suited to those familiar with \\(\\LaTeX\\), R and Excel2.2 I am not sure how large the intersection between these skill sets is but I personally find the workflow and resulting look very satisfying.\nIn the future I may make a clean template in a public repository to share with an accompanying blog post on how to use the template."
   },
   {
     "objectID": "goals/index.html",
     "href": "goals/index.html",
     "title": "Goals",
     "section": "",
-    "text": "Goals\nThis page is a collation of my goals (prospective) and achievements (retrospective). The purpose is to be something of a reminder of both how far I have come and what I am working towards. My vague cutoff is from my university days onwards.\n\n\n\n\n\n\nNon-linearity\n\n\n\nI would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some roadblocks and failures I have experience along the way.\nThis is my attempt to run counter to what one might see on a resume or social media (successes only). I am also doing this as a reminder that:\n\nNot all ventures succeed (and this is okay).\nIt is from failures that we often learn the most.\nWithout risking failure, we will never dare to do anything bold.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStudy\nProfessional\nPersonal Projects\nExtracurricular Activities"
+    "text": "Non-linearity\n\n\n\nI would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some roadblocks and failures I have experience along the way.\nThis is my attempt to run counter to what one might see on a resume or social media (predominately successes and seldom failures). I am also doing this as a reminder that:\n\nNot all ventures succeed (and this is okay).\nIt is from failures that we often learn the most.\nWithout risking failure, we will never dare to do anything bold.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStudy\nProfessional\nPersonal Projects\nExtracurricular Activities"
   },
   {
     "objectID": "index.html",
@@ -39,6 +60,6 @@
     "href": "index.html#session-info",
     "title": "Tim Gummer",
     "section": "Session info",
-    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-08 23:03:57 AEST\""
+    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-19 17:09:53 AEST\""
   }
 ]
