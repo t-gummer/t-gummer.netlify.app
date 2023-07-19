@@ -4,6 +4,7 @@ description: |
   <blockquote class="blockquote">
   Those who have seen me recently might observe that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
   </blockquote>
+title-block-banner: FALSE
 about:
   template: trestles
   id: about-block

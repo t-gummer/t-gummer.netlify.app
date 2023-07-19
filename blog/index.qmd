@@ -8,9 +8,6 @@ listing:
     contents: "2023/**/index.qmd"
     sort: "date desc"
     categories: true
-page-layout: full
-# toc-title: Year
-# title-block-banner: "#4C4C4B"
 toc-location: right
 date-format: "D MMMM YYYY"
 code-tools: false

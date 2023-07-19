@@ -8,6 +8,7 @@ title-block-banner: "#4C4C4B"
 format: 
   html:
     code-tools: true
+    page-layout: full
     # comments:
     #   giscus: 
     #     repo: andrewheiss/ath-quarto
@@ -37,7 +38,3 @@ author:
   - name: Tim Gummer
     url: https://t-gummer.netlify.app/
     # orcid: 0000-0002-3948-3914
-    
-format: 
-  html:
-    page-layout: full

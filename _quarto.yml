@@ -1,5 +1,6 @@
 authorname: "Tim Gummer"
 draft: false
+engine: knitr 
 
 project:
   type: website
@@ -18,6 +19,9 @@ project:
 title-meta: "Tim Gummer"
 description-meta: "Associate Actuary (AIAA) | R Enthusiast"
 
+# Enable banner style title blocks
+title-block-banner: "#4C4C4B"
+
 website:
   title: "Tim Gummer"
   description: "Associate Actuary (AIAA) | R Enthusiast"
@@ -34,9 +38,14 @@ website:
     pinned: true
     left:
       - text: Blog
+        icon: newspaper
         href: blog/index.qmd
       - text: Goals
+        icon: fingerprint
         href: goals/index.qmd    
+      - text: CV
+        icon: file-earmark-person
+        href: cv/index.qmd    
     right:
       - icon: github
         href: https://github.com/t-gummer

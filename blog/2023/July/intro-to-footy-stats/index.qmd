@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to AFL Stats in R"
 description: "This blog post discusses  the statistical questions people frequently in pose while watching sport I will discuss how one can use R to answer some of these questions using some questions that were actually presented at a game I attended."
-date: 2023-07-08
+date: 2023-07-20
 categories: 
   - Sport
   - Footy
@@ -9,7 +9,7 @@ categories:
   - Data
 image: fitzroy-lions-logo.png
 reference-location: margin
-draft: false
+draft: true
 
 # format:
 #   html:
