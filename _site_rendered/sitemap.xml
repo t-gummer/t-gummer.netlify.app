@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://t-gummer.netlify.app/blog/2023/July/intro-to-footy-stats/index.html</loc>
+    <lastmod>2023-07-20T16:31:39.473Z</lastmod>
+  </url>
+  <url>
     <loc>https://t-gummer.netlify.app/blog/index.html</loc>
-    <lastmod>2023-07-19T08:20:32.083Z</lastmod>
+    <lastmod>2023-07-20T16:31:40.036Z</lastmod>
   </url>
   <url>
     <loc>https://t-gummer.netlify.app/cv/index.html</loc>
-    <lastmod>2023-07-19T08:20:34.619Z</lastmod>
+    <lastmod>2023-07-20T16:31:43.661Z</lastmod>
   </url>
   <url>
     <loc>https://t-gummer.netlify.app/goals/index.html</loc>
-    <lastmod>2023-07-19T08:20:37.866Z</lastmod>
+    <lastmod>2023-07-20T16:31:46.968Z</lastmod>
   </url>
   <url>
     <loc>https://t-gummer.netlify.app/index.html</loc>
-    <lastmod>2023-07-19T08:20:40.257Z</lastmod>
+    <lastmod>2023-07-20T16:31:49.834Z</lastmod>
   </url>
 </urlset>

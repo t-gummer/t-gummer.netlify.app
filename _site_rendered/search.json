@@ -1,31 +1,52 @@
 [
   {
+    "objectID": "blog/2023/July/intro-to-footy-stats/index.html",
+    "href": "blog/2023/July/intro-to-footy-stats/index.html",
+    "title": "An Introduction to AFL Stats in R",
+    "section": "",
+    "text": "library(fitzRoy)\n# player_details_afl &lt;- fitzRoy::fetch_player_details_afltables()\n\n\nif(file.exists(\"data/player_stats_afltables.RDS\")) {\n  player_stats_afltables &lt;- readRDS(\"data/player_stats_afltables.RDS\")\n  \n} else {\n  player_stats_afltables &lt;- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)\n  saveRDS(player_stats_afltables, \"data/player_stats_afltables.RDS\")\n}\n\nif(file.exists(\"data/results_afltables.RDS\")) {\n  results_afltables &lt;- readRDS(\"data/results_afltables.RDS\")\n  \n} else {\n  results_afltables &lt;- fitzRoy::fetch_results_afltables(season = 1897:2023)\n  saveRDS(results_afltables, \"data/results_afltables.RDS\")\n}"
+  },
+  {
+    "objectID": "blog/2023/July/intro-to-footy-stats/index.html#the-fitzroy-package",
+    "href": "blog/2023/July/intro-to-footy-stats/index.html#the-fitzroy-package",
+    "title": "An Introduction to AFL Stats in R",
+    "section": "the Fitzroy package",
+    "text": "the Fitzroy package\nGo into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)\nData sources1:1 Source: https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources"
+  },
+  {
+    "objectID": "blog/2023/July/intro-to-footy-stats/index.html#other-r-things",
+    "href": "blog/2023/July/intro-to-footy-stats/index.html#other-r-things",
+    "title": "An Introduction to AFL Stats in R",
+    "section": "other R things",
+    "text": "other R things\nI will be using native pipe (short spiel +link stack overflow post and some article which introduces it)\nRVest for webscraping data (some data just isn’t immediately available via fitzRoy)."
+  },
+  {
+    "objectID": "blog/2023/July/intro-to-footy-stats/index.html#the-norm-smith",
+    "href": "blog/2023/July/intro-to-footy-stats/index.html#the-norm-smith",
+    "title": "An Introduction to AFL Stats in R",
+    "section": "The norm smith",
+    "text": "The norm smith\nThe Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.\nWhile as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).\nUnofficial source of older data https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.\nFor official norm smith which ever of the following are easier:\n\nhttps://www.afl.com.au/stats/leaders-awards/norm-smith-medal\nhttps://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients\n\nMake sure it lines up with the AFL data.\nFind the youngest player, player with least games"
+  },
+  {
     "objectID": "blog/index.html",
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "No matching items"
+    "text": "Sport\n\n\nFooty\n\n\nR\n\n\nData\n\n\n\n\nThis blog post discusses the statistical questions people frequently in pose while watching sport I will discuss how one can use R to answer some of these questions using some questions that were actually presented at a game I attended.\n\n\n\n\n\n\n20 July 2023\n\n\nTim Gummer\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/index.html#section",
     "href": "blog/index.html#section",
     "title": "Blog",
     "section": "",
-    "text": "No matching items"
-  },
-  {
-    "objectID": "cv/index.html",
-    "href": "cv/index.html",
-    "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Download current CV"
+    "text": "Sport\n\n\nFooty\n\n\nR\n\n\nData\n\n\n\n\nThis blog post discusses the statistical questions people frequently in pose while watching sport I will discuss how one can use R to answer some of these questions using some questions that were actually presented at a game I attended.\n\n\n\n\n\n\n20 July 2023\n\n\nTim Gummer\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "cv/index.html#view",
     "href": "cv/index.html#view",
     "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Download current CV"
+    "section": "View",
+    "text": "View\n\n\n\n\n  \n     Download current CV"
   },
   {
     "objectID": "cv/index.html#colophon",
@@ -33,6 +54,13 @@
     "title": "Curriculum Vitae",
     "section": "Colophon",
     "text": "Colophon\n\nHow the CV(ausage) is made.\n\nMy resume was built in a “data-driven” fashion using the vitae R package and Excel1. It uses the beautiful Awesome CV template which I previously used in pure \\(\\LaTeX\\).1 Note that the linked YouTube video does not use Excel but I do.\nSharing\nIt is currently in a private repository on GitHub as it has some private information in it. There is also a visually consistent template for writing (cover) letters as well. I am happy to share the code with anyone who is interested. It probably is best suited to those familiar with \\(\\LaTeX\\), R and Excel2.2 I am not sure how large the intersection between these skill sets is but I personally find the workflow and resulting look very satisfying.\nIn the future I may make a clean template in a public repository to share with an accompanying blog post on how to use the template."
+  },
+  {
+    "objectID": "cv/index.html#bit-of-fun",
+    "href": "cv/index.html#bit-of-fun",
+    "title": "Curriculum Vitae",
+    "section": "Bit of Fun",
+    "text": "Bit of Fun\nUnfortunately I do not have a video CV."
   },
   {
     "objectID": "goals/index.html",
@@ -60,6 +88,6 @@
     "href": "index.html#session-info",
     "title": "Tim Gummer",
     "section": "Session info",
-    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-19 17:09:53 AEST\""
+    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-20 20:49:59 AEST\""
   }
 ]

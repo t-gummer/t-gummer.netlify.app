@@ -19,9 +19,9 @@ format:
     #   banner-header-class: "blog-post"
 
 # Default for table of contents
-toc: true
+# toc: true
 # toc-title: Contents
-toc-location: left
+# toc-location: left
 
 freeze: false
 

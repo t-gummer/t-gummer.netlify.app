@@ -9,7 +9,7 @@ categories:
   - Data
 image: fitzroy-lions-logo.png
 reference-location: margin
-draft: true
+draft: false
 
 # format:
 #   html:

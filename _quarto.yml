@@ -80,6 +80,7 @@ format:
       light: [www/styles.scss, www/tgLight.scss] # flatly
       dark: [www/styles.scss, www/tgHacker.scss] # www/styles.scss, darkly
     toc: true
+    toc-location: left
     anchor-sections: true
     fig-cap-location: margin
     reference-location: margin
