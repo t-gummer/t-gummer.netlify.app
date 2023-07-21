@@ -8,11 +8,6 @@
 // t-gummer bootswatch light theme
 $theme: "tgLight" !default;
 
-// imports:
-@import 'https://fonts.googleapis.com/css?family=PT+Sans:400,700';
-@import 'https://fonts.googleapis.com/css?family=PT+Serif:400,700';
-@import 'https://fonts.googleapis.com/css?family=PT+Mono';
-
 //
 // Color system
 //
@@ -159,4 +154,12 @@ $text-colour-selection: $primary;
 
 .modal-header {
   background: $primary;
+}
+
+/* Button */
+.btn-primary:hover {
+    color: $secondary;
+}
+.btn-primary {
+    color: $white;
 }

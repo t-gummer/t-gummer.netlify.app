@@ -33,7 +33,7 @@
 
 /* other quarto variables */
 :root {
-  --quarto-font-monospace: "PT Mono", SFMono-Regular, Consolas, monospace;
+  --quarto-font-monospace: "Inconsolata", "PT Mono", SFMono-Regular, Consolas, monospace;
 }
 
 code span.al {

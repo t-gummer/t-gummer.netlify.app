@@ -121,7 +121,7 @@ $btn-close-hover-opacity:    1 !default;
 $footer-bg: $primary !default; 
 $footer-fg: $white !default; 
 
-$font-family-monospace: "PT Mono", SFMono-Regular, Consolas, monospace !default;
+$font-family-monospace: "Inconsolata", "PT Mono", SFMono-Regular, Consolas, monospace !default;
 // $font-family-sans-serif: $font-family-monospace;
 $headings-font-family: $font-family-monospace !default;
 
@@ -201,3 +201,10 @@ $text-colour-selection: $primary;
   background: $primary;
 }
 
+/* Button */
+.btn-primary:hover {
+    color: $secondary;
+}
+.btn-primary {
+    color: $white;
+}

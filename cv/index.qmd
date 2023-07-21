@@ -1,6 +1,6 @@
 ---
 title: Curriculum Vitae
-description: "This is my Curriculum Vitae (CV), outlining my professional and education experiences to date. It is not tailored to any particular role and is rather a more detailed and verbose of all my experiences I believe to be pertinent to my career."
+description: "This is my Curriculum Vitae (CV), outlining my professional and education experiences to date. It is not tailored to any particular role and is rather a more detailed and verbose collation of all my experiences I believe to be pertinent to my career."
 execute:
   echo: false
   warning: false
@@ -18,6 +18,8 @@ cv:
 #| echo: FALSE
 #| warning: FALSE
 # https://support.posit.co/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf
+library(httr)
+
 gh_token <- Sys.getenv("github-cv-pat")
 
 headers = c(
@@ -25,16 +27,16 @@ headers = c(
   "Accept" = 'application/vnd.github.v4.raw'
 )
 
-result <- httr::GET(url = "https://api.github.com/repos/t-gummer/cv/contents/public_cv/CV-TimothyGummer.pdf", httr::add_headers(headers))
+result <- GET(url = "https://api.github.com/repos/t-gummer/cv/contents/public_cv/CV-TimothyGummer.pdf", add_headers(headers))
 
-output <- httr::content(result, 'raw')
+output <- content(result, 'raw')
 
 writeBin(output, rmarkdown::metadata$cv$pdf)
 
 ```
 
 
-## View
+## Download
 
 ```{css echo=FALSE}
 .embed-container {
@@ -55,12 +57,17 @@ writeBin(output, rmarkdown::metadata$cv$pdf)
 }
 ```
 
+
 ```{=html}
 <p class="text-center">
   <a class="btn btn-primary btn-lg cv-download" href="`r rmarkdown::metadata$cv$pdf`" target="_blank">
     <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download current CV
   </a>
 </p>
+```
+
+
+```{=html}
 <div class="embed-container">
   <iframe src="`r rmarkdown::metadata$cv$pdf`" style="border: 0.5px"></iframe>
 </div>
