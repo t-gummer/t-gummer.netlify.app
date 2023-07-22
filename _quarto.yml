@@ -30,6 +30,8 @@ website:
   repo-url: "https://github.com/t-gummer/t-gummer.netlify.app"
   repo-branch: master
   
+  google-analytics: "G-V8P5XXLZK4"
+  
   search:
     location: navbar
     type: textbox
