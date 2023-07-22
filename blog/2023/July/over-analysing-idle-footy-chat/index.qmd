@@ -121,16 +121,18 @@ If you aren't interested in the code but what really interests you is the answer
 
 ## The `fitzRoy` Package
 
-The in analysing AFL data is actually obtaining the data. Our first thought might be to search the web for publicly available AFL datasets and apis or even have scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
+The in for step in analysing AFL data is obtaining the data ("collection"). Our first thought might be to search the web for publicly available AFL datasets and apis or even scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
 
 
-While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and [over-priced croissants](https://www.lunecroissanterie.com/){target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club!
+While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and [over-priced croissants](https://www.lunecroissanterie.com/){target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club.
   
 [![](fitzroy-lions-logo.png "La Marseillaise!")](https://www.youtube.com/watch?v=olKa-0H26k4){target="_blank"}
 
 [^bith-place]: It is also (regrettably) the place of my birth but as a WA boy I don't like to talk about the fact that my parents happened to be in Melbourne when I was born.
 
 We can obtain the data we need very simply using ts name-sake, the `fitzRoy` R package. It abstracts away all the web scraping and api calls for us into a very helpful family of `fetch_*` functions.
+
+So let's begin by loading the package.
 
 ```{r}
 library(fitzRoy)
@@ -160,7 +162,9 @@ if(file.exists("data/results_afltables.RDS")) {
 ```
 
 
-### `fitzRoy` Data Sources
+### `fitzRoy` Data Sources (WORK IN PROGRESS)
+
+
 
 Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)
 
@@ -178,17 +182,11 @@ results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
 
 ## Finicky Details About Other R Packages
 
-### The Pipe Operator
-
-I will be using native pipe (short spiel +link stack overflow post and some article which introduces it)
-
-### Webscraping package
-
-While the majority of our data will be sources using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of `fitzRoy` will require us to perform some bespoke web scraping. This will be performed using the `rvest` package.
-
-
-
 ### Tidyverse versus `data.table`
+
+In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed (tidyverse)[https://www.tidyverse.org/] and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}. As to make more people comfortable.
+
+[^previously-RStudio]: [formally known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
 
 As to not unsettle people who prefer either dplyr (and the tidyverse) or data.table, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab,
 
@@ -218,7 +216,32 @@ results_afltables_dt <- as.data.table(results_afltables)
 
 :::
 
-# Figuring Out the Answers
+#### Adoption of the Native Pipe Operator (`|>`)
+
+The so-called *pipe operator* (`%>%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} has been a core staple of tidyverse since its inception but since the R core team the a so-called *native pipe* was added to `base` R (`|>`) (in version [4.1](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}[^function-shorthand]), this has lead to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. The native pipe was initially missing some of the key features of the magrittr pipe, new features[^pipe-features] have been added to it that (in my mind) mean that it might have even surpassed the magrittr pipe.
+
+
+While I have tried to appease people in both the tidyverse and `data.table` camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (`|>`) in my tidyverse code.
+
+> Note that the common shortcut `Ctrl+Shift+M` can be changed from the `magrittr` pipe (`%>%`), which is still the default, to the native pipe (`|>`).
+
+[^function-shorthand]: another cool thing introduced in this version of R was 
+
+[^future-pipe-post]: I may even cover these in a future blog post
+
+[^pipe-features]: 1. In R version 4.2, `_` was  added as a placeholder character
+  2. In R version 4.3,
+  extractions using the `$` symbol are now allowed
+
+
+
+### Webscraping package
+
+While the majority of our data will be sources using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of `fitzRoy` will require us to perform some bespoke web scraping. This will be performed using the `rvest` package.
+
+
+
+# Figuring Out the Answers  (WORK IN PROGRESS)
 
 Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
 
@@ -269,7 +292,7 @@ Make sure it lines up with the AFL data.
 
 Find the youngest player, player with least games
 
-# Summary of Answers
+# Summary of Answers  (WORK IN PROGRESS)
 
 Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)
 
@@ -277,7 +300,7 @@ Summarise by player, team player and season where relevant (grouped columns or p
 
 I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package):
 
-- [Useless AFL Stats](https://www.facebook.com/uselessaflstats){target="_blank"}: a page which shares always interesting, sometimes abstract and often amusing AFL stats content.
+- [Useless AFL Stats](https://www.facebook.com/uselessaflstats){target="_blank"}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content.
 
 - [squiggle.com.au](https://squiggle.com.au/leaderboard/){target="_blank"}: displays a bunch of people's data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.
 

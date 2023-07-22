@@ -9,6 +9,7 @@ project:
   
   resources:
     - "img/**"
+    - "blog/**"
 
   preview: 
     port: 22222

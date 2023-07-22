@@ -1,0 +1,41 @@
+# Date format
+date-format: "dddd, D MMMM YYYY"
+
+# Enable banner style title blocks
+title-block-banner: "#4C4C4B"
+
+# Add blog-post class to the banner header area
+format: 
+  html:
+    code-tools: true
+    page-layout: full
+    # see if giscus can toggle for different modes: https://github.com/giscus/giscus/issues/336
+    # can I have live counter of reactions on the blog aggregation page 
+    comments: 
+      giscus: 
+        repo: t-gummer/t-gummer.netlify.app
+        category: Announcements
+        category-id: DIC_kwDOJykPlM4CYD4I
+        mapping: pathname
+        theme: dark_dimmed #preferred_color_scheme
+
+# Default for table of contents
+# toc: true
+# toc-title: Contents
+# toc-location: left
+
+freeze: false
+
+# title-block-banner: "2023/July/intro-to-footy-stats/AFL-logo.png"
+
+# Default knitr options
+execute:
+  echo: true
+  message: true
+  warning: true
+
+# Default author
+author:
+  - name: Tim Gummer
+    url: https://t-gummer.netlify.app/
+    # orcid: 0000-0002-3948-3914

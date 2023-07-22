@@ -218,21 +218,20 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 <li>
 <a href="#the-fitzroy-package" id="toc-the-fitzroy-package" class="nav-link" data-scroll-target="#the-fitzroy-package">The <code>fitzRoy</code> Package</a>
   <ul class="collapse">
-<li><a href="#fitzroy-data-sources" id="toc-fitzroy-data-sources" class="nav-link" data-scroll-target="#fitzroy-data-sources"><code>fitzRoy</code> Data Sources</a></li>
+<li><a href="#fitzroy-data-sources-work-in-progress" id="toc-fitzroy-data-sources-work-in-progress" class="nav-link" data-scroll-target="#fitzroy-data-sources-work-in-progress"><code>fitzRoy</code> Data Sources (WORK IN PROGRESS)</a></li>
   </ul>
 </li>
   <li>
 <a href="#finicky-details-about-other-r-packages" id="toc-finicky-details-about-other-r-packages" class="nav-link" data-scroll-target="#finicky-details-about-other-r-packages">Finicky Details About Other R Packages</a>
   <ul class="collapse">
-<li><a href="#the-pipe-operator" id="toc-the-pipe-operator" class="nav-link" data-scroll-target="#the-pipe-operator">The Pipe Operator</a></li>
+<li><a href="#tidyverse-versus-data.table" id="toc-tidyverse-versus-data.table" class="nav-link" data-scroll-target="#tidyverse-versus-data.table">Tidyverse versus <code>data.table</code></a></li>
   <li><a href="#webscraping-package" id="toc-webscraping-package" class="nav-link" data-scroll-target="#webscraping-package">Webscraping package</a></li>
-  <li><a href="#tidyverse-versus-data.table" id="toc-tidyverse-versus-data.table" class="nav-link" data-scroll-target="#tidyverse-versus-data.table">Tidyverse versus <code>data.table</code></a></li>
   </ul>
 </li>
   </ul>
 </li>
   <li>
-<a href="#figuring-out-the-answers" id="toc-figuring-out-the-answers" class="nav-link" data-scroll-target="#figuring-out-the-answers">Figuring Out the Answers</a>
+<a href="#figuring-out-the-answers-work-in-progress" id="toc-figuring-out-the-answers-work-in-progress" class="nav-link" data-scroll-target="#figuring-out-the-answers-work-in-progress">Figuring Out the Answers (WORK IN PROGRESS)</a>
   <ul class="collapse">
 <li><a href="#highest-scoring-quarter" id="toc-highest-scoring-quarter" class="nav-link" data-scroll-target="#highest-scoring-quarter">Highest Scoring Quarter</a></li>
   <li>
@@ -253,7 +252,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 </li>
   </ul>
 </li>
-  <li><a href="#summary-of-answers" id="toc-summary-of-answers" class="nav-link" data-scroll-target="#summary-of-answers">Summary of Answers</a></li>
+  <li><a href="#summary-of-answers-work-in-progress" id="toc-summary-of-answers-work-in-progress" class="nav-link" data-scroll-target="#summary-of-answers-work-in-progress">Summary of Answers (WORK IN PROGRESS)</a></li>
   <li><a href="#notable-afl-stats-figures" id="toc-notable-afl-stats-figures" class="nav-link" data-scroll-target="#notable-afl-stats-figures">Notable AFL Stats Figures</a></li>
   </ul></nav>
 </nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
@@ -284,8 +283,8 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 <div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;<a href="https://afltables.com/afl/stats/players/Z/Zac_Dawson.html#sortableTable2" target="_blank">19</a>, <a href="https://afltables.com/afl/stats/games/2009/111520090530.html" target="_blank">versus Melbourne in round 10 2009</a></p></li><li id="fn7"><p><sup>7</sup>&nbsp;<span id="distance-image">Tom Scully, 18.9 KM</span></p></li></div><p>but some questions will still go unanswered.</p>
 <div class="cell">
 <div class="cell-output-display">
-<span class="tippy html-widget html-fill-item-overflow-hidden html-fill-item" height="464px" id="htmlwidget-bddacec778c8db9b414e" width="100%"></span>
-<script type="application/json" data-for="htmlwidget-bddacec778c8db9b414e">{"x":{"element":"distance-image","opts":{"content":"Also called <img src=\"longest-distance.jpg\" title=\"Scully dominates!\" class=\"img-fluid\"> distribution."}},"evals":[],"jsHooks":[]}</script>
+<span class="tippy html-widget html-fill-item-overflow-hidden html-fill-item" height="464px" id="htmlwidget-ac64d1a183e9ff2b1a21" width="100%"></span>
+<script type="application/json" data-for="htmlwidget-ac64d1a183e9ff2b1a21">{"x":{"element":"distance-image","opts":{"content":"Also called <img src=\"longest-distance.jpg\" title=\"Scully dominates!\" class=\"img-fluid\"> distribution."}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="page-columns page-full"><p>However if you are a <a href="https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW" target="_blank">gadget-type operator</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude tools and approaches to this but in this post, I will be using R ( my preferred programming language).</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;My footy tipping username is <em>Gadget-type Operator</em> and I often use other <a href="https://www.youtube.com/watch?v=E_JCdK4ah78" target="_blank">BT quotes</a> for my username on other (even non-footy-related) accounts</p></li></div></div>
@@ -332,21 +331,22 @@ Disclaimer on the asterisk
 <div class="no-row-height column-margin column-container"><li id="fn9"><p><sup>9</sup>&nbsp;These may get get their own blog post in the future.</p></li></div><p>If you aren’t interested in the code but what really interests you is the answer, you can jump ahead to by <a href="#summary-of-answers">clicking here</a>.</p>
 </section></section><section id="technical-background" class="level1 page-columns page-full"><h1>Technical Background</h1>
 <section id="the-fitzroy-package" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-fitzroy-package">The <code>fitzRoy</code> Package</h2>
-<p>The in analysing AFL data is actually obtaining the data. Our first thought might be to search the web for publicly available AFL datasets and apis or even have scrape the data from websites such as the <a href="https://www.afl.com.au/" target="_blank">official AFL website</a>, <a href="https://www.footywire.com/" target="_blank">Footywire</a> or <a href="https://afltables.com/afl/afl_index.html" target="_blank">AFL Tables</a>. But there is a more straight-forward way.</p>
-<div class="page-columns page-full"><p>While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and <a href="https://www.lunecroissanterie.com/" target="_blank">over-priced croissants</a>, it was once home<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> to the mighty (<a href="https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions" target="_blank">and now merged out of existence</a>) Fitzroy Lions Football Club!</p><div class="no-row-height column-margin column-container"><li id="fn10"><p><sup>10</sup>&nbsp;It is also (regrettably) the place of my birth but as a WA boy I don’t like to talk about the fact that my parents happened to be in Melbourne when I was born.</p></li></div></div>
+<p>The in for step in analysing AFL data is obtaining the data (“collection”). Our first thought might be to search the web for publicly available AFL datasets and apis or even scrape the data from websites such as the <a href="https://www.afl.com.au/" target="_blank">official AFL website</a>, <a href="https://www.footywire.com/" target="_blank">Footywire</a> or <a href="https://afltables.com/afl/afl_index.html" target="_blank">AFL Tables</a>. But there is a more straight-forward way.</p>
+<div class="page-columns page-full"><p>While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and <a href="https://www.lunecroissanterie.com/" target="_blank">over-priced croissants</a>, it was once home<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> to the mighty (<a href="https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions" target="_blank">and now merged out of existence</a>) Fitzroy Lions Football Club.</p><div class="no-row-height column-margin column-container"><li id="fn10"><p><sup>10</sup>&nbsp;It is also (regrettably) the place of my birth but as a WA boy I don’t like to talk about the fact that my parents happened to be in Melbourne when I was born.</p></li></div></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><a href="https://www.youtube.com/watch?v=olKa-0H26k4" target="_blank"><img src="fitzroy-lions-logo.png" title="La Marseillaise!" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 <p>We can obtain the data we need very simply using ts name-sake, the <code>fitzRoy</code> R package. It abstracts away all the web scraping and api calls for us into a very helpful family of <code>fetch_*</code> functions.</p>
+<p>So let’s begin by loading the package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jimmyday12.github.io/fitzRoy/">fitzRoy</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 
 </div>
-<section id="fitzroy-data-sources" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="fitzroy-data-sources">
-<code>fitzRoy</code> Data Sources</h3>
+<section id="fitzroy-data-sources-work-in-progress" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="fitzroy-data-sources-work-in-progress">
+<code>fitzRoy</code> Data Sources (WORK IN PROGRESS)</h3>
 <p>Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)</p>
 <div class="page-columns page-full"><p>Data sources<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn11"><p><sup>11</sup>&nbsp;<a href="https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources" target="_blank">Source</a></p></li></div></div>
 <div class="cell">
@@ -354,13 +354,10 @@ Disclaimer on the asterisk
 <span><span class="va">results_afltables</span> <span class="op">&lt;-</span> <span class="fu">fitzRoy</span><span class="fu">::</span><span class="fu"><a href="https://jimmyday12.github.io/fitzRoy/reference/fetch_results.html">fetch_results_afltables</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">1897</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section><section id="finicky-details-about-other-r-packages" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="finicky-details-about-other-r-packages">Finicky Details About Other R Packages</h2>
-<section id="the-pipe-operator" class="level3"><h3 class="anchored" data-anchor-id="the-pipe-operator">The Pipe Operator</h3>
-<p>I will be using native pipe (short spiel +link stack overflow post and some article which introduces it)</p>
-</section><section id="webscraping-package" class="level3"><h3 class="anchored" data-anchor-id="webscraping-package">Webscraping package</h3>
-<p>While the majority of our data will be sources using the <code>fitzRoy</code> package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of <code>fitzRoy</code> will require us to perform some bespoke web scraping. This will be performed using the <code>rvest</code> package.</p>
-</section><section id="tidyverse-versus-data.table" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="tidyverse-versus-data.table">Tidyverse versus <code>data.table</code>
+<section id="tidyverse-versus-data.table" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="tidyverse-versus-data.table">Tidyverse versus <code>data.table</code>
 </h3>
-<div class="page-columns page-full"><p>As to not unsettle people who prefer either dplyr (and the tidyverse) or data.table, I have written code in both packages as to not alienate anyone<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab,</p><div class="no-row-height column-margin column-container"><li id="fn12"><p><sup>12</sup>&nbsp;note that I have not written a <code>base</code> R dataframes version because I can see arguments for using both tidyverse and <code>data.table</code> but no reason at all to use base R dataframes</p></li></div></div>
+<div class="page-columns page-full"><p>In the R community, there is an <a href="https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly" target="_blank">ongoing power struggle</a> between using the Posit<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>-backed (tidyverse)[https://www.tidyverse.org/] and the ever-potent <a href="https://rdatatable.gitlab.io/data.table/" target="_blank"><code>data.table</code></a>. As to make more people comfortable.</p><div class="no-row-height column-margin column-container"><li id="fn12"><p><sup>12</sup>&nbsp;<a href="https://posit.co/blog/rstudio-is-becoming-posit/" target="_blank">formally known as RStudio</a> (<a href="https://www.youtube.com/watch?v=TtMzTGfs-fc" target="_blank">RIP</a>)</p></li></div></div>
+<div class="page-columns page-full"><p>As to not unsettle people who prefer either dplyr (and the tidyverse) or data.table, I have written code in both packages as to not alienate anyone<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab,</p><div class="no-row-height column-margin column-container"><li id="fn13"><p><sup>13</sup>&nbsp;note that I have not written a <code>base</code> R dataframes version because I can see arguments for using both tidyverse and <code>data.table</code> but no reason at all to use base R dataframes</p></li></div></div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Tidyverse</a></li>
@@ -383,7 +380,21 @@ Disclaimer on the asterisk
 </div>
 </div>
 </div>
-</section></section></section><section id="figuring-out-the-answers" class="level1"><h1>Figuring Out the Answers</h1>
+<section id="adoption-of-the-native-pipe-operator" class="level4 page-columns page-full"><h4 class="anchored" data-anchor-id="adoption-of-the-native-pipe-operator">Adoption of the Native Pipe Operator (<code>|&gt;</code>)</h4>
+<div class="page-columns page-full"><p>The so-called <em>pipe operator</em> (<code>%&gt;%</code>) of the <a href="https://magrittr.tidyverse.org/" target="_blank"><code>magrittr</code></a> has been a core staple of tidyverse since its inception but since the R core team the a so-called <em>native pipe</em> was added to <code>base</code> R (<code>|&gt;</code>) (in version <a href="https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/" target="_blank">4.1</a><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>), this has lead to a split in adoption. There are some nuances in its usage<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> but it overall behaves in a similar way to the <code>magrittr</code> pipe and has <a href="https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe" target="_blank">less overhead (and is therefore faster)</a>. The native pipe was initially missing some of the key features of the magrittr pipe, new features<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> have been added to it that (in my mind) mean that it might have even surpassed the magrittr pipe.</p><div class="no-row-height column-margin column-container"><li id="fn14"><p><sup>14</sup>&nbsp;another cool thing introduced in this version of R was</p></li><li id="fn15"><p><sup>15</sup>&nbsp;I may even cover these in a future blog post</p></li><li id="fn16">
+<ol type="1">
+<li>In R version 4.2, <code>_</code> was added as a placeholder character</li>
+<li>In R version 4.3, extractions using the <code>$</code> symbol are now allowed</li>
+</ol>
+
+</li></div></div>
+<p>While I have tried to appease people in both the tidyverse and <code>data.table</code> camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (<code>|&gt;</code>) in my tidyverse code.</p>
+<blockquote class="blockquote">
+<p>Note that the common shortcut <code>Ctrl+Shift+M</code> can be changed from the <code>magrittr</code> pipe (<code>%&gt;%</code>), which is still the default, to the native pipe (<code>|&gt;</code>).</p>
+</blockquote>
+</section></section><section id="webscraping-package" class="level3"><h3 class="anchored" data-anchor-id="webscraping-package">Webscraping package</h3>
+<p>While the majority of our data will be sources using the <code>fitzRoy</code> package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of <code>fitzRoy</code> will require us to perform some bespoke web scraping. This will be performed using the <code>rvest</code> package.</p>
+</section></section></section><section id="figuring-out-the-answers-work-in-progress" class="level1"><h1>Figuring Out the Answers (WORK IN PROGRESS)</h1>
 <p>Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g.&nbsp;for individual goal kickers if it seems notable)</p>
 <section id="highest-scoring-quarter" class="level2"><h2 class="anchored" data-anchor-id="highest-scoring-quarter">Highest Scoring Quarter</h2>
 </section><section id="most-goal-kickers" class="level2"><h2 class="anchored" data-anchor-id="most-goal-kickers">Most Goal-kickers</h2>
@@ -409,12 +420,12 @@ Disclaimer on the asterisk
 </ul>
 <p>Make sure it lines up with the AFL data.</p>
 <p>Find the youngest player, player with least games</p>
-</section></section></section><section id="summary-of-answers" class="level1"><h1>Summary of Answers</h1>
+</section></section></section><section id="summary-of-answers-work-in-progress" class="level1"><h1>Summary of Answers (WORK IN PROGRESS)</h1>
 <p>Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)</p>
 </section><section id="notable-afl-stats-figures" class="level1"><h1>Notable AFL Stats Figures</h1>
 <p>I will finish by listing some people who are doing interesting work with AFL stats (often with heavy use of R and the <code>fitzRoy</code> package):</p>
 <ul>
-<li><p><a href="https://www.facebook.com/uselessaflstats" target="_blank">Useless AFL Stats</a>: a page which shares always interesting, sometimes abstract and often amusing AFL stats content.</p></li>
+<li><p><a href="https://www.facebook.com/uselessaflstats" target="_blank">Useless AFL Stats</a>: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content.</p></li>
 <li><p><a href="https://squiggle.com.au/leaderboard/" target="_blank">squiggle.com.au</a>: displays a bunch of people’s data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.</p></li>
 <li><p><a href="https://twitter.com/jaiden_popowski" target="_blank">Jaiden Popowski</a>: is prominent in the <a href="https://fantasy.afl.com.au/" target="_blank">AFL Fantasy</a> community for the interesting data-driven analysis he produces.</p></li>
 <li><p><a href="https://dfsaustralia.com/afl-home/" target="_blank">DFS Australia</a>: has some great data-driven tools that provide insight on advanced stats commonly used in <a href="https://fantasy.afl.com.au/" target="_blank">AFL Fantasy</a>.</p></li>
@@ -821,6 +832,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script><script src="https://giscus.app/client.js" data-repo="t-gummer/t-gummer.netlify.app" data-repo-id="R_kgDOJykPlA" data-category="Announcements" data-category-id="DIC_kwDOJykPlM4CYD4I" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="dark_dimmed" data-lang="en" crossorigin="anonymous" async="">
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "(Over-)Analysing Idle Footy Chat"</span></span>
@@ -945,10 +957,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## The `fitzRoy` Package</span></span>
 <span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>The in analysing AFL data is actually obtaining the data. Our first thought might be to search the web for publicly available AFL datasets and apis or even have scrape the data from websites such as the <span class="co">[</span><span class="ot">official AFL website</span><span class="co">](https://www.afl.com.au/)</span>{target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.</span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>The in for step in analysing AFL data is obtaining the data ("collection"). Our first thought might be to search the web for publicly available AFL datasets and apis or even scrape the data from websites such as the <span class="co">[</span><span class="ot">official AFL website</span><span class="co">](https://www.afl.com.au/)</span>{target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.</span>
 <span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and <span class="co">[</span><span class="ot">over-priced croissants</span><span class="co">](https://www.lunecroissanterie.com/)</span>{target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club!</span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and <span class="co">[</span><span class="ot">over-priced croissants</span><span class="co">](https://www.lunecroissanterie.com/)</span>{target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club.</span>
 <span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![](fitzroy-lions-logo.png "La Marseillaise!")</span><span class="co">](https://www.youtube.com/watch?v=olKa-0H26k4)</span>{target="_blank"}</span>
 <span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
@@ -956,158 +968,181 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>We can obtain the data we need very simply using ts name-sake, the <span class="in">`fitzRoy`</span> R package. It abstracts away all the web scraping and api calls for us into a very helpful family of <span class="in">`fetch_*`</span> functions.</span>
 <span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fitzRoy)</span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"data/player_stats_afltables.RDS"</span>)) {</span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>  player_stats_afltables <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/player_stats_afltables.RDS"</span>)</span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>  player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
-<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(player_stats_afltables, <span class="st">"data/player_stats_afltables.RDS"</span>)</span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"data/results_afltables.RDS"</span>)) {</span>
-<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>  results_afltables <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/results_afltables.RDS"</span>)</span>
-<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>  results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(results_afltables, <span class="st">"data/results_afltables.RDS"</span>)</span>
-<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>So let's begin by loading the package.</span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fitzRoy)</span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"data/player_stats_afltables.RDS"</span>)) {</span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>  player_stats_afltables <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/player_stats_afltables.RDS"</span>)</span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>  player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(player_stats_afltables, <span class="st">"data/player_stats_afltables.RDS"</span>)</span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"data/results_afltables.RDS"</span>)) {</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>  results_afltables <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/results_afltables.RDS"</span>)</span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>  results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(results_afltables, <span class="st">"data/results_afltables.RDS"</span>)</span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### `fitzRoy` Data Sources</span></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)</span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a><span class="fu">### `fitzRoy` Data Sources (WORK IN PROGRESS)</span></span>
 <span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a>Data sources<span class="ot">[^FitzRoy]</span>:</span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a><span class="ot">[^FitzRoy]: </span><span class="co">[</span><span class="ot">Source</span><span class="co">](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources)</span>{target="_blank"}</span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)</span>
 <span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: FALSE</span></span>
-<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
-<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
-<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## Finicky Details About Other R Packages</span></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>Data sources<span class="ot">[^FitzRoy]</span>:</span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="ot">[^FitzRoy]: </span><span class="co">[</span><span class="ot">Source</span><span class="co">](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources)</span>{target="_blank"}</span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: FALSE</span></span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Pipe Operator</span></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a>I will be using native pipe (short spiel +link stack overflow post and some article which introduces it)</span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Finicky Details About Other R Packages</span></span>
 <span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### Webscraping package</span></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tidyverse versus `data.table`</span></span>
 <span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>While the majority of our data will be sources using the <span class="in">`fitzRoy`</span> package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of <span class="in">`fitzRoy`</span> will require us to perform some bespoke web scraping. This will be performed using the <span class="in">`rvest`</span> package.</span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>In the R community, there is an <span class="co">[</span><span class="ot">ongoing power struggle</span><span class="co">](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly)</span>{target="_blank"} between using the Posit[^previously-RStudio]-backed (tidyverse)[https://www.tidyverse.org/] and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}. As to make more people comfortable.</span>
 <span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="ot">[^previously-RStudio]: </span><span class="co">[</span><span class="ot">formally known as RStudio</span><span class="co">](https://posit.co/blog/rstudio-is-becoming-posit/)</span>{target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})</span>
 <span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tidyverse versus `data.table`</span></span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>As to not unsettle people who prefer either dplyr (and the tidyverse) or data.table, I have written code in both packages as to not alienate anyone<span class="ot">[^base-r-dig]</span>. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab,</span>
 <span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a>As to not unsettle people who prefer either dplyr (and the tidyverse) or data.table, I have written code in both packages as to not alienate anyone<span class="ot">[^base-r-dig]</span>. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab,</span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="ot">[^base-r-dig]: </span>note that I have not written a <span class="in">`base`</span> R dataframes version because I can see arguments for using both tidyverse and <span class="in">`data.table`</span> but no reason at all to use base R dataframes</span>
 <span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="ot">[^base-r-dig]: </span>note that I have not written a <span class="in">`base`</span> R dataframes version because I can see arguments for using both tidyverse and <span class="in">`data.table`</span> but no reason at all to use base R dataframes</span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
 <span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Tidyverse</span></span>
 <span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Tidyverse</span></span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(player_stats_afltables)</span>
-<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>results_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results_afltables)</span>
-<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(player_stats_afltables)</span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>results_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results_afltables)</span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="fu">#### `data.table`</span></span>
 <span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a><span class="fu">#### `data.table`</span></span>
-<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
-<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(player_stats_afltables)</span>
-<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a>results_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(results_afltables)</span>
-<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(player_stats_afltables)</span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a>results_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(results_afltables)</span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Adoption of the Native Pipe Operator (`|&gt;`)</span></span>
 <span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="fu"># Figuring Out the Answers</span></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a>The so-called *pipe operator* (`%&gt;%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} has been a core staple of tidyverse since its inception but since the R core team the a so-called *native pipe* was added to <span class="in">`base`</span> R (<span class="in">`|&gt;`</span>) (in version <span class="co">[</span><span class="ot">4.1</span><span class="co">](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/)</span>{target="_blank"}[^function-shorthand]), this has lead to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. The native pipe was initially missing some of the key features of the magrittr pipe, new features<span class="ot">[^pipe-features]</span> have been added to it that (in my mind) mean that it might have even surpassed the magrittr pipe.</span>
 <span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a>Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)</span>
-<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Highest Scoring Quarter</span></span>
-<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Goal-kickers</span></span>
-<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a><span class="fu">### Individual</span></span>
-<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple</span></span>
-<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="fu">### Five or More (Bags)</span></span>
-<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Clangers</span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a>While I have tried to appease people in both the tidyverse and <span class="in">`data.table`</span> camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (<span class="in">`|&gt;`</span>) in my tidyverse code.</span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Note that the common shortcut </span><span class="in">`Ctrl+Shift+M`</span><span class="at"> can be changed from the </span><span class="in">`magrittr`</span><span class="at"> pipe (</span><span class="in">`%&gt;%`</span><span class="at">), which is still the default, to the native pipe (</span><span class="in">`|&gt;`</span><span class="at">).</span></span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a><span class="ot">[^function-shorthand]: </span>another cool thing introduced in this version of R was </span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a><span class="ot">[^future-pipe-post]: </span>I may even cover these in a future blog post</span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="ot">[^pipe-features]: </span>1. In R version 4.2, <span class="in">`_`</span> was  added as a placeholder character</span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="ss">  2. </span>In R version 4.3,</span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>  extractions using the <span class="in">`$`</span> symbol are now allowed</span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>Define clanger</span>
-<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worst Disposal Efficiency</span></span>
-<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>Define disposal efficiency</span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### Webscraping package</span></span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>While the majority of our data will be sources using the <span class="in">`fitzRoy`</span> package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of <span class="in">`fitzRoy`</span> will require us to perform some bespoke web scraping. This will be performed using the <span class="in">`rvest`</span> package.</span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## The norm smith</span></span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a><span class="fu"># Figuring Out the Answers  (WORK IN PROGRESS)</span></span>
 <span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>Make the below a collapsible callout (some of it doesn't need to be)</span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)</span>
 <span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>This illustrates the fact that sometimes you need to stray outside of fitzRoy but it give most of the data you could ever want.</span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a><span class="fu">## Highest Scoring Quarter</span></span>
 <span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a><span class="fu">### Background</span></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Goal-kickers</span></span>
 <span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>The norm smith medal is award to the player adjudged best a field (best on ground) in the Grand Final.</span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a><span class="fu">### Individual</span></span>
 <span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a>The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.</span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple</span></span>
 <span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).</span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### Five or More (Bags)</span></span>
 <span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>Unofficial source of older data</span>
-<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.</span>
-<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Clangers</span></span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>Define clanger</span>
 <span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a>For official norm smith which ever of the following are easier:</span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worst Disposal Efficiency</span></span>
 <span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://www.afl.com.au/stats/leaders-awards/norm-smith-medal</span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a>Define disposal efficiency</span>
 <span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients</span>
-<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a>Make sure it lines up with the AFL data.</span>
-<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a>Find the youngest player, player with least games</span>
-<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary of Answers</span></span>
-<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a>Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)</span>
-<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a><span class="fu"># Notable AFL Stats Figures</span></span>
-<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a>I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the <span class="in">`fitzRoy`</span> package):</span>
-<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Useless AFL Stats</span><span class="co">](https://www.facebook.com/uselessaflstats)</span>{target="_blank"}: a page which shares always interesting, sometimes abstract and often amusing AFL stats content.</span>
-<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">squiggle.com.au</span><span class="co">](https://squiggle.com.au/leaderboard/)</span>{target="_blank"}: displays a bunch of people's data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.</span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## The norm smith</span></span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a>Make the below a collapsible callout (some of it doesn't need to be)</span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>This illustrates the fact that sometimes you need to stray outside of fitzRoy but it give most of the data you could ever want.</span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a><span class="fu">### Background</span></span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a>The norm smith medal is award to the player adjudged best a field (best on ground) in the Grand Final.</span>
+<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a>The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.</span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a>While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).</span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a>Unofficial source of older data</span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a>https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.</span>
 <span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Jaiden Popowski</span><span class="co">](https://twitter.com/jaiden_popowski)</span>{target="_blank"}: is prominent in the [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"} community for the interesting data-driven analysis he produces.</span>
-<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">DFS Australia</span><span class="co">](https://dfsaustralia.com/afl-home/)</span>{target="_blank"}: has some great data-driven tools that provide insight on advanced stats commonly used in [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"}.</span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a>For official norm smith which ever of the following are easier:</span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://www.afl.com.au/stats/leaders-awards/norm-smith-medal</span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients</span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a>Make sure it lines up with the AFL data.</span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a>Find the youngest player, player with least games</span>
+<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary of Answers  (WORK IN PROGRESS)</span></span>
+<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a>Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)</span>
+<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a><span class="fu"># Notable AFL Stats Figures</span></span>
+<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a>I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the <span class="in">`fitzRoy`</span> package):</span>
+<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Useless AFL Stats</span><span class="co">](https://www.facebook.com/uselessaflstats)</span>{target="_blank"}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content.</span>
+<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">squiggle.com.au</span><span class="co">](https://squiggle.com.au/leaderboard/)</span>{target="_blank"}: displays a bunch of people's data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.</span>
+<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Jaiden Popowski</span><span class="co">](https://twitter.com/jaiden_popowski)</span>{target="_blank"}: is prominent in the [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"} community for the interesting data-driven analysis he produces.</span>
+<span id="cb5-320"><a href="#cb5-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-321"><a href="#cb5-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">DFS Australia</span><span class="co">](https://dfsaustralia.com/afl-home/)</span>{target="_blank"}: has some great data-driven tools that provide insight on advanced stats commonly used in [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"}.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
