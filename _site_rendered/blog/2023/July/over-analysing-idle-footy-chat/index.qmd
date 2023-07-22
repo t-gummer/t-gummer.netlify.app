@@ -1,7 +1,7 @@
 ---
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
-  This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this as a medium through which I can introduce analysis of AFL data in R.
+  This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
 date: 2023-07-22
 categories: 
   - Sport
@@ -25,21 +25,21 @@ draft: false
 
 Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics have been recorded and opined on by teams, the press and your average punter alike. 
 
-My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]), is no different. Indeed some have even described the AFL (Australia's nation competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
+My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]) is no different. Indeed some have even described the AFL (Australia's nation competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
 
-[^footy]: As a Western Australian this is how I define it (along with the majority of Australia) but I am aware that this term is reserved for rugby league in New South Whales and Queensland
+[^footy]: As a Western Australian this is how I define it (along with the majority of Australia) but I am aware that this term is reserved for rugby league in New South Wales and Queensland
 [^data-rich-sport-source]: [Source: Vice](https://www.youtube.com/watch?v=i_mePwh_02M){target="_blank"}
 
 
 It is my observation that it is common for those watching or attending live footy to ask questions such as:
 
-> What is record for the most *[statistical category]*?
+> What is the record for the most *[statistical category]*?
 
 or 
 
 > When was the last time *[obscure event]* happened?
 
-I beleive a contributer to this is that we are emulating what we hear on the broadcast commentary. The difference is that they often have a team of  [computer-type boffins](https://www.youtube.com/clip/UgkxvNk03iqKigc9NKMjWOs2NvuRFRY8xRHn){target="_blank"}[^video-link-disclaimer] behind the scenes feeding them the answer. 
+I believe a contributor to this is that we are emulating what we hear on the broadcast commentary. The difference is that they often have a team of  [computer-type boffins](https://www.youtube.com/clip/UgkxvNk03iqKigc9NKMjWOs2NvuRFRY8xRHn){target="_blank"}[^video-link-disclaimer] behind the scenes feeding them the answer. 
 
 [^video-link-disclaimer]: The video linked here is unfortunately clipped from an American guy who kind of missed the point a bit, but it is also the highest quality clip I could find of this brilliant piece of commentary from BT ([Brian Taylor](https://www.youtube.com/watch?v=E_JCdK4ah78){target="_blank"} for the uninitiated).
 
@@ -47,7 +47,7 @@ I beleive a contributer to this is that we are emulating what we hear on the bro
 
 Well, a quick Google search will make short work of questions of a more trivial nature such as "which player has kicked the most goals"[^tony-lockett] or "which team has won the most premierships"[^most-premierships]. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as
 
-* Trawling through more obscure websites such as [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"} to answer things liek "what is the most disposal Zac Dawson had in a game"[^zac-dawson]; or
+* Trawling through more obscure websites such as [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"} to answer things like "what is the most disposal Zac Dawson had in a game"[^zac-dawson]; or
 
 * Digging into the deep recesses of the AFL Live App to answer questions like "what is the record for the longest distance run in a game"[^telstra-tracker]
 
@@ -68,7 +68,7 @@ tippy::tippy_this(elementId = "distance-image", tooltip = 'Also called <img src=
 
 [^most-premierships]: [Carlton and Essendon tied on 16](https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Premierships){target="_blank"}
 
-However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW){target="_blank"}[^tipping-name] like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude tools and approaches to this but in this post, I will be using R ( my preferred programming language).
+However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW){target="_blank"}[^tipping-name] like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude of tools and approaches to this but in this post, I will be using R (my preferred programming language).
 
 [^tipping-name]: My footy tipping username is *Gadget-type Operator* and I often use other [BT quotes](https://www.youtube.com/watch?v=E_JCdK4ah78){target="_blank"} for my username on other (even non-footy-related) accounts
 
@@ -80,39 +80,44 @@ I recently had the misfortune (as a West Coast fan) of attending a game live bet
 
 In one-sided games like this, it seems to me that footy stats questions become more common than usual for two key reasons:
 
-1. It adds something interesting to a game that otherwise lacks excitment
+1. It adds something interesting to a game that otherwise lacks excitement
 
-2. These games are often filled large statistical feats that might be close to records
+2. These games are often filled with large statistical anomalies that might set new records
 
-If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and center on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the ether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) question listed below:
+If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions listed below:
 
 > 
 - What is the record for the highest scoring quarter?
 - What is the record for the most individual goal kickers in a single game?
 - What is the record for the most multiple goal kickers in a single game?
-- What is the record for the most 5+ goal kickers in a single game (i.e. the most bags)?
+- What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?
 - Where does the aforementioned game rank among the most one-sided games?
 - What is the record for the most clangers in a game?
 - What is the record for the worst disposal efficiency in a game by a player?
-- Has anyone won a Norm smith in their first season in the AFL?
+- Has anyone won a Norm Smith Medal in their first season in the AFL?
 - What is the record for the most unanswered goals in a game?*
 - What is the school with the most AFL players on their list?*
 - What city/town has the most AFL players relative to population?*
 - Which player has the best goals to behinds ratio?*
 - Have there ever been any undefeated seasons?*
-- What is the worst win-lost record to make finals?*
+- What is the worst win-loss record to make finals?*
 
 ::: {.callout-note}
 
 ## Disclaimer on the asterisk
 
-I have put an asterisk questions cannot easily be answered by the methods I discuss below and others are too lengthy for this blog post[^future-posts]. The remaining questions will be tackled using R below.
+I have put an asterisk next to questions that either: 
+
+* cannot easily be answered by the methods I discuss below; or
+* are too lengthy for this blog post[^future-posts]. 
+
+The remaining questions will be tackled using R below.
 
 :::
 
-[^future-posts]: These may get get their own blog post in the future.
+[^future-posts]: These may get their own blog post in the future.
 
-If you aren't interested in the code but what really interests you is the answer, you can jump ahead to by [clicking here](#summary-of-answers).
+If you are only really interested in the answers (and not the R coding), you can jump ahead by [clicking here](#summary-of-answers).
 
 
 
@@ -121,7 +126,7 @@ If you aren't interested in the code but what really interests you is the answer
 
 ## The `fitzRoy` Package
 
-The in for step in analysing AFL data is obtaining the data ("collection"). Our first thought might be to search the web for publicly available AFL datasets and apis or even scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
+The first step in analysing AFL data is obtaining the data ("collection"). Our first thought might be to search the web for publicly available AFL datasets and APIs or even scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
 
 
 While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and [over-priced croissants](https://www.lunecroissanterie.com/){target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club.
@@ -130,7 +135,7 @@ While most people now know Fitzroy as a trendy inner city suburb of Melbourne, f
 
 [^bith-place]: It is also (regrettably) the place of my birth but as a WA boy I don't like to talk about the fact that my parents happened to be in Melbourne when I was born.
 
-We can obtain the data we need very simply using ts name-sake, the `fitzRoy` R package. It abstracts away all the web scraping and api calls for us into a very helpful family of `fetch_*` functions.
+We can obtain the data we need very simply using its name-sake, the `fitzRoy` R package. It abstracts away all the web scraping and API calls for us into a very helpful family of `fetch_*` functions.
 
 So let's begin by loading the package.
 
@@ -184,11 +189,11 @@ results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
 
 ### Tidyverse versus `data.table`
 
-In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed (tidyverse)[https://www.tidyverse.org/] and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}. As to make more people comfortable.
+In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed [tidyverse](https://www.tidyverse.org/){target="_blank"} and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}.
 
 [^previously-RStudio]: [formally known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
 
-As to not unsettle people who prefer either dplyr (and the tidyverse) or data.table, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab,
+As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab.
 
 [^base-r-dig]: note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but no reason at all to use base R dataframes
 
@@ -218,26 +223,28 @@ results_afltables_dt <- as.data.table(results_afltables)
 
 #### Adoption of the Native Pipe Operator (`|>`)
 
-The so-called *pipe operator* (`%>%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} has been a core staple of tidyverse since its inception but since the R core team the a so-called *native pipe* was added to `base` R (`|>`) (in version [4.1](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}[^function-shorthand]), this has lead to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. The native pipe was initially missing some of the key features of the magrittr pipe, new features[^pipe-features] have been added to it that (in my mind) mean that it might have even surpassed the magrittr pipe.
+The so-called *pipe operator* (`%>%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} has been a core staple of tidyverse since its inception but since the R core team introduced the so-called *native pipe* (`|>`) to `base` R (in version [4.1](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}[^function-shorthand]), this has led to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. The native pipe was initially missing some of the key features of the `magrittr` pipe, new features[^pipe-features] have been added to it that (in my mind) mean that it might have even surpassed the `magrittr` pipe.
 
 
 While I have tried to appease people in both the tidyverse and `data.table` camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (`|>`) in my tidyverse code.
 
-> Note that the common shortcut `Ctrl+Shift+M` can be changed from the `magrittr` pipe (`%>%`), which is still the default, to the native pipe (`|>`).
+> Note that the common RStudio shortcut, `Ctrl+Shift+M` can be changed from the `magrittr` pipe (`%>%`), which is still the default, to the native pipe (`|>`).
 
-[^function-shorthand]: another cool thing introduced in this version of R was 
+[^function-shorthand]: another cool thing introduced in this version of R was so-called function shorthand (`\()`), see `help("function")` for more details
 
 [^future-pipe-post]: I may even cover these in a future blog post
 
-[^pipe-features]: 1. In R version 4.2, `_` was  added as a placeholder character
-  2. In R version 4.3,
-  extractions using the `$` symbol are now allowed
+[^pipe-features]: In R version 4.2, the `_` symbol was added as a placeholder character and in R version 4.3, extractions using the `$` symbol are now allowed
 
 
 
 ### Webscraping package
 
-While the majority of our data will be sources using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of `fitzRoy` will require us to perform some bespoke web scraping. This will be performed using the `rvest` package.
+While the majority of our data will be sourced using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of `fitzRoy` will require us to perform some bespoke web scraping. This will be performed using the `rvest` package.
+
+```{r}
+library(rvest)
+```
 
 
 
