@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.3.361" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="Tim Gummer" />
+<meta name="description" content="Associate Actuary (AIAA) | R Enthusiast" />
+
+<title>Tim Gummer – (Over-)Analysing Idle Footy Chat</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V8P5XXLZK4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
+</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background: #4C4C4B;
+      }
+</style>
+<script src="../../../../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="../../../../site_libs/tippyjs-3.2.0/themes/google.css" rel="stylesheet" />
+<link href="../../../../site_libs/tippyjs-3.2.0/themes/light-border.css" rel="stylesheet" />
+<link href="../../../../site_libs/tippyjs-3.2.0/themes/light.css" rel="stylesheet" />
+<link href="../../../../site_libs/tippyjs-3.2.0/themes/translucent.css" rel="stylesheet" />
+<script src="../../../../site_libs/tippyjs-3.2.0/tippy.all.min.js"></script>
+<script src="../../../../site_libs/tippy-binding-0.1.0/tippy.js"></script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="/index.html">
+    <span class="navbar-title">Tim Gummer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/blog/index.html" rel="" target=""><i 
+  class="bi bi-newspaper" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="/goals/index.html" rel="" target=""><i 
+  class="bi bi-fingerprint" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text">Goals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="/cv/index.html" rel="" target=""><i 
+  class="bi bi-file-earmark-person" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/t-gummer" rel="" target=""><i 
+  class="bi bi-github" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/timothy-gummer/" rel="" target=""><i 
+  class="bi bi-linkedin" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:mail.timothy.gummer@gmail.com" rel="" target=""><i 
+  class="bi bi-envelope" 
+  role="img" 
+  aria-label="email" 
+>
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div id="quarto-toc-target"></div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" ></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default toc-left">
+  <div class="quarto-title-banner">
+    <div class="quarto-title column-body">
+      <h1 class="title">(Over-)Analysing Idle Footy Chat</h1>
+                  <div>
+        <div class="description">
+          <p>This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Sport</div>
+                <div class="quarto-category">AFL</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Data</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://t-gummer.netlify.app/">Tim Gummer</a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Monday, 24 July 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header>
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prelude" id="toc-prelude">Prelude</a>
+  <ul>
+  <li><a href="#a-concrete-example" id="toc-a-concrete-example">A concrete example</a></li>
+  </ul></li>
+  <li><a href="#technical-background" id="toc-technical-background">Technical Background</a>
+  <ul>
+  <li><a href="#the-fitzroy-package" id="toc-the-fitzroy-package">The <code>fitzRoy</code> Package</a>
+  <ul>
+  <li><a href="#fitzroy-data-sources-work-in-progress" id="toc-fitzroy-data-sources-work-in-progress"><code>fitzRoy</code> Data Sources (WORK IN PROGRESS)</a></li>
+  </ul></li>
+  <li><a href="#finicky-details-about-other-r-packages" id="toc-finicky-details-about-other-r-packages">Finicky Details About Other R Packages</a>
+  <ul>
+  <li><a href="#tidyverse-versus-data.table" id="toc-tidyverse-versus-data.table">Tidyverse versus <code>data.table</code></a></li>
+  <li><a href="#webscraping-package" id="toc-webscraping-package">Webscraping package</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#figuring-out-the-answers-work-in-progress" id="toc-figuring-out-the-answers-work-in-progress">Figuring Out the Answers (WORK IN PROGRESS)</a>
+  <ul>
+  <li><a href="#highest-scoring-quarter" id="toc-highest-scoring-quarter">Highest Scoring Quarter</a></li>
+  <li><a href="#most-goal-kickers" id="toc-most-goal-kickers">Most Goal-kickers</a>
+  <ul>
+  <li><a href="#individual" id="toc-individual">Individual</a></li>
+  <li><a href="#multiple" id="toc-multiple">Multiple</a></li>
+  <li><a href="#five-or-more-bags" id="toc-five-or-more-bags">Five or More (Bags)</a></li>
+  </ul></li>
+  <li><a href="#most-clangers" id="toc-most-clangers">Most Clangers</a></li>
+  <li><a href="#worst-disposal-efficiency" id="toc-worst-disposal-efficiency">Worst Disposal Efficiency</a></li>
+  <li><a href="#the-norm-smith" id="toc-the-norm-smith">The norm smith</a>
+  <ul>
+  <li><a href="#background" id="toc-background">Background</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#summary-of-answers-work-in-progress" id="toc-summary-of-answers-work-in-progress">Summary of Answers (WORK IN PROGRESS)</a></li>
+  <li><a href="#notable-afl-stats-figures" id="toc-notable-afl-stats-figures">Notable AFL Stats Figures</a></li>
+  </ul>
+</nav>
+<!-- TODO: if need to change this in any way add a collapseable ammendments section in the form of a collapsable caution callout block with a bullet list with the date, a colon then a description of the change (e.g. fixed typos) -->
+<section id="prelude" class="level1">
+<h1>Prelude</h1>
+<p>Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics have been recorded and opined on by teams, the press and your average punter alike.</p>
+<p>My beloved sport of <em>Australian Rules Football</em> (which I will henceforth refer to as “footy”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>) is no different. Indeed some have even described the AFL (Australia’s nation competition) as “the most data rich sport on Earth”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, although I would suggest that certain American sports such as baseball (i.e. <a href="https://www.youtube.com/watch?v=PlKDQqKh03Y" target="_blank">Moneyball</a>) have made far better use of their data.</p>
+<p>It is my observation that it is common for those watching or attending live footy to ask questions such as:</p>
+<blockquote>
+<p>What is the record for the most <em>[statistical category]</em>?</p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>When was the last time <em>[obscure event]</em> happened?</p>
+</blockquote>
+<p>I believe a contributor to this is that we are emulating what we hear on the broadcast commentary. The difference is that they often have a team of <a href="https://www.youtube.com/clip/UgkxvNk03iqKigc9NKMjWOs2NvuRFRY8xRHn" target="_blank">computer-type boffins</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> behind the scenes feeding them the answer.</p>
+<blockquote>
+<p>But what are us plebeians meant to do, bereft of such luxuries you might ask?</p>
+</blockquote>
+<p>Well, a quick Google search will make short work of questions of a more trivial nature such as “which player has kicked the most goals”<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> or “which team has won the most premierships”<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as</p>
+<ul>
+<li><p>Trawling through more obscure websites such as <a href="https://afltables.com/afl/afl_index.html" target="_blank">AFL Tables</a> to answer things like “what is the most disposal Zac Dawson had in a game”<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>; or</p></li>
+<li><p>Digging into the deep recesses of the AFL Live App to answer questions like “what is the record for the longest distance run in a game”<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p></li>
+</ul>
+<p>but some questions will still go unanswered.</p>
+<div class="cell">
+<div class="cell-output-display margin-caption">
+<span class="tippy html-widget html-fill-item-overflow-hidden html-fill-item" height="464px" id="htmlwidget-f2570bd04e7161729260" width="100%"></span>
+<script type="application/json" data-for="htmlwidget-f2570bd04e7161729260">{"x":{"element":"distance-image","opts":{"content":"Also called <img src=\"longest-distance.jpg\" title=\"Scully dominates!\" class=\"img-fluid\"> distribution."}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>However if you are a <a href="https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW" target="_blank">gadget-type operator</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude of tools and approaches to this but in this post, I will be using R (my preferred programming language).</p>
+<section id="a-concrete-example" class="level2">
+<h2>A concrete example</h2>
+<p>I recently had the misfortune (as a West Coast fan) of attending a game live between the Sydney Swans and (not so) mighty West Coast Eagles with the following scoreline:</p>
+<p><img src="swans-vs-eagles-score.png" title="How embarrassing!" class="margin-caption img-fluid" /></p>
+<p>In one-sided games like this, it seems to me that footy stats questions become more common than usual for two key reasons:</p>
+<ol type="1">
+<li><p>It adds something interesting to a game that otherwise lacks excitement</p></li>
+<li><p>These games are often filled with large statistical anomalies that might set new records</p></li>
+</ol>
+<p>If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions listed below:</p>
+<blockquote>
+<ul>
+<li>What is the record for the highest scoring quarter?</li>
+<li>What is the record for the most individual goal kickers in a single game?</li>
+<li>What is the record for the most multiple goal kickers in a single game?</li>
+<li>What is the record for the most players kicking five or more goals in a single game (i.e. the most “bags”)?</li>
+<li>Where does the aforementioned game rank among the most one-sided games?</li>
+<li>What is the record for the most clangers in a game?</li>
+<li>What is the record for the worst disposal efficiency in a game by a player?</li>
+<li>Has anyone won a Norm Smith Medal in their first season in the AFL?</li>
+<li>What is the record for the most unanswered goals in a game?*</li>
+<li>What is the school with the most AFL players on their list?*</li>
+<li>What city/town has the most AFL players relative to population?*</li>
+<li>Which player has the best goals to behinds ratio?*</li>
+<li>Have there ever been any undefeated seasons?*</li>
+<li>What is the worst win-loss record to make finals?*</li>
+</ul>
+</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class='callout-icon'></i>
+</div>
+<div class="callout-title-container flex-fill">
+Disclaimer on the asterisk
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I have put an asterisk next to questions that either:</p>
+<ul>
+<li>cannot easily be answered by the methods I discuss below; or</li>
+<li>are too lengthy for this blog post (these may get their own blog post in the future).</li>
+</ul>
+<p>The remaining questions will be tackled using R below.</p>
+</div>
+</div>
+<p>If you are only really interested in the answers (and not the R coding), you can jump ahead by <a href="#summary-of-answers">clicking here</a>.</p>
+</section>
+</section>
+<section id="technical-background" class="level1">
+<h1>Technical Background</h1>
+<section id="the-fitzroy-package" class="level2">
+<h2>The <code>fitzRoy</code> Package</h2>
+<p>The first step in analysing AFL data is obtaining the data (“collection”). Our first thought might be to search the web for publicly available AFL datasets and APIs or even scrape the data from websites such as the <a href="https://www.afl.com.au/" target="_blank">official AFL website</a>, <a href="https://www.footywire.com/" target="_blank">Footywire</a> or <a href="https://afltables.com/afl/afl_index.html" target="_blank">AFL Tables</a>. But there is a more straight-forward way.</p>
+<p>While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and <a href="https://www.lunecroissanterie.com/" target="_blank">over-priced croissants</a>, it was once home<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> to the mighty (<a href="https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club&#39;s_AFL_operations,_become_Brisbane_Lions" target="_blank">and now merged out of existence</a>) Fitzroy Lions Football Club.</p>
+<div class="quarto-figure quarto-figure-center margin-caption">
+<figure>
+<p><a href="https://www.youtube.com/watch?v=olKa-0H26k4" target="_blank"><img src="fitzroy-lions-logo.png" title="La Marseillaise!" class="img-fluid" /></a></p>
+</figure>
+</div>
+<p>We can obtain the data we need very simply using its name-sake, the <code>fitzRoy</code> R package. It abstracts away all the web scraping and API calls for us into a very helpful family of <code>fetch_*</code> functions.</p>
+<p>So let’s begin by loading the package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fitzRoy)</span></code></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<section id="fitzroy-data-sources-work-in-progress" class="level3">
+<h3><code>fitzRoy</code> Data Sources (WORK IN PROGRESS)</h3>
+<p>Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)</p>
+<p>Data sources<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="finicky-details-about-other-r-packages" class="level2">
+<h2>Finicky Details About Other R Packages</h2>
+<section id="tidyverse-versus-data.table" class="level3">
+<h3>Tidyverse versus <code>data.table</code></h3>
+<p>In the R community, there is an <a href="https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly" target="_blank">ongoing power struggle</a> between using the Posit<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>-backed <a href="https://www.tidyverse.org/" target="_blank">tidyverse</a> and the ever-potent <a href="https://rdatatable.gitlab.io/data.table/" target="_blank"><code>data.table</code></a>.</p>
+<p>As to not unsettle people who prefer either <code>dplyr</code> (and the tidyverse) or <code>data.table</code>, I have written code in both packages as to not alienate anyone<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Tidyverse</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><code>data.table</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(player_stats_afltables)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>results_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results_afltables)</span></code></pre></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(player_stats_afltables)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>results_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(results_afltables)</span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<section id="adoption-of-the-native-pipe-operator" class="level4">
+<h4>Adoption of the Native Pipe Operator (<code>|&gt;</code>)</h4>
+<p>The so-called <em>pipe operator</em> (<code>%&gt;%</code>) of the <a href="https://magrittr.tidyverse.org/" target="_blank"><code>magrittr</code></a> has been a core staple of tidyverse since its inception but since the R core team introduced the so-called <em>native pipe</em> (<code>|&gt;</code>) to <code>base</code> R (in version <a href="https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/" target="_blank">4.1</a><a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>), this has led to a split in adoption. There are some nuances in its usage<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> but it overall behaves in a similar way to the <code>magrittr</code> pipe and has <a href="https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe" target="_blank">less overhead (and is therefore faster)</a>. The native pipe was initially missing some of the key features of the <code>magrittr</code> pipe, new features<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> have been added to it that (in my mind) mean that it might have even surpassed the <code>magrittr</code> pipe.</p>
+<p>While I have tried to appease people in both the tidyverse and <code>data.table</code> camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (<code>|&gt;</code>) in my tidyverse code.</p>
+<blockquote>
+<p>Note that the common RStudio shortcut, <code>Ctrl+Shift+M</code> can be changed from the <code>magrittr</code> pipe (<code>%&gt;%</code>), which is still the default, to the native pipe (<code>|&gt;</code>).</p>
+</blockquote>
+</section>
+</section>
+<section id="webscraping-package" class="level3">
+<h3>Webscraping package</h3>
+<p>While the majority of our data will be sourced using the <code>fitzRoy</code> package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of <code>fitzRoy</code> will require us to perform some bespoke web scraping. This will be performed using the <code>rvest</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="figuring-out-the-answers-work-in-progress" class="level1">
+<h1>Figuring Out the Answers (WORK IN PROGRESS)</h1>
+<p>Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)</p>
+<section id="highest-scoring-quarter" class="level2">
+<h2>Highest Scoring Quarter</h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Tidyverse</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><code>data.table</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(player_stats_afltables)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>results_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results_afltables)</span></code></pre></div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(player_stats_afltables)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>results_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(results_afltables)</span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="most-goal-kickers" class="level2">
+<h2>Most Goal-kickers</h2>
+<section id="individual" class="level3">
+<h3>Individual</h3>
+</section>
+<section id="multiple" class="level3">
+<h3>Multiple</h3>
+</section>
+<section id="five-or-more-bags" class="level3">
+<h3>Five or More (Bags)</h3>
+</section>
+</section>
+<section id="most-clangers" class="level2">
+<h2>Most Clangers</h2>
+<p>Define clanger</p>
+</section>
+<section id="worst-disposal-efficiency" class="level2">
+<h2>Worst Disposal Efficiency</h2>
+<p>Define disposal efficiency</p>
+</section>
+<section id="the-norm-smith" class="level2">
+<h2>The norm smith</h2>
+<p>Make the below a collapsible callout (some of it doesn’t need to be)</p>
+<p>This illustrates the fact that sometimes you need to stray outside of fitzRoy but it give most of the data you could ever want.</p>
+<section id="background" class="level3">
+<h3>Background</h3>
+<p>The norm smith medal is award to the player adjudged best a field (best on ground) in the Grand Final.</p>
+<p>The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.</p>
+<p>While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).</p>
+<p>Unofficial source of older data https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.</p>
+<p>For official norm smith which ever of the following are easier:</p>
+<ul>
+<li><p>https://www.afl.com.au/stats/leaders-awards/norm-smith-medal</p></li>
+<li><p>https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients</p></li>
+</ul>
+<p>Make sure it lines up with the AFL data.</p>
+<p>Find the youngest player, player with least games</p>
+</section>
+</section>
+</section>
+<section id="summary-of-answers-work-in-progress" class="level1">
+<h1>Summary of Answers (WORK IN PROGRESS)</h1>
+<p>Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)</p>
+</section>
+<section id="notable-afl-stats-figures" class="level1">
+<h1>Notable AFL Stats Figures</h1>
+<p>I will finish by listing some people who are doing interesting work with AFL stats (often with heavy use of R and the <code>fitzRoy</code> package):</p>
+<ul>
+<li><p><a href="https://www.facebook.com/uselessaflstats" target="_blank">Useless AFL Stats</a>: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content.</p></li>
+<li><p><a href="https://squiggle.com.au/leaderboard/" target="_blank">squiggle.com.au</a>: displays a bunch of people’s data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.</p></li>
+<li><p><a href="https://twitter.com/jaiden_popowski" target="_blank">Jaiden Popowski</a>: is prominent in the <a href="https://fantasy.afl.com.au/" target="_blank">AFL Fantasy</a> community for the interesting data-driven analysis he produces.</p></li>
+<li><p><a href="https://dfsaustralia.com/afl-home/" target="_blank">DFS Australia</a>: has some great data-driven tools that provide insight on advanced stats commonly used in <a href="https://fantasy.afl.com.au/" target="_blank">AFL Fantasy</a>.</p></li>
+</ul>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Tim Gummer</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Tim Gummer</span> <span class="hidden" data-render-id="quarto-int-navbar:Blog">Blog</span> <span class="hidden" data-render-id="quarto-int-navbar:/blog/index.html">/blog/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Goals">Goals</span> <span class="hidden" data-render-id="quarto-int-navbar:/goals/index.html">/goals/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:CV">CV</span> <span class="hidden" data-render-id="quarto-int-navbar:/cv/index.html">/cv/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:https://github.com/t-gummer">https://github.com/t-gummer</span> <span class="hidden" data-render-id="quarto-int-navbar:https://www.linkedin.com/in/timothy-gummer/">https://www.linkedin.com/in/timothy-gummer/</span> <span class="hidden" data-render-id="quarto-int-navbar:mailto:mail.timothy.gummer@gmail.com">mailto:mail.timothy.gummer@gmail.com</span> <span class="hidden" data-render-id="footer-left"><span class="faux-block"><i class="fa-regular fa-copyright" aria-label="copyright"></i> 2023 Tim Gummer</span> <span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app" target="_blank"><i class="fa-brands fa-github" aria-label="github"></i> Source Code</a></span></span> <span class="hidden" data-render-id="footer-center"><span class="faux-block light-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Initiate hacker mode!"><i class="fa-solid fa-toggle-off"></i></a> icon in the navigation bar</span> <span class="faux-block light-mode"> to initiate dark (hacker) mode 😁</span> <span class="faux-block dark-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Return to normie mode?"><i class="fa-solid fa-toggle-on"></i></a> icon in the navigation bar</span> <span class="faux-block dark-mode"> to return to light (normie) mode 😞</span></span> <span class="hidden" data-render-id="footer-right"><span class="faux-block"> Designed with <i class="fa-solid fa-heart" aria-label="heart"></i> using</span> <span class="faux-block"> <a href="https://www.r-project.org" target="_blank"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> and <a href="https://quarto.org" target="_blank">Quarto</a></span></span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">Tim Gummer - (Over-)Analysing Idle Footy Chat</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Tim Gummer - (Over-)Analysing Idle Footy Chat</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Tim Gummer - (Over-)Analysing Idle Footy Chat</span> <span class="hidden" data-render-id="quarto-metasitename">Tim Gummer</span> <span class="hidden" data-render-id="quarto-twittercarddesc">This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.</span> <span class="hidden" data-render-id="quarto-ogcardddesc">This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.</span></p>
+</div>
+<!-- -->
+<div class="quarto-embedded-source-code">
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;(Over-)Analysing Idle Footy Chat&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">  This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023-07-24</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">  - Sport</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">  - AFL</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - R</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - Data</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> fitzroy-lions-logo.png</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="an">reference-location:</span><span class="co"> margin</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># format:</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   html:</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     include-before-body: ../../html/margin_image.html</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     include-after-body: ../../html/blog_footer.html</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">TODO</span><span class="co">: if need to change this in any way add a collapseable ammendments section in the form of a collapsable caution callout block with a bullet list with the date, a colon then a description of the change (e.g. fixed typos) --&gt;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu"># Prelude</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics have been recorded and opined on by teams, the press and your average punter alike. </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>My beloved sport of *Australian Rules Football* (which I will henceforth refer to as &quot;footy&quot;<span class="ot">[^footy]</span>) is no different. Indeed some have even described the AFL (Australia&#39;s nation competition) as &quot;the most data rich sport on Earth&quot;<span class="ot">[^data-rich-sport-source]</span>, although I would suggest that certain American sports such as baseball (i.e. <span class="co">[</span><span class="ot">Moneyball</span><span class="co">](https://www.youtube.com/watch?v=PlKDQqKh03Y)</span>{target=&quot;_blank&quot;}) have made far better use of their data.</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="ot">[^footy]: </span>As a Western Australian this is how I define it (along with the majority of Australia) but I am aware that this term is reserved for rugby league in New South Wales and Queensland</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="ot">[^data-rich-sport-source]: </span><span class="co">[</span><span class="ot">Source: Vice</span><span class="co">](https://www.youtube.com/watch?v=i_mePwh_02M)</span>{target=&quot;_blank&quot;}</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>It is my observation that it is common for those watching or attending live footy to ask questions such as:</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; What is the record for the most *[statistical category]*?</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>or </span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; When was the last time *[obscure event]* happened?</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>I believe a contributor to this is that we are emulating what we hear on the broadcast commentary. The difference is that they often have a team of  <span class="co">[</span><span class="ot">computer-type boffins</span><span class="co">](https://www.youtube.com/clip/UgkxvNk03iqKigc9NKMjWOs2NvuRFRY8xRHn)</span>{target=&quot;_blank&quot;}<span class="ot">[^video-link-disclaimer]</span> behind the scenes feeding them the answer. </span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="ot">[^video-link-disclaimer]: </span>The video linked here is unfortunately clipped from an American guy who kind of missed the point a bit, but it is also the highest quality clip I could find of this brilliant piece of commentary from BT (<span class="co">[</span><span class="ot">Brian Taylor</span><span class="co">](https://www.youtube.com/watch?v=E_JCdK4ah78)</span>{target=&quot;_blank&quot;} for the uninitiated).</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; But what are us plebeians meant to do, bereft of such luxuries you might ask?</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>Well, a quick Google search will make short work of questions of a more trivial nature such as &quot;which player has kicked the most goals&quot;<span class="ot">[^tony-lockett]</span> or &quot;which team has won the most premierships&quot;<span class="ot">[^most-premierships]</span>. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Trawling through more obscure websites such as <span class="co">[</span><span class="ot">AFL Tables</span><span class="co">](https://afltables.com/afl/afl_index.html)</span>{target=&quot;_blank&quot;} to answer things like &quot;what is the most disposal Zac Dawson had in a game&quot;<span class="ot">[^zac-dawson]</span>; or</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Digging into the deep recesses of the AFL Live App to answer questions like &quot;what is the record for the longest distance run in a game&quot;<span class="ot">[^telstra-tracker]</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>but some questions will still go unanswered.</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>tippy<span class="sc">::</span><span class="fu">tippy_this</span>(<span class="at">elementId =</span> <span class="st">&quot;distance-image&quot;</span>, <span class="at">tooltip =</span> <span class="st">&#39;Also called &lt;img src=&quot;longest-distance.jpg&quot; title=&quot;Scully dominates!&quot; class=&quot;img-fluid&quot;&gt; distribution.&#39;</span>)</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="ot">[^zac-dawson]: </span><span class="co">[</span><span class="ot">19</span><span class="co">](https://afltables.com/afl/stats/players/Z/Zac_Dawson.html#sortableTable2)</span>{target=&quot;_blank&quot;}, [versus Melbourne in round 10 2009](https://afltables.com/afl/stats/games/2009/111520090530.html){target=&quot;_blank&quot;}</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="ot">[^telstra-tracker]: </span><span class="co">[</span><span class="ot">Tom Scully, 18.9 KM</span><span class="co">]</span>{id=&#39;distance-image&#39;}</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="ot">[^tony-lockett]: </span><span class="co">[</span><span class="ot">Tony Lockett on 1360</span><span class="co">](https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Goalkicking)</span>{target=&quot;_blank&quot;}</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="ot">[^most-premierships]: </span><span class="co">[</span><span class="ot">Carlton and Essendon tied on 16</span><span class="co">](https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Premierships)</span>{target=&quot;_blank&quot;}</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>However if you are a <span class="co">[</span><span class="ot">gadget-type operator</span><span class="co">](https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW)</span>{target=&quot;_blank&quot;}<span class="ot">[^tipping-name]</span> like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude of tools and approaches to this but in this post, I will be using R (my preferred programming language).</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="ot">[^tipping-name]: </span>My footy tipping username is *Gadget-type Operator* and I often use other <span class="co">[</span><span class="ot">BT quotes</span><span class="co">](https://www.youtube.com/watch?v=E_JCdK4ah78)</span>{target=&quot;_blank&quot;} for my username on other (even non-footy-related) accounts</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## A concrete example</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>I recently had the misfortune (as a West Coast fan) of attending a game live between the Sydney Swans and (not so) mighty West Coast Eagles with the following scoreline:</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="al">![](swans-vs-eagles-score.png &quot;How embarrassing!&quot;)</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>In one-sided games like this, it seems to me that footy stats questions become more common than usual for two key reasons:</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>It adds something interesting to a game that otherwise lacks excitement</span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>These games are often filled with large statistical anomalies that might set new records</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions listed below:</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the highest scoring quarter?</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the most individual goal kickers in a single game?</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the most multiple goal kickers in a single game?</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the most players kicking five or more goals in a single game (i.e. the most &quot;bags&quot;)?</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Where does the aforementioned game rank among the most one-sided games?</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the most clangers in a game?</span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the worst disposal efficiency in a game by a player?</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Has anyone won a Norm Smith Medal in their first season in the AFL?</span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the record for the most unanswered goals in a game?*</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the school with the most AFL players on their list?*</span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What city/town has the most AFL players relative to population?*</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Which player has the best goals to behinds ratio?*</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Have there ever been any undefeated seasons?*</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the worst win-loss record to make finals?*</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disclaimer on the asterisk</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>I have put an asterisk next to questions that either: </span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>cannot easily be answered by the methods I discuss below; or</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>are too lengthy for this blog post (these may get their own blog post in the future). </span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>The remaining questions will be tackled using R below.</span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>If you are only really interested in the answers (and not the R coding), you can jump ahead by <span class="co">[</span><span class="ot">clicking here</span><span class="co">](#summary-of-answers)</span>.</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="fu"># Technical Background</span></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## The `fitzRoy` Package</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>The first step in analysing AFL data is obtaining the data (&quot;collection&quot;). Our first thought might be to search the web for publicly available AFL datasets and APIs or even scrape the data from websites such as the <span class="co">[</span><span class="ot">official AFL website</span><span class="co">](https://www.afl.com.au/)</span>{target=&quot;_blank&quot;}, [Footywire](https://www.footywire.com/){target=&quot;_blank&quot;} or [AFL Tables](https://afltables.com/afl/afl_index.html){target=&quot;_blank&quot;}. But there is a more straight-forward way.</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and <span class="co">[</span><span class="ot">over-priced croissants</span><span class="co">](https://www.lunecroissanterie.com/)</span>{target=&quot;_blank&quot;}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club&#39;s_AFL_operations,_become_Brisbane_Lions){target=&quot;_blank&quot;}) Fitzroy Lions Football Club.</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![](fitzroy-lions-logo.png &quot;La Marseillaise!&quot;)</span><span class="co">](https://www.youtube.com/watch?v=olKa-0H26k4)</span>{target=&quot;_blank&quot;}</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="ot">[^bith-place]: </span>It is also (regrettably) the place of my birth but as a WA boy I don&#39;t like to talk about the fact that my parents happened to be in Melbourne when I was born.</span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>We can obtain the data we need very simply using its name-sake, the <span class="in">`fitzRoy`</span> R package. It abstracts away all the web scraping and API calls for us into a very helpful family of <span class="in">`fetch_*`</span> functions.</span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>So let&#39;s begin by loading the package.</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fitzRoy)</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">&quot;data/player_stats_afltables.RDS&quot;</span>)) {</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>  player_stats_afltables <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;data/player_stats_afltables.RDS&quot;</span>)</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>  player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(player_stats_afltables, <span class="st">&quot;data/player_stats_afltables.RDS&quot;</span>)</span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">&quot;data/results_afltables.RDS&quot;</span>)) {</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>  results_afltables <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;data/results_afltables.RDS&quot;</span>)</span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>  results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(results_afltables, <span class="st">&quot;data/results_afltables.RDS&quot;</span>)</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### `fitzRoy` Data Sources (WORK IN PROGRESS)</span></span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>Data sources<span class="ot">[^FitzRoy]</span>:</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="ot">[^FitzRoy]: </span><span class="co">[</span><span class="ot">Source</span><span class="co">](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources)</span>{target=&quot;_blank&quot;}</span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: FALSE</span></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>player_stats_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_player_stats_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>results_afltables <span class="ot">&lt;-</span> fitzRoy<span class="sc">::</span><span class="fu">fetch_results_afltables</span>(<span class="at">season =</span> <span class="dv">1897</span><span class="sc">:</span><span class="dv">2023</span>)</span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Finicky Details About Other R Packages</span></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tidyverse versus `data.table`</span></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>In the R community, there is an <span class="co">[</span><span class="ot">ongoing power struggle</span><span class="co">](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly)</span>{target=&quot;_blank&quot;} between using the Posit[^previously-RStudio]-backed [tidyverse](https://www.tidyverse.org/){target=&quot;_blank&quot;} and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target=&quot;_blank&quot;}.</span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="ot">[^previously-RStudio]: </span><span class="co">[</span><span class="ot">formally known as RStudio</span><span class="co">](https://posit.co/blog/rstudio-is-becoming-posit/)</span>{target=&quot;_blank&quot;} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target=&quot;_blank&quot;})</span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>As to not unsettle people who prefer either <span class="in">`dplyr`</span> (and the tidyverse) or <span class="in">`data.table`</span>, I have written code in both packages as to not alienate anyone<span class="ot">[^base-r-dig]</span>. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab.</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="ot">[^base-r-dig]: </span>note that I have not written a <span class="in">`base`</span> R dataframes version because I can see arguments for using both tidyverse and <span class="in">`data.table`</span> but no reason at all to use base R dataframes</span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Tidyverse</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(player_stats_afltables)</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>results_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results_afltables)</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="fu">#### `data.table`</span></span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(player_stats_afltables)</span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a>results_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(results_afltables)</span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Adoption of the Native Pipe Operator (`|&gt;`)</span></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>The so-called *pipe operator* (`%&gt;%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target=&quot;_blank&quot;} has been a core staple of tidyverse since its inception but since the R core team introduced the so-called *native pipe* (<span class="in">`|&gt;`</span>) to <span class="in">`base`</span> R (in version <span class="co">[</span><span class="ot">4.1</span><span class="co">](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/)</span>{target=&quot;_blank&quot;}[^function-shorthand]), this has led to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target=&quot;_blank&quot;}. The native pipe was initially missing some of the key features of the <span class="in">`magrittr`</span> pipe, new features<span class="ot">[^pipe-features]</span> have been added to it that (in my mind) mean that it might have even surpassed the <span class="in">`magrittr`</span> pipe.</span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>While I have tried to appease people in both the tidyverse and <span class="in">`data.table`</span> camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (<span class="in">`|&gt;`</span>) in my tidyverse code.</span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Note that the common RStudio shortcut, </span><span class="in">`Ctrl+Shift+M`</span><span class="at"> can be changed from the </span><span class="in">`magrittr`</span><span class="at"> pipe (</span><span class="in">`%&gt;%`</span><span class="at">), which is still the default, to the native pipe (</span><span class="in">`|&gt;`</span><span class="at">).</span></span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="ot">[^function-shorthand]: </span>another cool thing introduced in this version of R was so-called function shorthand (<span class="in">`\()`</span>), see <span class="in">`help(&quot;function&quot;)`</span> for more details</span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a><span class="ot">[^future-pipe-post]: </span>I may even cover these in a future blog post</span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="ot">[^pipe-features]: </span>In R version 4.2, the <span class="in">`_`</span> symbol was added as a placeholder character and in R version 4.3, extractions using the <span class="in">`$`</span> symbol are now allowed</span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### Webscraping package</span></span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>While the majority of our data will be sourced using the <span class="in">`fitzRoy`</span> package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of <span class="in">`fitzRoy`</span> will require us to perform some bespoke web scraping. This will be performed using the <span class="in">`rvest`</span> package.</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a><span class="fu"># Figuring Out the Answers  (WORK IN PROGRESS)</span></span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)</span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a><span class="fu">## Highest Scoring Quarter</span></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Tidyverse</span></span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(player_stats_afltables)</span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>results_afltables_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results_afltables)</span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a><span class="fu">#### `data.table`</span></span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a>quarto-executable-code-5450563D</span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: FALSE</span></span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a>player_stats_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(player_stats_afltables)</span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a>results_afltables_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(results_afltables)</span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Goal-kickers</span></span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a><span class="fu">### Individual</span></span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple</span></span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a><span class="fu">### Five or More (Bags)</span></span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Most Clangers</span></span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>Define clanger</span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worst Disposal Efficiency</span></span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>Define disposal efficiency</span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## The norm smith</span></span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>Make the below a collapsible callout (some of it doesn&#39;t need to be)</span>
+<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>This illustrates the fact that sometimes you need to stray outside of fitzRoy but it give most of the data you could ever want.</span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### Background</span></span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>The norm smith medal is award to the player adjudged best a field (best on ground) in the Grand Final.</span>
+<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.</span>
+<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).</span>
+<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a>Unofficial source of older data</span>
+<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a>https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.</span>
+<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>For official norm smith which ever of the following are easier:</span>
+<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://www.afl.com.au/stats/leaders-awards/norm-smith-medal</span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients</span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>Make sure it lines up with the AFL data.</span>
+<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>Find the youngest player, player with least games</span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary of Answers  (WORK IN PROGRESS)</span></span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)</span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="fu"># Notable AFL Stats Figures</span></span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a>I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the <span class="in">`fitzRoy`</span> package):</span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Useless AFL Stats</span><span class="co">](https://www.facebook.com/uselessaflstats)</span>{target=&quot;_blank&quot;}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content.</span>
+<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">squiggle.com.au</span><span class="co">](https://squiggle.com.au/leaderboard/)</span>{target=&quot;_blank&quot;}: displays a bunch of people&#39;s data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.</span>
+<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Jaiden Popowski</span><span class="co">](https://twitter.com/jaiden_popowski)</span>{target=&quot;_blank&quot;}: is prominent in the [AFL Fantasy](https://fantasy.afl.com.au/){target=&quot;_blank&quot;} community for the interesting data-driven analysis he produces.</span>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">DFS Australia</span><span class="co">](https://dfsaustralia.com/afl-home/)</span>{target=&quot;_blank&quot;}: has some great data-driven tools that provide insight on advanced stats commonly used in [AFL Fantasy](https://fantasy.afl.com.au/){target=&quot;_blank&quot;}.</span></code></pre></div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>As a Western Australian this is how I define it (along with the majority of Australia) but I am aware that this term is reserved for rugby league in New South Wales and Queensland<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.youtube.com/watch?v=i_mePwh_02M" target="_blank">Source: Vice</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The video linked here is unfortunately clipped from an American guy who kind of missed the point a bit, but it is also the highest quality clip I could find of this brilliant piece of commentary from BT (<a href="https://www.youtube.com/watch?v=E_JCdK4ah78" target="_blank">Brian Taylor</a> for the uninitiated).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Goalkicking" target="_blank">Tony Lockett on 1360</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Premierships" target="_blank">Carlton and Essendon tied on 16</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://afltables.com/afl/stats/players/Z/Zac_Dawson.html#sortableTable2" target="_blank">19</a>, <a href="https://afltables.com/afl/stats/games/2009/111520090530.html" target="_blank">versus Melbourne in round 10 2009</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><span id="distance-image">Tom Scully, 18.9 KM</span><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>My footy tipping username is <em>Gadget-type Operator</em> and I often use other <a href="https://www.youtube.com/watch?v=E_JCdK4ah78" target="_blank">BT quotes</a> for my username on other (even non-footy-related) accounts<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>It is also (regrettably) the place of my birth but as a WA boy I don’t like to talk about the fact that my parents happened to be in Melbourne when I was born.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><a href="https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources" target="_blank">Source</a><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p><a href="https://posit.co/blog/rstudio-is-becoming-posit/" target="_blank">formally known as RStudio</a> (<a href="https://www.youtube.com/watch?v=TtMzTGfs-fc" target="_blank">RIP</a>)<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>note that I have not written a <code>base</code> R dataframes version because I can see arguments for using both tidyverse and <code>data.table</code> but no reason at all to use base R dataframes<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>another cool thing introduced in this version of R was so-called function shorthand (<code>\()</code>), see <code>help("function")</code> for more details<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>I may even cover these in a future blog post<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>In R version 4.2, the <code>_</code> symbol was added as a placeholder character and in R version 4.3, extractions using the <code>$</code> symbol are now allowed<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js"
+        data-repo="t-gummer/t-gummer.netlify.app"
+        data-repo-id="R_kgDOJykPlA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOJykPlM4CYD4I"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark_dimmed"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <div class='footer-contents'><span class="faux-block"> 2023 Tim Gummer</span>
+<span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app" target="_blank"> Source Code</a></span>
+</div>  
+    </div>   
+    <div class="nav-footer-center">
+      <div class='footer-contents'><span class="faux-block light-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Initiate hacker mode!"><i class="fa-solid fa-toggle-off"></i></a> icon in the navigation bar</span>
+<span class="faux-block light-mode"> to initiate dark (hacker) mode 😁</span>
+<span class="faux-block dark-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Return to normie mode?"><i class="fa-solid fa-toggle-on"></i></a> icon  in the navigation bar</span>
+<span class="faux-block dark-mode"> to return to light (normie) mode 😞</span>
+</div>  
+    </div>
+    <div class="nav-footer-right">
+      <div class='footer-contents'><span class="faux-block"> Designed with  using</span>
+<span class="faux-block"> <a href="https://www.r-project.org" target="_blank"></a> and <a href="https://quarto.org" target="_blank">Quarto</a></span>
+</div>  
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>

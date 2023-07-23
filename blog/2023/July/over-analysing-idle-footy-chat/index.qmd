@@ -2,7 +2,7 @@
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
   This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
-date: 2023-07-22
+date: 2023-07-24
 categories: 
   - Sport
   - AFL
@@ -109,13 +109,12 @@ If we also consider that it was two actuaries talking, it is safe to say that fo
 I have put an asterisk next to questions that either: 
 
 * cannot easily be answered by the methods I discuss below; or
-* are too lengthy for this blog post[^future-posts]. 
+* are too lengthy for this blog post (these may get their own blog post in the future). 
 
 The remaining questions will be tackled using R below.
 
 :::
 
-[^future-posts]: These may get their own blog post in the future.
 
 If you are only really interested in the answers (and not the R coding), you can jump ahead by [clicking here](#summary-of-answers).
 
@@ -250,11 +249,83 @@ library(rvest)
 
 # Figuring Out the Answers  (WORK IN PROGRESS)
 
+In this section I will provide my working using R for each of the [aforementioned questions](#a-concrete-example).
+
 Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
 
 ## Highest Scoring Quarter
 
+While we only need the quarter-by-quarter scores of each game, only the player stats dataset has the requred quarter scores on it for some reason. Thus, we will create a version of this 
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+Break down by
+
+* Each quarter
+
+
+```{r}
+#| eval: FALSE
+library(dplyr)
+player_stats_afltables_tb <- as_tibble(player_stats_afltables)
+results_afltables_tb <- as_tibble(results_afltables)
+```
+
+
+
+
+```{r}
+player_stats_afltables_tb <- as_tibble(player_stats_afltables)
+results_afltables_tb <- as_tibble(results_afltables)
+```
+
+
+#### `data.table`
+
+```{r}
+#| message: FALSE
+library(data.table)
+player_stats_afltables_dt <- as.data.table(player_stats_afltables)
+results_afltables_dt <- as.data.table(results_afltables)
+```
+
+
+:::
+
+
 ## Most Goal-kickers
+
+URL structure:
+https://afltables.com/afl/stats/games/YYYY/AABBYYYYMMDD.html
+
+where AA and BB are the team codes for two teams (described below) playing in ascending order (not order of home and away)
+
+e.g. https://afltables.com/afl/stats/games/1991/020419910803.html
+
+
+01: Adelaide Crows
+02: Brisbane Bears (team=brisbane lions for 1987-1996)
+03: Carlton
+04: Collingwoord
+05: Essendon
+06: Fitzroy
+07: Western Bulldogs/Footscray
+08: Fremantle
+09: Geelong
+10: Hawthorn
+11: Melbourne
+12: North Melbourne
+13: Port Adelaide
+14: Richmond
+15: St Kilda
+16: Sydney/South Melbourne
+17 University
+18: West Coast
+19: Brisbane Lions (team=brisbane lions for 1997 onwards)
+20: Gold Coast
+21: GWS
 
 ### Individual
 
