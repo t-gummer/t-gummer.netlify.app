@@ -63,17 +63,14 @@ display_text_as_tooltip <- function(value, index) {
 ss <- gs4_get("https://docs.google.com/spreadsheets/d/1kRK0zWsGz7GOHhtWSaV_9SlZ2zRxns_pVEh4YMJtsLQ/edit#gid=0")
 goals_tb <- read_sheet(ss, sheet = "Goals") |> 
   filter(!is.na(project)) |> 
+  arrange(goal_completion_date, goal_start_date) |> 
   relocate(goal_completed_flag, .before = goal_start_date)
 projects_tb <- read_sheet(ss, sheet = "Projects") |> 
   filter(!is.na(project)) |> 
+  arrange(completion_date, start_date) |> 
   select(-c("completion_date (formulaic)", "completion_date (manual)"))
+
 categories_tb <- read_sheet(ss, sheet = "Categories")
-
-
-
-# combined_tb <- left_join(projects_tb, goals_tb, by = "project") |> 
-#   left_join(categories_tb, by = "category") |> 
-#   select(category, info1,  info2, completed_flag, goal, goal_completed_flag)
 
 ```
 
@@ -242,6 +239,7 @@ goals_table_category("Extracurricular")
 ## Table Legend
 
 Below is a legend for the *Status* and *Completion* fields.
+
 
 ```{r}
 tribble(
