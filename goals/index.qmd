@@ -40,21 +40,9 @@ This is my attempt to run counter to what one might see on a resume or social me
 -   Without risking failure, we will never dare to do anything bold.
 :::
 
+# Summary Tables
+
 The tables below are split into tabs by category (*Study*, *Professional*, *Personal Projects* and *Extracurricular*). Each table row is a different project. Click the arrow to the left of each row, to expand each project into a table with my goals. If the 🖱 ️symbol appears in a cell, then it has a tooltip which you can view by hovering over it with your mouse.
-
-Legend for status/completion fields:
-
-```{r}
-tribble(
-  ~"Symbol", ~"Meaning",
-  "✅", "Complete",
-  "🟡", "In Progress",
-  "❌",  "Not Started"
-) |> 
-  reactable_themed(fullWidth = FALSE, width = 250)
-```
-
-
 
 
 ```{r}
@@ -249,3 +237,20 @@ goals_table_category("Extracurricular")
 :::
 
 <!-- :::: -->
+
+
+## Table Legend
+
+Below is a legend for the *Status* and *Completion* fields.
+
+```{r}
+tribble(
+  ~"Symbol", ~"Meaning",
+  "✅", "Complete",
+  "🟡", "In Progress",
+  "❌",  "Not Started"
+) |> 
+  reactable_themed(fullWidth = FALSE, width = 250)
+```
+
+
