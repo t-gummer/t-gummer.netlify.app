@@ -14,18 +14,11 @@
     "text": "No matching items"
   },
   {
-    "objectID": "cv/index.html",
-    "href": "cv/index.html",
+    "objectID": "cv/index.html#download",
+    "href": "cv/index.html#download",
     "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Download current CV"
-  },
-  {
-    "objectID": "cv/index.html#view",
-    "href": "cv/index.html#view",
-    "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Download current CV"
+    "section": "Download",
+    "text": "Download\n\n\n\n\n  \n     Download current CV"
   },
   {
     "objectID": "cv/index.html#colophon",
@@ -35,31 +28,38 @@
     "text": "Colophon\n\nHow the CV(ausage) is made.\n\nMy resume was built in a “data-driven” fashion using the vitae R package and Excel1. It uses the beautiful Awesome CV template which I previously used in pure \\(\\LaTeX\\).1 Note that the linked YouTube video does not use Excel but I do.\nSharing\nIt is currently in a private repository on GitHub as it has some private information in it. There is also a visually consistent template for writing (cover) letters as well. I am happy to share the code with anyone who is interested. It probably is best suited to those familiar with \\(\\LaTeX\\), R and Excel2.2 I am not sure how large the intersection between these skill sets is but I personally find the workflow and resulting look very satisfying.\nIn the future I may make a clean template in a public repository to share with an accompanying blog post on how to use the template."
   },
   {
-    "objectID": "goals/index.html",
-    "href": "goals/index.html",
+    "objectID": "cv/index.html#bit-of-fun",
+    "href": "cv/index.html#bit-of-fun",
+    "title": "Curriculum Vitae",
+    "section": "Bit of Fun",
+    "text": "Bit of Fun\nUnfortunately I do not have a video CV."
+  },
+  {
+    "objectID": "goals/index.html#table-legend",
+    "href": "goals/index.html#table-legend",
     "title": "Goals",
-    "section": "",
-    "text": "Non-linearity\n\n\n\nI would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some roadblocks and failures I have experience along the way.\nThis is my attempt to run counter to what one might see on a resume or social media (predominately successes and seldom failures). I am also doing this as a reminder that:\n\nNot all ventures succeed (and this is okay).\nIt is from failures that we often learn the most.\nWithout risking failure, we will never dare to do anything bold.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStudy\nProfessional\nPersonal Projects\nExtracurricular Activities"
+    "section": "Table Legend",
+    "text": "Table Legend\nBelow is a legend for the Status and Completion fields."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Tim Gummer",
     "section": "",
-    "text": "Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email\n  \n\n  \n  \n\nYou have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages: R, VBA, Excel, \\(\\LaTeX\\)\nMethods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics\nApplications: Sport (Australian Rules Football, Cricket)"
+    "text": "Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email\n  \n\n  \n  \n\nYou have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), with my family and on personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects. I enjoy these projects for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages: R, VBA, Excel, \\(\\LaTeX\\), Python\nMethods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics\nApplications: Sport (Australian Rules Football, Cricket)"
   },
   {
     "objectID": "index.html#welcome-to-my-website",
     "href": "index.html#welcome-to-my-website",
     "title": "Tim Gummer",
     "section": "",
-    "text": "You have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages: R, VBA, Excel, \\(\\LaTeX\\)\nMethods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics\nApplications: Sport (Australian Rules Football, Cricket)"
+    "text": "You have reached the personal website of Tim Gummer. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), with my family and on personal projects.\nI have built this website as a fun project. I would like to use it to chronicle some of my side projects. I enjoy these projects for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).\n\nThe content of this site will mix and match combinations of some of my particular interests/skills listed below:\n\nTools/Languages: R, VBA, Excel, \\(\\LaTeX\\), Python\nMethods: Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics\nApplications: Sport (Australian Rules Football, Cricket)"
   },
   {
     "objectID": "index.html#session-info",
     "href": "index.html#session-info",
     "title": "Tim Gummer",
     "section": "Session info",
-    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-19 17:09:53 AEST\""
+    "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-22 23:47:59 AEST\""
   }
 ]

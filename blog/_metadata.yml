@@ -9,19 +9,20 @@ format:
   html:
     code-tools: true
     page-layout: full
-    # comments:
-    #   giscus: 
-    #     repo: andrewheiss/ath-quarto
-    #     category: Blog comments
-    #     category-id: DIC_kwDOIg6EJc4CSz92
-    #     mapping: pathname
-    # quarto-template-params:
-    #   banner-header-class: "blog-post"
+    # see if giscus can toggle for different modes: https://github.com/giscus/giscus/issues/336
+    # can I have live counter of reactions on the blog aggregation page 
+    comments: 
+      giscus: 
+        repo: t-gummer/t-gummer.netlify.app
+        category: Announcements
+        category-id: DIC_kwDOJykPlM4CYD4I
+        mapping: pathname
+        theme: dark_dimmed #preferred_color_scheme
 
 # Default for table of contents
-toc: true
+# toc: true
 # toc-title: Contents
-toc-location: left
+# toc-location: left
 
 freeze: false
 

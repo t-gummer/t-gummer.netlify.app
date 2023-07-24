@@ -1,0 +1,456 @@
+---
+title: "(Over-)Analysing Idle Footy Chat"
+description: |
+  This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
+date: 2023-07-24
+categories: 
+  - Sport
+  - AFL
+  - R
+  - Data
+image: fitzroy-lions-logo.png
+reference-location: margin
+draft: true
+
+# format:
+#   html:
+#     include-before-body: ../../html/margin_image.html
+#     include-after-body: ../../html/blog_footer.html
+---
+
+
+<!-- TODO: if need to change this in any way add a collapseable ammendments section in the form of a collapsable caution callout block with a bullet list with the date, a colon then a description of the change (e.g. fixed typos) -->
+
+```{r hidden setup}
+#| echo: false
+#| message: false
+
+library(reactable)
+source("../../../../scripts/reactable-theming.R")
+
+
+```
+
+
+
+# Prelude
+
+Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics have been recorded and opined on by teams, the press and your average punter alike. 
+
+My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]) is no different. Indeed some have even described the AFL (Australia's nation competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
+
+[^footy]: As a Western Australian this is how I define it (along with the majority of Australia) but I am aware that this term is reserved for rugby league in New South Wales and Queensland
+[^data-rich-sport-source]: [Source](https://www.youtube.com/watch?v=i_mePwh_02M){target="_blank"}
+
+
+It is my observation that it is common for those watching or attending live footy to ask questions such as:
+
+> What is the record for the most *[statistical category]*?
+
+or 
+
+> When was the last time *[obscure event]* happened?
+
+I believe a contributor to this is that we are emulating what we hear on the broadcast commentary. The difference is that they often have a team of  [computer-type boffins](https://www.youtube.com/clip/UgkxvNk03iqKigc9NKMjWOs2NvuRFRY8xRHn){target="_blank"}[^video-link-disclaimer] behind the scenes feeding them the answer. 
+
+[^video-link-disclaimer]: The video linked here is unfortunately clipped from an American guy who kind of missed the point a bit, but it is also the highest quality clip I could find of this brilliant piece of commentary from BT ([Brian Taylor](https://www.youtube.com/watch?v=E_JCdK4ah78){target="_blank"} for the uninitiated).
+
+> But what are us plebeians meant to do, bereft of such luxuries you might ask?
+
+Well, a quick Google search will make short work of questions of a more trivial nature such as "which player has kicked the most goals"[^tony-lockett] or "which team has won the most premierships"[^most-premierships]. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as
+
+* Trawling through more obscure websites such as [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"} to answer things like "what is the most disposal Zac Dawson had in a game"[^zac-dawson]; or
+
+* Digging into the deep recesses of the AFL Live App to answer questions like "what is the record for the longest distance run in a game"[^telstra-tracker]
+
+but some questions will still go unanswered.
+
+```{r}
+#| echo: false
+tippy::tippy_this(elementId = "distance-image", tooltip = 'Also called <img src="longest-distance.jpg" title="Scully dominates!" class="img-fluid"> distribution.')
+
+```
+
+
+[^zac-dawson]: [19](https://afltables.com/afl/stats/players/Z/Zac_Dawson.html#sortableTable2){target="_blank"}, [versus Melbourne in round 10 2009](https://afltables.com/afl/stats/games/2009/111520090530.html){target="_blank"}
+
+[^telstra-tracker]: [Tom Scully, 18.9 KM]{id='distance-image'}
+
+[^tony-lockett]: [Tony Lockett on 1360](https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Goalkicking){target="_blank"}
+
+[^most-premierships]: [Carlton and Essendon tied on 16](https://en.wikipedia.org/wiki/List_of_VFL/AFL_records#Premierships){target="_blank"}
+
+However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW){target="_blank"}[^tipping-name] like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude of tools and approaches to this but in this post, I will be using R (my preferred programming language).
+
+[^tipping-name]: My footy tipping username is *Gadget-type Operator* and I often use other [BT quotes](https://www.youtube.com/watch?v=E_JCdK4ah78){target="_blank"} for my username on other (even non-footy-related) accounts
+
+::: {.callout-caution collapse="true"}
+
+## Apologies for the delay
+
+I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for slowness are:
+
+* Am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice publishable words, it become a bit of a slog.
+
+* The scope of this project expanded as I kept on branching off from the main mission in order provide additional background.
+
+
+The R code and analysis itself did not take long at all, so the main areas I am looking to improve in the future are my writing efficiency and keeping the scope of my blog posts under control. However, it would feel like going against my style to avoid going down rabbit holes and off on tangents entirely, so there is still a balance to be struck there.
+
+:::
+
+
+## A concrete example
+
+I recently had the misfortune (as a West Coast fan) of attending a game live between the Sydney Swans and (not so) mighty West Coast Eagles with the following scoreline:
+
+![](swans-vs-eagles-score.png "How embarrassing!")
+
+In one-sided games like this, it seems to me that footy stats questions become more common than usual for two key reasons:
+
+1. It adds something interesting to a game that otherwise lacks excitement
+
+2. These games are often filled with large statistical anomalies that might set new records
+
+If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions listed below:
+
+> 
+- What is the record for the highest scoring quarter?
+- What is the record for the most individual goal kickers in a single game?
+- What is the record for the most multiple goal kickers in a single game?
+- What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?
+- Where does the aforementioned game rank among the most one-sided games?
+- What is the record for the most clangers in a game?
+- What is the record for the worst disposal efficiency in a game by a player?
+- Has anyone won a Norm Smith Medal in their first season in the AFL?
+- What is the record for the most unanswered goals in a game?*
+- What is the school with the most AFL players on their list?*
+- What city/town has the most AFL players relative to population?*
+- Which player has the best goals to behinds ratio?*
+- Have there ever been any undefeated seasons?*
+- What is the worst win-loss record to make finals?*
+
+::: {.callout-note}
+
+## Disclaimer on the asterisk
+
+I have put an asterisk next to questions that either: 
+
+* cannot easily be answered by the methods I discuss below; or
+* are too lengthy for this blog post (these may get their own blog post in the future). 
+
+The remaining questions will be tackled using R below.
+
+:::
+
+
+If you are only really interested in the answers (and not the R coding), you can jump ahead by [clicking here](#summary-of-answers).
+
+
+
+
+# Technical Background
+
+## The `fitzRoy` Package
+
+The first step in analysing AFL data is obtaining the data ("collection"). Our first thought might be to search the web for publicly available AFL datasets and APIs or even scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
+
+
+While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and [over-priced croissants](https://www.lunecroissanterie.com/){target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club.
+  
+[![](fitzroy-lions-logo.png "La Marseillaise!")](https://www.youtube.com/watch?v=olKa-0H26k4){target="_blank"}
+
+[^bith-place]: It is also (regrettably) the place of my birth but as a WA boy I don't like to talk about the fact that my parents happened to be in Melbourne when I was born.
+
+We can obtain the data we need very simply using its name-sake, the `fitzRoy` R package. It abstracts away all the web scraping and API calls for us into a very helpful family of `fetch_*` functions.
+
+So let's begin by loading the package and while we're at it, I will also load all the other packages I will be using.
+
+```{r}
+library(fitzRoy)
+# Note that I generally avoid mixing dplyr and data.table at the same time
+#   but the reason I have done with will become apparent later
+library(dplyr)
+library(data.table)
+
+library(rvest)
+library(stringr)
+
+```
+
+
+
+```{r}
+#| echo: FALSE
+if(file.exists("data/player_stats_afltables.RDS")) {
+  player_stats_afltables <- readRDS("data/player_stats_afltables.RDS")
+  
+} else {
+  player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
+  saveRDS(player_stats_afltables, "data/player_stats_afltables.RDS")
+}
+
+if(file.exists("data/results_afltables.RDS")) {
+  results_afltables <- readRDS("data/results_afltables.RDS")
+  
+} else {
+  results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
+  saveRDS(results_afltables, "data/results_afltables.RDS")
+}
+
+
+
+```
+
+
+### `fitzRoy` Data Sources (WORK IN PROGRESS)
+
+Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. We note however, that the 
+
+Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)
+
+Data sources[^FitzRoy]:
+
+[^FitzRoy]: [Source](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources){target="_blank"}
+
+```{r}
+#| eval: FALSE
+player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
+results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
+```
+
+
+
+## Finicky Details About Other R Packages
+
+### Tidyverse versus `data.table`
+
+In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed [tidyverse](https://www.tidyverse.org/){target="_blank"} and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}.
+
+[^previously-RStudio]: [formally known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
+
+As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab.
+
+[^base-r-dig]: note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but no reason at all to use base R dataframes
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+#| message: FALSE
+player_stats_afltables_tb <- as_tibble(player_stats_afltables)
+results_afltables_tb <- as_tibble(results_afltables)
+```
+
+
+#### `data.table`
+
+```{r}
+#| message: FALSE
+player_stats_afltables_dt <- as.data.table(player_stats_afltables)
+results_afltables_dt <- as.data.table(results_afltables)
+```
+
+
+:::
+
+#### Adoption of the Native Pipe Operator (`|>`)
+
+The so-called *pipe operator* (`%>%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} has been a core staple of tidyverse since its inception but since the R core team introduced the so-called *native pipe* (`|>`) to `base` R (in version [4.1](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}[^function-shorthand]), this has led to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. The native pipe was initially missing some of the key features of the `magrittr` pipe, new features[^pipe-features] have been added to it that (in my mind) mean that it might have even surpassed the `magrittr` pipe.
+
+
+While I have tried to appease people in both the tidyverse and `data.table` camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (`|>`) in my tidyverse code.
+
+> Note that the common RStudio shortcut, `Ctrl+Shift+M` can be changed from the `magrittr` pipe (`%>%`), which is still the default, to the native pipe (`|>`).
+
+[^function-shorthand]: another cool thing introduced in this version of R was so-called function shorthand (`\()`), see `help("function")` for more details
+
+[^future-pipe-post]: I may even cover these in a future blog post
+
+[^pipe-features]: In R version 4.2, the `_` symbol was added as a placeholder character and in R version 4.3, extractions using the `$` symbol are now allowed
+
+
+
+### Webscraping package
+
+While the majority of our data will be sourced using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of `fitzRoy` will require us to perform some bespoke web scraping. This will be performed using the `rvest` package.
+
+```{r}
+library(rvest)
+```
+
+
+
+# Figuring Out the Answers  (WORK IN PROGRESS)
+
+In this section I will provide my working using R for each of the [aforementioned questions](#a-concrete-example).
+
+Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
+
+## Highest Scoring Quarter
+
+
+While we only need the quarter-by-quarter scores of each game, only the `player_stats_afl_tables` (and not `results_afl_tables`) dataset has the required quarter by quarter score data. Thus, we will start by creating a 'flattened' version of `player_stats_afl_tables` that provide game-level field.
+
+First, let's take a look at the dataset and determine which fields are player-level and which are match-level.
+
+```{r}
+str(player_stats_afltables)
+```
+
+Inspecting the fields, we can determine that the following fields are player-level:
+
+```{r}
+player_level_fields <- c("First.name", "Surname", "ID", "Jumper.No.", "Playing.for", "Kicks", "Marks", "Handballs", "Goals", 
+  "Behinds", "Hit.Outs", "Tackles", "Rebounds", "Inside.50s", "Clearances", "Clangers", "Frees.For", 
+  "Frees.Against", "Brownlow.Votes", "Contested.Possessions", "Uncontested.Possessions", "Contested.Marks", 
+  "Marks.Inside.50", "One.Percenters", "Bounces", "Goal.Assists", "Time.on.Ground..")
+
+match_level_fields <- setdiff(colnames(player_stats_afltables), player_level_fields)
+
+```
+
+We can now safely group by the `match_level_fields` below:
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+Break down by
+
+* Each quarter
+
+
+```{r}
+#| eval: FALSE
+library(dplyr)
+library(stringr)
+
+player_stats_afltables_tb |> 
+  group_by(
+    Season, Round, Date, Local.start.time, Venue, Attendance, Home.team, 
+    Away.team, Home.score, .data[["Away.score"]]
+  ) |> 
+  summarise(count = n())
+results_afltables_tb <- as_tibble(results_afltables)
+```
+
+
+
+
+```{r}
+
+player_stats_afltables_tb <- as_tibble(player_stats_afltables)
+results_afltables_tb <- as_tibble(results_afltables)
+
+# verify that it has the same number of rows as the results data.
+
+```
+
+
+#### `data.table`
+
+```{r}
+#| message: FALSE
+library(data.table)
+player_stats_afltables_dt <- as.data.table(player_stats_afltables)
+results_afltables_dt <- as.data.table(results_afltables)
+```
+
+
+:::
+
+
+## Most Goal-kickers
+
+URL structure:
+https://afltables.com/afl/stats/games/YYYY/AABBYYYYMMDD.html
+
+where AA and BB are the team codes for two teams (described below) playing in ascending order (not order of home and away)
+
+e.g. https://afltables.com/afl/stats/games/1991/020419910803.html
+
+
+01: Adelaide Crows
+02: Brisbane Bears (team=brisbane lions for 1987-1996)
+03: Carlton
+04: Collingwoord
+05: Essendon
+06: Fitzroy
+07: Western Bulldogs/Footscray
+08: Fremantle
+09: Geelong
+10: Hawthorn
+11: Melbourne
+12: North Melbourne
+13: Port Adelaide
+14: Richmond
+15: St Kilda
+16: Sydney/South Melbourne
+17 University
+18: West Coast
+19: Brisbane Lions (team=brisbane lions for 1997 onwards)
+20: Gold Coast
+21: GWS
+
+### Individual
+
+### Multiple
+
+### Five or More (Bags)
+
+## Most Clangers
+
+Define clanger
+
+## Worst Disposal Efficiency
+
+Define disposal efficiency
+
+
+## The norm smith
+
+Make the below a collapsible callout (some of it doesn't need to be)
+
+This illustrates the fact that sometimes you need to stray outside of fitzRoy but it give most of the data you could ever want.
+
+### Background
+
+The norm smith medal is award to the player adjudged best a field (best on ground) in the Grand Final.
+
+The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.
+
+While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).
+
+Unofficial source of older data
+https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.
+
+
+For official norm smith which ever of the following are easier:
+
+- https://www.afl.com.au/stats/leaders-awards/norm-smith-medal
+
+- https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients
+
+Make sure it lines up with the AFL data.
+
+Find the youngest player, player with least games
+
+# Summary of Answers  (WORK IN PROGRESS)
+
+Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)
+
+# Notable AFL Stats Figures
+
+I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package):
+
+- [Useless AFL Stats](https://www.facebook.com/uselessaflstats){target="_blank"}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content. [Liam Crow](https://twitter.com/crow_data_sci){target="_blank"} is their data scientist and posts some interesting content of his own on his website: [https://www.crowdatascience.com](https://www.crowdatascience.com){target="_blank"}.
+
+- [squiggle.com.au](https://squiggle.com.au/leaderboard/){target="_blank"}: displays a bunch of people's data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.
+
+- [Jaiden Popowski](https://twitter.com/jaiden_popowski){target="_blank"}: is prominent in the [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"} community for the interesting data-driven analysis he produces.
+
+- [DFS Australia](https://dfsaustralia.com/afl-home/){target="_blank"}: has some great data-driven tools that provide insight on advanced stats commonly used in [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"}.
+

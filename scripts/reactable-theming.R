@@ -57,7 +57,7 @@ JS_aggregate_other_value <- function(other_column_name) {
 
 # https://glin.github.io/reactable/articles/cookbook/cookbook.html#merge-cells
 reactable_style_merged <- function(column) {
-  JS(glue("function(rowInfo, column, state) {
+  reactable::JS(glue::glue("function(rowInfo, column, state) {
           const firstSorted = state.sorted[0]
           // Merge cells if unsorted or sorting by <<column>>
           if (!firstSorted || firstSorted.id === '<<column>>') {
@@ -70,4 +70,7 @@ reactable_style_merged <- function(column) {
   
 }
 
-
+# Use this to prevent the annoying American default data forma
+colFormat_aus <- function(...) {
+  reactable::colFormat(..., locales = c("en-AU", 	"en-GB"))
+}

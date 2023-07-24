@@ -2,15 +2,22 @@
 
 
 // imports:
+// old fonts
 @import 'https://fonts.googleapis.com/css?family=PT+Sans:400,700';
 @import 'https://fonts.googleapis.com/css?family=PT+Serif:400,700';
 @import 'https://fonts.googleapis.com/css?family=PT+Mono';
+// new fonts (might want to remove the new fonts later)
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
+@import 'https://fonts.googleapis.com/css?family=EB+Garamond:400,700';
+@import 'https://fonts.googleapis.com/css?family=Fira+Code:400'; //,700
+@import 'https://fonts.googleapis.com/css?family=Inconsolata:400'; //,700
+
 // Fonts
 
 // stylelint-disable-next-line value-keyword-case
-$font-family-sans-serif: "PT Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
-$font-family-serif: "PT Serif", sans-serif !default;
-$font-family-monospace:       "PT Mono", SFMono-Regular, Consolas, monospace !default;
+$font-family-sans-serif: "Montserrat", "PT Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-serif: "EB Garamond", "PT Serif", sans-serif !default;
+$font-family-monospace: "Inconsolata", "PT Mono", SFMono-Regular, Consolas, monospace !default;
 
 $headings-font-family:        $font-family-serif !default;
 
@@ -138,4 +145,8 @@ $grid-breakpoints: (
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
+}
+
+code {
+  color: inherit;
 }

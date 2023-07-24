@@ -28,15 +28,15 @@ format:
 ## Welcome to my website!
 
 
-You have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), my family and personal projects.
+You have reached the personal website of **Tim Gummer**. I am an Associate of Institute of Actuaries of Australia (AIAA). I am currently taking an 18 month leave of absence from my job as an Actuarial Analyst at Finity Consulting in order to spend more time on my actuarial studies (to become a fellow), with my family and on personal projects.
 
-I have built this website as a fun project. I would like to use it to chronicle some of my side projects while I am taking my leave of absence. I enjoy these project for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).
+I have built this website as a fun project. I would like to use it to chronicle some of my side projects. I enjoy these projects for their own sake and the main benefit I get out of them is learning and the satisfaction of building something cool. I hope that this website will provide me with further motivation to work on these projects (as well as being an enjoyable project in and of itself).
 
 ### My interests
 
 The content of this site will mix and match combinations of some of my particular interests/skills listed below:
 
-  * Tools/Languages: R,  VBA, Excel, $\LaTeX$
+  * Tools/Languages: R,  VBA, Excel, $\LaTeX$, Python
     
   * Methods:  Statistics, Data Science (Collection, Visualisation, Modelling), Mathematics
   
@@ -44,12 +44,16 @@ The content of this site will mix and match combinations of some of my particula
 
 :::
 
+----
+
 
 # Contents
 
-* [goals](Goals): keeping track of my goals (prospective) and achievements (retrospective) as well as failure/road blocks along the way.
+* [Blog](Blog): articles about my person projects and things that interest me.
 
-* [blog](Blog): articles about my person projects and things that interest me.
+* [Goals](Goals): keeping track of my goals (prospective) and achievements (retrospective) as well as failure/road blocks along the way.
+
+* [CV](CV): my public curriculum vitae for keeping track of my educational and professional experiences.
 
 
 # Colophon

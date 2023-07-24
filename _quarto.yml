@@ -9,6 +9,7 @@ project:
   
   resources:
     - "img/**"
+    - "blog/2023/July/over-analysing-idle-footy-chat/longest-distance.jpg"
 
   preview: 
     port: 22222
@@ -29,6 +30,8 @@ website:
   
   repo-url: "https://github.com/t-gummer/t-gummer.netlify.app"
   repo-branch: master
+  
+  google-analytics: "G-V8P5XXLZK4"
   
   search:
     location: navbar
@@ -80,6 +83,7 @@ format:
       light: [www/styles.scss, www/tgLight.scss] # flatly
       dark: [www/styles.scss, www/tgHacker.scss] # www/styles.scss, darkly
     toc: true
+    toc-location: left
     anchor-sections: true
     fig-cap-location: margin
     reference-location: margin
