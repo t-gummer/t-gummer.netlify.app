@@ -13,28 +13,6 @@ format:
 ---
 
 
-
-
-
-
-
-::: {.callout-tip}
-
-## Non-linearity
-
-I would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some *roadblocks* and *failures* I have experience along the way.
-
-This is my attempt to run counter to what one might see on a resume or social media (predominately successes and seldom failures). I am also doing this as a reminder that:
-
-* Not all ventures succeed (and this is okay).
-* It is from failures that we often learn the most.
-* Without risking failure, we will never dare to do anything bold.
-
-:::
-
-
-
-
 ```{r setup}
 source("../scripts/reactable-theming.R")
 library(googlesheets4)
@@ -45,9 +23,37 @@ library(reactable)
 library(reactablefmtr)
 library(tippy)
 library(htmltools)
-
+library(scales)
 
 ```
+
+
+::: callout-tip
+## Non-linearity
+
+I would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some *roadblocks* and *failures* I have experience along the way.
+
+This is my attempt to run counter to what one might see on a resume or social media (predominately successes and seldom failures). I am also doing this as a reminder that:
+
+-   Not all ventures succeed (and this is okay).
+-   It is from failures that we often learn the most.
+-   Without risking failure, we will never dare to do anything bold.
+:::
+
+The tables below are split into tabs by category (Study, Professional, Personal Projects and Extracurricular). Each table row is a different "project". Click the arrow to the left of each row, to expand each project into a table with my goals. If the "🖱" ️symbol appears in a cell, then it has a tooltip which you can view by hovering over it with your mouse.
+
+Legend for status/completion fields:
+
+```{r}
+tribble(
+  ~"Symbol", ~"Meaning",
+  "✅", "Complete",
+  "🟡", "In Progress",
+  "❌",  "Not Started"
+) |> 
+  reactable_themed(fullWidth = FALSE, width = 250)
+```
+
 
 
 
@@ -65,87 +71,167 @@ display_text_as_tooltip <- function(value, index) {
 }
 ```
 
-
 ```{r get data}
 ss <- gs4_get("https://docs.google.com/spreadsheets/d/1kRK0zWsGz7GOHhtWSaV_9SlZ2zRxns_pVEh4YMJtsLQ/edit#gid=0")
 goals_tb <- read_sheet(ss, sheet = "Goals") |> 
-  filter(!is.na(project))
+  filter(!is.na(project)) |> 
+  relocate(goal_completed_flag, .before = goal_start_date)
 projects_tb <- read_sheet(ss, sheet = "Projects") |> 
-  filter(!is.na(project))
+  filter(!is.na(project)) |> 
+  select(-c("completion_date (formulaic)", "completion_date (manual)"))
 categories_tb <- read_sheet(ss, sheet = "Categories")
 
-combined_tb <- left_join(projects_tb, goals_tb, by = "project") |> 
-  left_join(categories_tb, by = "category") |> 
-  select(category, info1,  info2, completed_flag, goal, goal_completed_flag)
+
+
+# combined_tb <- left_join(projects_tb, goals_tb, by = "project") |> 
+#   left_join(categories_tb, by = "category") |> 
+#   select(category, info1,  info2, completed_flag, goal, goal_completed_flag)
 
 ```
-
-
 
 ```{r}
 goals_table_category <- function(category_label) {
   categories_tb |>
-    filter(category == category_label) -> categories_tb_filtered
+      filter(category == category_label) -> categories_tb_filtered
   
   info1_label <- categories_tb_filtered$info1_label  
   info2_label <- categories_tb_filtered$info2_label  
+
   
   renaming_list <- `names<-`(c("info1", "info2"), c(info1_label, info2_label))
   
+  projects_tb_filtered <- projects_tb |> 
+    filter(category == category_label) |> 
+    select(-category) |> 
+    rename(all_of(renaming_list))
+  
   info_col_spec <- list(
     colDef(
+      cell = \(cell_value, row_index, column_name) {
+        description <- projects_tb_filtered[row_index, "description"][[1]]
+        if(is.na(description)) {
+          cell_value
+          } else {
+            tippy::tippy(paste(cell_value, "🖱"), paste("<b>More Details</b></br>", description))
+          }
+        }
       ),
     colDef(
-        aggregate = JS_return_first_value,
-        cell = \(value, row_index, column_name) ""
       )
   ) |> 
     `names<-`(value = c(info1_label, info2_label))
   
   
-  combined_tb |> 
-    filter(category == category_label) |> 
-    select(-category) |> 
-    rename(all_of(renaming_list)) |> 
+
+  
+  projects_tb_filtered |> 
     reactable_themed(
-      groupBy = info1_label,
+      details = function(index) {
+        .project <- projects_tb_filtered$project[[index]]
+        goals_tb_filtered <- goals_tb |>
+          filter(project == .project)
+        goals_tb_filtered |>
+          reactable_themed(
+            outlined = TRUE,
+            columns = list(
+              project = colDef(show = FALSE),
+              goal_completed_flag = colDef(
+                name = "Completion",
+                cell = \(cell_value, row_index, column_name) {
+                  if(cell_value) {
+                    render_text <- "️✅"
+                  } else {
+                    in_progress <- goals_tb_filtered[row_index, "in_progress"][[1]]
+                    if(in_progress) {
+                      render_text <- "🟡"
+                    } else {
+                      render_text <- "❌"
+                    }
+                  }
+                  road_blocks <- goals_tb_filtered[row_index, "road_blocks"][[1]]
+                  if(is.na(road_blocks)) {
+                    render_text
+                  } else {
+                    tippy::tippy(paste(render_text, "🖱"), paste("<b>Road Block</b></br>", road_blocks))
+                  }
+              }),
+              goal_description = colDef(show = FALSE),
+              goal_start_date = colDef(name = "Date Started", format = colFormat_aus(date = TRUE)),
+              goal_completion_date = colDef(name = "Date Completed", format = colFormat_aus(date = TRUE)),
+              in_progress = colDef(show = FALSE),
+              road_blocks = colDef(show = FALSE),
+              link = colDef(
+                name = "Link",
+                cell = \(cell_value, row_index, column_name) {
+                  if(is.na(cell_value)) {
+                    ""
+                  } else {
+                    tags$a(target = "_blank", href = cell_value, "🔗")
+                  }
+                }),
+              goal = colDef(
+                name = "Goal",
+                cell = \(cell_value, row_index, column_name) {
+                  goal_description <- goals_tb_filtered[row_index, "goal_description"][[1]]
+                  if(is.na(goal_description)) {
+                    cell_value
+                    } else {
+                      tippy::tippy(paste(cell_value, "🖱"), paste("<b>More Details</b></br>", goal_description))
+                    }
+                  }
+                )
+              )
+            ) |> 
+          div(style = "padding: 1rem")
+      },
       pagination = FALSE,
       columns = list(
-        goal = colDef(name = "Goal"),
-        goal_completed_flag = colDef(
-          name = "Complete", 
-          aggregate = JS_aggregate_other_value("completed_flag")
-          ),
-        completed_flag = colDef(show = FALSE)
+        project = colDef(show = FALSE),
+        start_date = colDef(name = "Date Started", format = colFormat_aus(date = TRUE)),
+        completion_date = colDef(name = "Date Completed", format = colFormat_aus(date = TRUE)),
+        description = colDef(show = FALSE),
+        completed_flag = colDef(
+          name = "Status",
+          cell = \(cell_value, row_index, column_name) {
+            if(cell_value) {
+              "️✅"
+            } else {
+              completion <- projects_tb_filtered[row_index, "goal_completion"][[1]]
+              if(completion > 0) {
+                paste("🟡", scales::percent(completion))
+              } else {
+                "❌"
+              }
+              
+            }
+        }),
+        goal_count = colDef(show = FALSE),
+        goal_achieved = colDef(show = FALSE),
+        goal_partial = colDef(show = FALSE),
+        goal_completion = colDef(show = FALSE),
+        completed_flag = colDef()
       ) |> 
         c(info_col_spec)
       )
   
 }
-
-
 ```
 
+<!-- :::: {.column-screen} -->
 
-
-:::: {.column-screen}
-::: {.panel-tabset}
-
+::: panel-tabset
 ## Study
 
 ```{r}
 goals_table_category("Study")
-```
 
+```
 
 ## Professional
 
 ```{r}
 goals_table_category("Professional")
 ```
-
-
-
 
 ## Personal Projects
 
@@ -155,66 +241,9 @@ goals_table_category("Personal Projects")
 
 ## Extracurricular Activities
 
-
 ```{r}
 goals_table_category("Extracurricular")
 ```
-
-
-
 :::
-::::
 
-
-```{r}
-#| column: page
-#| eval: FALSE
-
-# combined_tb <- left_join(projects_tb, goals_tb, by = "project") |> 
-#   select(category, goal_label, start_date, completion_date, sub_goal, sub_goal_start_date, sub_goal_completion_date, sub_goal_description, sub_goal_completed_flag) |> 
-#   arrange(category, start_date) |>
-#   select(-start_date, -completion_date) 
-
-combined_tb |> 
-  reactable_themed(
-    groupBy = c("category", "goal_label"),
-    defaultExpanded = FALSE,
-    columns = list(
-      category = colDef(
-        name = "Category"
-        # ,
-        # style = reactable_merged("category")
-        ),
-      goal_label = colDef(
-        name = "Goal"
-        # ,
-        # style = reactable_merged("goal_label")
-        ),
-      sub_goal = colDef(
-        name = "Sub-Goal"
-        ),
-      sub_goal_start_date = colDef(
-        name = "Start Date",
-        aggregate = "min",
-        format = colFormat(date = TRUE)
-      ),
-      sub_goal_completion_date = colDef(
-        name = "Completion Date",
-        aggregate = "max",
-        format = colFormat(date = TRUE)
-      ),
-      sub_goal_description = colDef(
-        name = "Description",
-        cell = display_text_as_tooltip
-      ),
-      sub_goal_completed_flag = colDef(
-        name = "Completed"
-      )
-      ),
-    pagination = FALSE
-    )
-
-
-```
-
-
+<!-- :::: -->

@@ -21,6 +21,7 @@ draft: false
 
 <!-- TODO: if need to change this in any way add a collapseable ammendments section in the form of a collapsable caution callout block with a bullet list with the date, a colon then a description of the change (e.g. fixed typos) -->
 
+
 # Prelude
 
 Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics have been recorded and opined on by teams, the press and your average punter alike. 
@@ -71,6 +72,22 @@ tippy::tippy_this(elementId = "distance-image", tooltip = 'Also called <img src=
 However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJxG9BEEvFMmGfpjSBWc4MtWPKwNTLW){target="_blank"}[^tipping-name] like myself, you will expand the number of footy stats questions you can answer immensely by accessing and manipulating the raw data yourself. There are of course a multitude of tools and approaches to this but in this post, I will be using R (my preferred programming language).
 
 [^tipping-name]: My footy tipping username is *Gadget-type Operator* and I often use other [BT quotes](https://www.youtube.com/watch?v=E_JCdK4ah78){target="_blank"} for my username on other (even non-footy-related) accounts
+
+::: {.callout-caution collapse="true"}
+
+## Apologies for the delay
+
+I have been promising some people that this (my first) post will be out for quite some time now. It has finally arrived and the main reasons for slowness are:
+
+* Am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice publishable words, it become a bit of a slog.
+
+* The scope of this project expanded as I kept on branching off from the main mission in order provide additional background.
+
+
+The R code and analysis itself did not take long at all, so the main areas I am looking to improve in the future are my writing efficiency and keeping the scope of my blog posts under control. However, it would feel like going against my style to avoid going down rabbit holes and off on tangents entirely, so there is still a balance to be struck there.
+
+:::
+
 
 ## A concrete example
 
@@ -168,7 +185,7 @@ if(file.exists("data/results_afltables.RDS")) {
 
 ### `fitzRoy` Data Sources (WORK IN PROGRESS)
 
-
+Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. We note however, that the 
 
 Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)
 
@@ -249,18 +266,47 @@ library(rvest)
 
 # Figuring Out the Answers  (WORK IN PROGRESS)
 
+In this section I will provide my working using R for each of the [aforementioned questions](#a-concrete-example).
+
 Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
 
 ## Highest Scoring Quarter
+
+
+
+While we only need the quarter-by-quarter scores of each game, only the `player_stats` data set has the required quarter by quarter score fields on it for some reason. Thus, we will start by creating a 'flattened' version of the players data set that provide game-level field.
+
 ::: {.panel-tabset}
 
 #### Tidyverse
 
+Break down by
+
+* Each quarter
+
+
 ```{r}
-#| message: FALSE
+#| eval: FALSE
 library(dplyr)
+
+player_stats_afltables_tb |> 
+  group_by(
+    Season, Round, Date, Local.start.time, Venue, Attendance, Home.team, 
+    Away.team, Home.score, Away.score, HQ1G, , HQ1G
+  )
+results_afltables_tb <- as_tibble(results_afltables)
+```
+
+
+
+
+```{r}
+
 player_stats_afltables_tb <- as_tibble(player_stats_afltables)
 results_afltables_tb <- as_tibble(results_afltables)
+
+# verify that it has the same number of rows as the results data.
+
 ```
 
 
@@ -278,6 +324,36 @@ results_afltables_dt <- as.data.table(results_afltables)
 
 
 ## Most Goal-kickers
+
+URL structure:
+https://afltables.com/afl/stats/games/YYYY/AABBYYYYMMDD.html
+
+where AA and BB are the team codes for two teams (described below) playing in ascending order (not order of home and away)
+
+e.g. https://afltables.com/afl/stats/games/1991/020419910803.html
+
+
+01: Adelaide Crows
+02: Brisbane Bears (team=brisbane lions for 1987-1996)
+03: Carlton
+04: Collingwoord
+05: Essendon
+06: Fitzroy
+07: Western Bulldogs/Footscray
+08: Fremantle
+09: Geelong
+10: Hawthorn
+11: Melbourne
+12: North Melbourne
+13: Port Adelaide
+14: Richmond
+15: St Kilda
+16: Sydney/South Melbourne
+17 University
+18: West Coast
+19: Brisbane Lions (team=brisbane lions for 1997 onwards)
+20: Gold Coast
+21: GWS
 
 ### Individual
 
@@ -330,7 +406,7 @@ Summarise by player, team player and season where relevant (grouped columns or p
 
 I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package):
 
-- [Useless AFL Stats](https://www.facebook.com/uselessaflstats){target="_blank"}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content.
+- [Useless AFL Stats](https://www.facebook.com/uselessaflstats){target="_blank"}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content. [Liam Crow](https://twitter.com/crow_data_sci){target="_blank"} is their data scientist and posts some interesting content of his own on his website: [https://www.crowdatascience.com](https://www.crowdatascience.com){target="_blank"}.
 
 - [squiggle.com.au](https://squiggle.com.au/leaderboard/){target="_blank"}: displays a bunch of people's data-driven tipping models, many of which have websites and social media accounts where they do AFL stats.
 

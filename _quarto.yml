@@ -9,7 +9,7 @@ project:
   
   resources:
     - "img/**"
-    - "blog/**"
+    - "blog/2023/July/over-analysing-idle-footy-chat/longest-distance.jpg"
 
   preview: 
     port: 22222
