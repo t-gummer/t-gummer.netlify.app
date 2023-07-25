@@ -2,7 +2,7 @@
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
   This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
-date: 2023-07-24
+date: 2023-07-25
 categories: 
   - Sport
   - AFL
@@ -10,8 +10,8 @@ categories:
   - Data
 image: fitzroy-lions-logo.png
 reference-location: margin
-draft: true
-
+draft: false
+reading-time: true
 # format:
 #   html:
 #     include-before-body: ../../html/margin_image.html
@@ -30,6 +30,7 @@ source("../../../../scripts/reactable-theming.R")
 
 
 ```
+
 
 
 
@@ -162,12 +163,16 @@ While most people now know Fitzroy as a trendy inner city suburb of Melbourne, f
 
 [^bith-place]: It is also (regrettably) the place of my birth but as a WA boy I don't like to talk about the fact that my parents happened to be in Melbourne when I was born.
 
+
+
 We can obtain the data we need very simply using its name-sake, the `fitzRoy` R package. It abstracts away all the web scraping and API calls for us into a very helpful family of `fetch_*` functions.
 
-So let's begin by loading the package and while we're at it, I will also load all the other packages I will be using.
+So let's begin by loading the `fitzRoy` package and while we're at it, I will also load all the other packages I will be using.
 
-```{r}
+```{r load packages}
+#| message: FALSE
 library(fitzRoy)
+
 # Note that I generally avoid mixing dplyr and data.table at the same time
 #   but the reason I have done with will become apparent later
 library(dplyr)
@@ -180,8 +185,44 @@ library(stringr)
 
 
 
+
+### `fitzRoy` Data Sources
+
+`fitzRoy` provides access to a number of footy data sources[^FitzRoy] including [AFL Tables](https://afltables.com/){target="_blank"} and the [official AFL website](https://www.afl.com.au/fixture){target="_blank"}. Each data source has its own advantages and disadvantages, for example:
+
+* [AFL Tables](https://afltables.com/){target="_blank"} has the entirety of AFL/VFL history (1897 to present) but lacks some of the more advanced stats.
+
+* The [official AFL website](https://www.afl.com.au/fixture){target="_blank"} only has data from 2014 onwards but it also probably the most complete in terms of the advanced statistics it contains (e.g. centre bounce attendances[^CBAs]).
+
+[^FitzRoy]: Up-to-date information on data sources can be found on `fitzRoy`'s [documentation site](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources){target="_blank"}
+
+[^CBAs]: Centre bounce attendances (CBAs) are a commonly-used metrics in AFL fantasy, coaches often look at tools such as [this one](https://dfsaustralia.com/afl-cbas/){target="_blank"} to help with researching their trades.
+
+Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. However if we require stats that it is missing, we will simply have to adopt a different data source and caveat it by saying it is only for a subset of the full history of the competition.
+
+
+The `fetch_*` family of functions from the `fitzRoy` package allow us to read the package. Consult the [documentation site](https://jimmyday12.github.io/fitzRoy/reference/index.html){target="_blank"} for a complete list of all the available functions. Below we will get the data we need to answer our questions:
+
 ```{r}
-#| echo: FALSE
+#| eval: FALSE
+player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
+results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
+```
+
+
+
+
+::: {.callout-warning}
+
+#### Being a good citizen
+
+When sourcing data from `fitzRoy`, it is important to follow good data collection[^fitzRoy-good-practice] etiquette by only downloading the data you need and avoiding repeatedly downloading the same data over and over again. This prevents servers being overloaded and will mean everyone will get their data faster.
+
+For example for the purposes of this blog post, I have saved the data in a local RDS file instead of repeatedly calling the `fetch_*` functions, I use `readRDS()`. The code for this is below (and the code above is not actually run but is cleaner for demonstration purposes):
+
+[^fitzRoy-good-practice]: this topic is discussed on the `fitzRoy` documentation site [here](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#good-practices){target="_blank"}
+
+```{r}
 if(file.exists("data/player_stats_afltables.RDS")) {
   player_stats_afltables <- readRDS("data/player_stats_afltables.RDS")
   
@@ -201,23 +242,7 @@ if(file.exists("data/results_afltables.RDS")) {
 
 
 ```
-
-
-### `fitzRoy` Data Sources (WORK IN PROGRESS)
-
-Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. We note however, that the 
-
-Go into data sources and what you would use each for. Official AFL for most extensive stats (depth), AFL tables for the full VFL/AFL history (handy for these types of questions)
-
-Data sources[^FitzRoy]:
-
-[^FitzRoy]: [Source](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#data-sources){target="_blank"}
-
-```{r}
-#| eval: FALSE
-player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
-results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
-```
+:::
 
 
 
@@ -231,11 +256,13 @@ In the R community, there is an [ongoing power struggle](https://stackoverflow.c
 
 As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab.
 
-[^base-r-dig]: note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but no reason at all to use base R dataframes
+[^base-r-dig]: note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but `base` R `data.frames` will probably cause more pain than they are worth (there is a reason that tidyverse and `data.table` exist)
 
 ::: {.panel-tabset}
 
 #### Tidyverse
+
+Note that the code below is somewhat redundant as the `fitzRoy` package follows the [tidyverse philosophy](https://jimmyday12.github.io/fitzRoy/CONTRIBUTING.html){target="_blank"} and returns [tibbles](https://tibble.tidyverse.org/){target="_blank"}. However this is add the `_tb` suffix[^tb-abbreviation] to distinguish it from the `data.table` code.
 
 ```{r}
 #| message: FALSE
@@ -243,8 +270,12 @@ player_stats_afltables_tb <- as_tibble(player_stats_afltables)
 results_afltables_tb <- as_tibble(results_afltables)
 ```
 
+[^tb-abbreviation]: an abbreviation of "tibble"
+
 
 #### `data.table`
+
+Henceforth, all `data.table` code will use the `_dt` suffix[^dt-abbreviation] as to distinguish it from the tidyverse code.
 
 ```{r}
 #| message: FALSE
@@ -252,12 +283,14 @@ player_stats_afltables_dt <- as.data.table(player_stats_afltables)
 results_afltables_dt <- as.data.table(results_afltables)
 ```
 
+[^dt-abbreviation]: an acronym of "data.table"
 
 :::
 
+
 #### Adoption of the Native Pipe Operator (`|>`)
 
-The so-called *pipe operator* (`%>%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} has been a core staple of tidyverse since its inception but since the R core team introduced the so-called *native pipe* (`|>`) to `base` R (in version [4.1](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}[^function-shorthand]), this has led to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. The native pipe was initially missing some of the key features of the `magrittr` pipe, new features[^pipe-features] have been added to it that (in my mind) mean that it might have even surpassed the `magrittr` pipe.
+The so-called *pipe operator* (`%>%`) of the [`magrittr`](https://magrittr.tidyverse.org/){target="_blank"} package has been a core staple of tidyverse since its inception but since the R core team introduced the so-called *native pipe* (`|>`) to `base` R (in version [4.1](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}[^function-shorthand]), this has led to a split in adoption. There are some nuances in its usage[^future-pipe-post] but it overall behaves in a similar way to the `magrittr` pipe and has [less overhead (and is therefore faster)](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe){target="_blank"}. While the native pipe was initially missing some of the key features of the `magrittr` pipe, new features[^pipe-features] have been added to it that (in my mind) mean that it might have even surpassed the `magrittr` pipe.
 
 
 While I have tried to appease people in both the tidyverse and `data.table` camps, I will not be re-writing my code more than once with such as minor syntactic difference as the pipe I use. I will therefore be dragging all my tidyverse-using readers kicking and screaming into the R 4.1 world by adopting the native pipe (`|>`) in my tidyverse code.
@@ -274,38 +307,110 @@ While I have tried to appease people in both the tidyverse and `data.table` camp
 
 ### Webscraping package
 
-While the majority of our data will be sourced using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists) which is outside of the scope of `fitzRoy` will require us to perform some bespoke web scraping. This will be performed using the `rvest` package.
-
-```{r}
-library(rvest)
-```
+While the majority of our data will be sourced using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists, which are outside of the scope of `fitzRoy`) will require us to perform some bespoke web scraping. This will be performed using the `rvest` package (loaded [above](#cb1)).
 
 
-
-# Figuring Out the Answers  (WORK IN PROGRESS)
+# Figuring Out the Answers
 
 In this section I will provide my working using R for each of the [aforementioned questions](#a-concrete-example).
 
-Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
+> Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
 
-## Highest Scoring Quarter
+## Preliminary Data Work
 
+### Finding the Infamous Game
 
-While we only need the quarter-by-quarter scores of each game, only the `player_stats_afl_tables` (and not `results_afl_tables`) dataset has the required quarter by quarter score data. Thus, we will start by creating a 'flattened' version of `player_stats_afl_tables` that provide game-level field.
+Let's begin with the simple exercise of obtaining the match ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game.
 
-First, let's take a look at the dataset and determine which fields are player-level and which are match-level.
+To begin with, let's scrutinise the results data figure out what we have to work with.
+
 
 ```{r}
+str(results_afltables)
+```
+
+
+Based on the above we can use a combination of the `Date` (or combination of `Season` and `Round`), `Home.Team` and `Away.Team` fields to uniquely describe the match and thus obtain it's unique `Game` id.
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+
+```{r}
+(
+  results_afltables_tb |> 
+    filter(Season == 2023, Round == "R15", Home.Team == "Sydney", 
+           Away.Team == "West Coast") |> 
+    pull(Game) ->
+    infamous_game_id_tb
+)
+
+```
+
+
+#### `data.table`
+
+
+```{r}
+(
+  infamous_game_id_dt <- results_afltables_dt[
+    Season == 2023 & Round == "R15" & Home.Team == "Sydney" & 
+      Away.Team == "West Coast", 
+    Game
+    ]
+)
+
+# confirming:
+identical(infamous_game_id_tb, infamous_game_id_dt)
+
+```
+:::
+
+We can henceforth use this game ID whenever relevant to rank the swans.
+
+### Flattening the Data
+
+While inspecting the `results_afltables_dt` we may not that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our question is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will create a 'flattened' version of `player_stats_afl_tables` that provide match-level field.
+
+
+First, let's take a look at the `player_stats_afl_tables` dataset to determine which fields are player-level and which are match-level.
+
+::: {.panel-tabset}
+
+#### Code
+
+
+```{r}
+#| eval: false
 str(player_stats_afltables)
 ```
 
-Inspecting the fields, we can determine that the following fields are player-level:
+Note that the output has been placed into another tab as it is rather long.
+
+#### Output
+
+
 
 ```{r}
-player_level_fields <- c("First.name", "Surname", "ID", "Jumper.No.", "Playing.for", "Kicks", "Marks", "Handballs", "Goals", 
-  "Behinds", "Hit.Outs", "Tackles", "Rebounds", "Inside.50s", "Clearances", "Clangers", "Frees.For", 
-  "Frees.Against", "Brownlow.Votes", "Contested.Possessions", "Uncontested.Possessions", "Contested.Marks", 
-  "Marks.Inside.50", "One.Percenters", "Bounces", "Goal.Assists", "Time.on.Ground..")
+#| echo: false
+str(player_stats_afltables)
+```
+
+:::
+
+
+Inspecting the fields and using some knowledge of the game, we can determine that the following fields are player-level:
+
+```{r}
+player_level_fields <- c(
+  "First.name", "Surname", "ID", "Jumper.No.", "Playing.for", "Kicks", "Marks", 
+  "Handballs", "Goals", "Behinds", "Hit.Outs", "Tackles", "Rebounds", "Inside.50s", 
+  "Clearances", "Clangers", "Frees.For", "Frees.Against", "Brownlow.Votes", 
+  "Contested.Possessions", "Uncontested.Possessions", "Contested.Marks", 
+  "Marks.Inside.50", "One.Percenters", "Bounces", "Goal.Assists", "Time.on.Ground..",
+  "Substitute"
+  )
 
 match_level_fields <- setdiff(colnames(player_stats_afltables), player_level_fields)
 
@@ -317,6 +422,86 @@ We can now safely group by the `match_level_fields` below:
 ::: {.panel-tabset}
 
 #### Tidyverse
+
+
+```{r}
+player_stats_afltables_tb |> 
+  mutate(
+    home_player = Playing.for == Home.team,
+    away_player = Playing.for == Away.team
+  ) |> 
+  group_by(pick(match_level_fields)) |> 
+  summarise(
+    player_count = n(),
+    home_kicks = sum(Kicks * home_player),
+    away_kicks = sum(Kicks * away_player),
+    home_marks = sum(Marks * home_player),
+    away_marks = sum(Marks * away_player),
+    home_handballs = sum(Handballs * home_player),
+    away_handballs = sum(Handballs * away_player),
+    home_hit_outs = sum(Hit.Outs * home_player),
+    away_hit_outs = sum(Hit.Outs * away_player),
+    home_tackles = sum(Tackles * home_player),
+    away_tackles = sum(Tackles * away_player),
+    home_rebounds = sum(Rebounds * home_player),
+    away_rebounds = sum(Rebounds * away_player),
+    home_inside_50s = sum(Inside.50s * home_player),
+    away_inside_50s = sum(Inside.50s * away_player),
+    home_clearances = sum(Clearances * home_player),
+    away_clearances = sum(Clearances * away_player),
+    home_clangers = sum(Clangers * home_player),
+    away_clangers = sum(Clangers * away_player),
+    home_frees_for = sum(Frees.For * home_player),
+    away_frees_for = sum(Frees.For * away_player),
+    home_frees_against = sum(Frees.Against * home_player),
+    away_frees_against = sum(Frees.Against * away_player),
+    home_contested_possessions = sum(Contested.Possessions * home_player),
+    away_contested_possessions = sum(Contested.Possessions * away_player),
+    home_uncontested_possessions = sum(Uncontested.Possessions * home_player),
+    away_uncontested_possessions = sum(Uncontested.Possessions * away_player),
+    home_contested_marks = sum(Contested.Marks * home_player),
+    away_contested_marks = sum(Contested.Marks * away_player),
+    home_marks_inside_50 = sum(Marks.Inside.50 * home_player),
+    away_marks_inside_50 = sum(Marks.Inside.50 * away_player),
+    home_one_percenters = sum(One.Percenters * home_player),
+    away_one_percenters = sum(One.Percenters * away_player),
+    home_bounces = sum(Bounces * home_player),
+    away_bounces = sum(Bounces * away_player),
+    home_goal_assists = sum(Goal.Assists * home_player),
+    away_goal_assists = sum(Goal.Assists * away_player),
+    .groups = "drop"
+  ) -> 
+  match_stats_flat_tb
+
+# verify correct number of games:
+nrow(match_stats_flat_tb) == nrow(results_afltables_tb)
+```
+
+Note that the output has been placed into another tab as it is rather long.
+
+#### `data.table`
+
+
+
+```{r}
+match_stats_flat_dt <- copy(player_stats_afltables_dt)
+
+match_stats_flat_dt[, home_player := Playing.for == Home.team]
+match_stats_flat_dt[, away_player := Playing.for == Away.team]
+
+
+```
+
+:::
+
+
+
+## Highest Scoring Quarter
+
+
+::: {.panel-tabset}
+
+### Tidyverse
 
 Break down by
 
@@ -350,7 +535,7 @@ results_afltables_tb <- as_tibble(results_afltables)
 ```
 
 
-#### `data.table`
+### `data.table`
 
 ```{r}
 #| message: FALSE
@@ -361,6 +546,10 @@ results_afltables_dt <- as.data.table(results_afltables)
 
 
 :::
+
+### Comparing to the Swans Eagles Game
+
+While the swans scored heavily in the aforementioned game, it was not loaded so heavily in any particular so they are not really close to the highest scoring quarters. However, their third quarter score of 11 goals 5, 71 made it into the top ten of their highest scoring quarters. I actually didn't need to run any R code to find this out as there is a page on AFL tables that summarises quarter score records [here](https://afltables.com/afl/teams/swans/qh.html){targer = "_blank"}.
 
 
 ## Most Goal-kickers

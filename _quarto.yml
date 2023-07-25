@@ -33,6 +33,10 @@ website:
   
   google-analytics: "G-V8P5XXLZK4"
   
+  back-to-top-navigation: true
+  reader-mode: true
+  repo-actions: [edit, issue]
+  
   search:
     location: navbar
     type: textbox
