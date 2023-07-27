@@ -1,8 +1,8 @@
 ---
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
-  This blog post discusses the types of statistical questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
-date: 2023-07-25
+  This blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
+date: 2023-07-29
 categories: 
   - Sport
   - AFL
@@ -36,7 +36,7 @@ source("../../../../scripts/reactable-theming.R")
 
 # Prelude
 
-Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics have been recorded and opined on by teams, the press and your average punter alike. 
+Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics are constantly being recorded and opined on by teams, the press and your average punter alike. 
 
 My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]) is no different. Indeed some have even described the AFL (Australia's nation competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
 
@@ -58,7 +58,7 @@ I believe a contributor to this is that we are emulating what we hear on the bro
 
 > But what are us plebeians meant to do, bereft of such luxuries you might ask?
 
-Well, a quick Google search will make short work of questions of a more trivial nature such as "which player has kicked the most goals"[^tony-lockett] or "which team has won the most premierships"[^most-premierships]. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as
+Well, a quick Google search will make short work of questions of a more trivial nature such as "which player has kicked the most career goals"[^tony-lockett] or "which team has won the most premierships"[^most-premierships]. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as
 
 * Trawling through more obscure websites such as [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"} to answer things like "what is the most disposal Zac Dawson had in a game"[^zac-dawson]; or
 
@@ -87,6 +87,7 @@ However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJ
 
 ::: {.callout-caution collapse="true"}
 
+
 ## Apologies for the delay
 
 I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for slowness are:
@@ -100,8 +101,11 @@ The R code and analysis itself did not take long at all, so the main areas I am 
 
 :::
 
+## Target Audience Unclear
 
-## A concrete example
+> If you are a footy fan this article will likely present as some mildy interesting footy facts, combined with incomprehensible techno-babble. For R users this will likely appear to be a fairly elementary data wrangling exercise, combined with a bunch of references you don't understand. But if you are both a footy fan and an R user, it will hopefully prove to be a quite interesting read. 
+
+# A concrete example
 
 I recently had the misfortune (as a West Coast fan) of attending a game live between the Sydney Swans and (not so) mighty West Coast Eagles with the following scoreline:
 
@@ -115,21 +119,26 @@ In one-sided games like this, it seems to me that footy stats questions become m
 
 If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions listed below:
 
+```{=html}
+<div id = "question-list"> </div>
+```
+
 > 
-- What is the record for the highest scoring quarter?
-- What is the record for the most individual goal kickers in a single game?
-- What is the record for the most multiple goal kickers in a single game?
-- What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?
-- Where does the aforementioned game rank among the most one-sided games?
-- What is the record for the most clangers in a game?
-- What is the record for the worst disposal efficiency in a game by a player?
-- Has anyone won a Norm Smith Medal in their first season in the AFL?
+- [What is the record for the highest scoring quarter?](#highest-scoring-quarter)
+- [What is the record for the most individual goal kickers in a single game?](#individual)
+- [What is the record for the most multiple goal kickers in a single game?](#multiple)
+- [What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?](#five-or-more-bags)
+- [Where does the aforementioned game rank among the most one-sided games?](#most-one-sided-games)
+- [What is the record for the most clangers in a game?](#most-clangers)
+- [What is the record for the worst disposal efficiency in a game by a player?](#worst-disposal-efficiency)
+- [Has anyone won a Norm Smith Medal in their first season in the AFL?](#youngest-norm-smith-medalist)
 - What is the record for the most unanswered goals in a game?*
 - What is the school with the most AFL players on their list?*
 - What city/town has the most AFL players relative to population?*
 - Which player has the best goals to behinds ratio?*
 - Have there ever been any undefeated seasons?*
 - What is the worst win-loss record to make finals?*
+
 
 ::: {.callout-note}
 
@@ -205,8 +214,8 @@ The `fetch_*` family of functions from the `fitzRoy` package allow us to read th
 
 ```{r}
 #| eval: FALSE
-player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
-results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
+player_stats <- fitzRoy::fetch_player_stats(season = 1897:2023)
+results <- fitzRoy::fetch_results(season = 1897:2023)
 ```
 
 
@@ -218,45 +227,48 @@ results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
 
 When sourcing data from `fitzRoy`, it is important to follow good data collection[^fitzRoy-good-practice] etiquette by only downloading the data you need and avoiding repeatedly downloading the same data over and over again. This prevents servers being overloaded and will mean everyone will get their data faster.
 
-For example for the purposes of this blog post, I have saved the data in a local RDS file instead of repeatedly calling the `fetch_*` functions, I use `readRDS()`. The code for this is below (and the code above is not actually run but is cleaner for demonstration purposes):
+In keeping with this, for the purposes of this blog post, I have saved the data in a local RDS file instead of repeatedly calling the `fetch_*` functions, I use `readRDS()`. The code for this is below (and the code above is not actually run but is cleaner for demonstration purposes):
 
 [^fitzRoy-good-practice]: this topic is discussed on the `fitzRoy` documentation site [here](https://jimmyday12.github.io/fitzRoy/articles/fitzRoy.html#good-practices){target="_blank"}
 
 ```{r}
-if(file.exists("data/player_stats_afltables.RDS")) {
-  player_stats_afltables <- readRDS("data/player_stats_afltables.RDS")
+if(file.exists("data/player_stats.RDS")) {
+  player_stats <- readRDS("data/player_stats.RDS")
   
 } else {
-  player_stats_afltables <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
-  saveRDS(player_stats_afltables, "data/player_stats_afltables.RDS")
+  player_stats <- fitzRoy::fetch_player_stats_afltables(season = 1897:2023)
+  saveRDS(player_stats, "data/player_stats.RDS")
 }
 
-if(file.exists("data/results_afltables.RDS")) {
-  results_afltables <- readRDS("data/results_afltables.RDS")
+if(file.exists("data/results.RDS")) {
+  results <- readRDS("data/results.RDS")
   
 } else {
-  results_afltables <- fitzRoy::fetch_results_afltables(season = 1897:2023)
-  saveRDS(results_afltables, "data/results_afltables.RDS")
+  results <- fitzRoy::fetch_results_afltables(season = 1897:2023)
+  saveRDS(results, "data/results.RDS")
 }
-
-
 
 ```
+
 :::
 
-
+The data we have read in is as at round `R tail(player_stats$Round, 1)` of the `R tail(player_stats$Season, 1)` AFL season.
 
 ## Finicky Details About Other R Packages
 
-### Tidyverse versus `data.table`
+### Tidyverse Versus `data.table`
 
-In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed [tidyverse](https://www.tidyverse.org/){target="_blank"} and the ever-potent [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}.
+In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed [tidyverse](https://www.tidyverse.org/){target="_blank"} and the heavily-optimised [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}.
 
 [^previously-RStudio]: [formally known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
 
-As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout to allow the reader to see both for their convenience. As my personal preference for readability is the tidyverse, I will place this code in the first tab.
+As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout for the convenience of the reader. As my personal preference for readability purposes is the tidyverse[^tidyverse-rationale], I will place this code in the first tab.
+
 
 [^base-r-dig]: note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but `base` R `data.frames` will probably cause more pain than they are worth (there is a reason that tidyverse and `data.table` exist)
+
+
+[^tidyverse-rationale]: I will typically will only use `data.table` if the size of data necessitates it. In this case, the data is less than a million rows so there are no problems.
 
 ::: {.panel-tabset}
 
@@ -266,8 +278,8 @@ Note that the code below is somewhat redundant as the `fitzRoy` package follows 
 
 ```{r}
 #| message: FALSE
-player_stats_afltables_tb <- as_tibble(player_stats_afltables)
-results_afltables_tb <- as_tibble(results_afltables)
+player_stats_tb <- as_tibble(player_stats)
+results_tb <- as_tibble(results)
 ```
 
 [^tb-abbreviation]: an abbreviation of "tibble"
@@ -279,8 +291,8 @@ Henceforth, all `data.table` code will use the `_dt` suffix[^dt-abbreviation] as
 
 ```{r}
 #| message: FALSE
-player_stats_afltables_dt <- as.data.table(player_stats_afltables)
-results_afltables_dt <- as.data.table(results_afltables)
+player_stats_dt <- as.data.table(player_stats)
+results_dt <- as.data.table(results)
 ```
 
 [^dt-abbreviation]: an acronym of "data.table"
@@ -310,71 +322,30 @@ While I have tried to appease people in both the tidyverse and `data.table` camp
 While the majority of our data will be sourced using the `fitzRoy` package, a small amount of data (namely Norm Smith medalists, which are outside of the scope of `fitzRoy`) will require us to perform some bespoke web scraping. This will be performed using the `rvest` package (loaded [above](#cb1)).
 
 
+
 # Figuring Out the Answers
 
-In this section I will provide my working using R for each of the [aforementioned questions](#a-concrete-example).
+In this section I will provide my working using R for each of the [aforementioned questions](#question-list). Where relevant, I will figure out where the [aforementioned infamous game](#a-concrete-example) places in the history of the AFL for that particular category.
 
-> Place the swans games for these stats where relevant. look at the least remarkable game it is on part with (e.g. for individual goal kickers if it seems notable)
 
 ## Preliminary Data Work
 
-### Finding the Infamous Game
-
-Let's begin with the simple exercise of obtaining the match ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game.
-
-To begin with, let's scrutinise the results data figure out what we have to work with.
-
-
-```{r}
-str(results_afltables)
-```
-
-
-Based on the above we can use a combination of the `Date` (or combination of `Season` and `Round`), `Home.Team` and `Away.Team` fields to uniquely describe the match and thus obtain it's unique `Game` id.
-
-::: {.panel-tabset}
-
-#### Tidyverse
-
-
-```{r}
-(
-  results_afltables_tb |> 
-    filter(Season == 2023, Round == "R15", Home.Team == "Sydney", 
-           Away.Team == "West Coast") |> 
-    pull(Game) ->
-    infamous_game_id_tb
-)
-
-```
-
-
-#### `data.table`
-
-
-```{r}
-(
-  infamous_game_id_dt <- results_afltables_dt[
-    Season == 2023 & Round == "R15" & Home.Team == "Sydney" & 
-      Away.Team == "West Coast", 
-    Game
-    ]
-)
-
-# confirming:
-identical(infamous_game_id_tb, infamous_game_id_dt)
-
-```
-:::
-
-We can henceforth use this game ID whenever relevant to rank the swans.
 
 ### Flattening the Data
 
-While inspecting the `results_afltables_dt` we may not that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our question is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will create a 'flattened' version of `player_stats_afl_tables` that provide match-level field.
+
+To begin with, let's scrutinise the results data in order to figure out what we have to work with.
 
 
-First, let's take a look at the `player_stats_afl_tables` dataset to determine which fields are player-level and which are match-level.
+```{r}
+str(results)
+```
+
+
+While inspecting the `results` we may note that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our question is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will create a 'flattened' version of `player_stats_afl_tables` with all the match-level fields available to us on both datasets.
+
+
+Now, let's take a look at the `player_stats_afl_tables` dataset to determine which fields are player-level and which are match-level.
 
 ::: {.panel-tabset}
 
@@ -383,18 +354,16 @@ First, let's take a look at the `player_stats_afl_tables` dataset to determine w
 
 ```{r}
 #| eval: false
-str(player_stats_afltables)
+str(player_stats)
 ```
 
 Note that the output has been placed into another tab as it is rather long.
 
 #### Output
 
-
-
 ```{r}
 #| echo: false
-str(player_stats_afltables)
+str(player_stats)
 ```
 
 :::
@@ -412,11 +381,11 @@ player_level_fields <- c(
   "Substitute"
   )
 
-match_level_fields <- setdiff(colnames(player_stats_afltables), player_level_fields)
+match_level_fields <- setdiff(colnames(player_stats), player_level_fields)
 
 ```
 
-We can now safely group by the `match_level_fields` below:
+We can now safely group and aggregate by the `match_level_fields` below:
 
 
 ::: {.panel-tabset}
@@ -425,12 +394,12 @@ We can now safely group by the `match_level_fields` below:
 
 
 ```{r}
-player_stats_afltables_tb |> 
+player_stats_tb |> 
   mutate(
     home_player = Playing.for == Home.team,
     away_player = Playing.for == Away.team
   ) |> 
-  group_by(pick(match_level_fields)) |> 
+  group_by(pick(all_of(match_level_fields))) |> 
   summarise(
     player_count = n(),
     home_kicks = sum(Kicks * home_player),
@@ -470,30 +439,316 @@ player_stats_afltables_tb |>
     home_goal_assists = sum(Goal.Assists * home_player),
     away_goal_assists = sum(Goal.Assists * away_player),
     .groups = "drop"
-  ) -> 
+  ) |>
+  arrange(Date, Local.start.time, Home.team) -> 
   match_stats_flat_tb
 
 # verify correct number of games:
-nrow(match_stats_flat_tb) == nrow(results_afltables_tb)
+nrow(match_stats_flat_tb) == nrow(results_tb)
 ```
-
-Note that the output has been placed into another tab as it is rather long.
 
 #### `data.table`
 
 
-
 ```{r}
-match_stats_flat_dt <- copy(player_stats_afltables_dt)
+match_stats_flat_dt <- copy(player_stats_dt)
 
 match_stats_flat_dt[, home_player := Playing.for == Home.team]
 match_stats_flat_dt[, away_player := Playing.for == Away.team]
 
+match_stats_flat_dt <- match_stats_flat_dt[, .(
+  player_count = .N,
+  home_kicks = sum(Kicks * home_player),
+  away_kicks = sum(Kicks * away_player),
+  home_marks = sum(Marks * home_player),
+  away_marks = sum(Marks * away_player),
+  home_handballs = sum(Handballs * home_player),
+  away_handballs = sum(Handballs * away_player),
+  home_hit_outs = sum(Hit.Outs * home_player),
+  away_hit_outs = sum(Hit.Outs * away_player),
+  home_tackles = sum(Tackles * home_player),
+  away_tackles = sum(Tackles * away_player),
+  home_rebounds = sum(Rebounds * home_player),
+  away_rebounds = sum(Rebounds * away_player),
+  home_inside_50s = sum(Inside.50s * home_player),
+  away_inside_50s = sum(Inside.50s * away_player),
+  home_clearances = sum(Clearances * home_player),
+  away_clearances = sum(Clearances * away_player),
+  home_clangers = sum(Clangers * home_player),
+  away_clangers = sum(Clangers * away_player),
+  home_frees_for = sum(Frees.For * home_player),
+  away_frees_for = sum(Frees.For * away_player),
+  home_frees_against = sum(Frees.Against * home_player),
+  away_frees_against = sum(Frees.Against * away_player),
+  home_contested_possessions = sum(Contested.Possessions * home_player),
+  away_contested_possessions = sum(Contested.Possessions * away_player),
+  home_uncontested_possessions = sum(Uncontested.Possessions * home_player),
+  away_uncontested_possessions = sum(Uncontested.Possessions * away_player),
+  home_contested_marks = sum(Contested.Marks * home_player),
+  away_contested_marks = sum(Contested.Marks * away_player),
+  home_marks_inside_50 = sum(Marks.Inside.50 * home_player),
+  away_marks_inside_50 = sum(Marks.Inside.50 * away_player),
+  home_one_percenters = sum(One.Percenters * home_player),
+  away_one_percenters = sum(One.Percenters * away_player),
+  home_bounces = sum(Bounces * home_player),
+  away_bounces = sum(Bounces * away_player),
+  home_goal_assists = sum(Goal.Assists * home_player),
+  away_goal_assists = sum(Goal.Assists * away_player)
+), by = match_level_fields]
+
+setorder(match_stats_flat_dt, Date, Local.start.time, Home.team)
+
+# verify outputs match:
+identical(as.data.frame(match_stats_flat_tb), as.data.frame(match_stats_flat_dt))
+
+```
+:::
+
+Henceforth, `player_stats_*` and `match_stats_flat_*` will be the two datasets we will use predominantly.
+
+### IDs and URLs
+
+One thing that our `match_stats_flat_*` dataset is currently lacking is a game ID for use as a primary key. In addition, being able to link directly to AFL tables when talking about particular game or players would be handy.
+
+#### Game ID and URL
+
+Let's tackle the game ID by writing some functions to an ID which also conveniently lines up with the way AFL Tables game URLs work (two birds with one stone). 
+
+
+```{r}
+team_code_map <- c(
+  "Adelaide" = "01",
+  "Brisbane Bears" = "02",
+  "Carlton" = "03",
+  "Collingwood" = "04",
+  "Essendon" = "05",
+  "Fitzroy" = "06",
+  "Western Bulldogs" = "07",
+  "Fremantle" = "08",
+  "Geelong" = "09",
+  "Hawthorn" = "10",
+  "Melbourne" = "11",
+  "North Melbourne" = "12",
+  "Port Adelaide" = "13",
+  "Richmond" = "14",
+  "St Kilda" = "15",
+  "Sydney" = "16",
+  "University" = "17",
+  "West Coast" = "18",
+  "Brisbane Lions" = "19",
+  "Gold Coast" = "20",
+  "Greater Western Sydney" = "21"
+)
+
+# The three functions below are all vectorised for efficiency purposes
+get_team_code <- function(team_name) {
+ team_code_map[team_name]
+}
+
+get_game_id <- function(home_team_code, away_team_code, game_date) {
+  # example ID: 161820230624
+  game_date_string <- format(game_date, "%Y%m%d")
+  
+  ifelse(
+    home_team_code > away_team_code, 
+    # the smaller code is always first
+    paste0(away_team_code, home_team_code, game_date_string),
+    paste0(home_team_code, away_team_code, game_date_string)
+    )
+}
+
+get_game_afltables_url <- function(game_id, season) {
+  # example url: https://afltables.com/afl/stats/games/2023/161820230624.html
+  paste0("https://afltables.com/afl/stats/games/", season,"/", game_id, ".html")
+}
+
+
+```
+
+Now lets use these functions[^vectorisation-benefits] to add a primary key to our `match_stats_flat_*` datasets.
+
+[^vectorisation-benefits]: Note that as the functions are vectorised, we need not use the slow `purrr::map*()` or `*apply()` family of functions to apply them to a column of our `tibble` and `data.table` respectively.
+
+::: {.panel-tabset}
+
+##### Tidyverse
+
+```{r}
+match_stats_flat_tb |> 
+  mutate(
+    home_team_code = get_team_code(Home.team),
+    away_team_code = get_team_code(Away.team),
+    game_id = get_game_id(home_team_code, away_team_code, Date),
+    game_afltables_url = get_game_afltables_url(game_id, Season)
+  ) |> 
+  relocate(game_id, .before = Season) |> 
+  arrange(game_id) ->
+  match_stats_flat_tb
+
+```
+
+##### `data.table`
+
+```{r}
+match_stats_flat_dt[, home_team_code := get_team_code(Home.team)]
+match_stats_flat_dt[, away_team_code := get_team_code(Away.team)]
+match_stats_flat_dt[, game_id := get_game_id(home_team_code, away_team_code, Date)]
+match_stats_flat_dt[, game_afltables_url := get_game_afltables_url(game_id, Season)]
+
+setcolorder(match_stats_flat_dt, c("game_id", setdiff(names(match_stats_flat_dt), "game_id")))
+setkey(match_stats_flat_dt, game_id)
+
+# verify outputs match:
+identical(as.data.frame(match_stats_flat_tb), as.data.frame(match_stats_flat_dt))
+```
+
+:::
+
+#### Player URLs
+
+In a similar way we can add a player URL to our `player_stats_*` datasets, we start by creating a mapping table.
+
+
+::: {.panel-tabset}
+
+##### Tidyverse
+
+```{r}
+# non-duplicate URL: https://afltables.com/afl/stats/players/E/Errol_Gulden.html
+# duplicate URL: https://afltables.com/afl/stats/players/J/Josh_Kennedy0.html, https://afltables.com/afl/stats/players/J/Josh_Kennedy1.html
+# for dealing with duplicates, for example Peter Brown (6 of the same name!) seems to have a nonsensical order
+player_stats_tb |> 
+  mutate(full_name = paste(First.name, Surname, sep = "_")) |> 
+  distinct(ID, full_name) |> 
+  group_by(full_name) |> 
+  arrange(ID) |>
+  mutate(
+    instance_number = as.character(cumsum(rep(1L, n())) - 1L),
+    dup_count = n()
+  ) |> 
+  mutate(
+    number_suffix = if_else(dup_count == 1L, "", instance_number),
+    first_letter = str_sub(full_name, 1, 1),
+    player_afltables_url = paste0("https://afltables.com/afl/stats/players/", 
+                                  first_letter, "/", full_name, number_suffix, ".html")
+  ) |> 
+  ungroup() |> 
+  select(ID, player_afltables_url) ->
+  player_url_tb
+
+# player_url_map_tb <- `names<-`(player_url_tb$player_url, player_url_tb$ID)
+```
+
+##### `data.table`
+
+```{r}
+player_url_dt <- copy(player_stats_dt)
+
+player_url_dt[, full_name := paste(First.name, Surname, sep = "_")]
+player_url_dt <- unique(player_url_dt, by = c("ID", "full_name"))
+setorder(player_url_dt, ID)
+player_url_dt <- player_url_dt[, `:=`(
+  instance_number = as.character(cumsum(rep(1L, .N)) - 1L),
+  dup_count = .N
+), "full_name"]
+
+player_url_dt[, number_suffix := fifelse((dup_count == 1L), "", instance_number)]
+player_url_dt[, first_letter := str_sub(full_name, 1, 1)]
+player_url_dt[, player_afltables_url := paste0("https://afltables.com/afl/stats/players/", 
+                                     first_letter, "/", full_name, number_suffix, ".html")]
+player_url_dt <- player_url_dt[, .(ID, player_afltables_url)]
+# player_url_map_dt <- `names<-`(player_url_dt$player_url, player_url_dt$ID)
+
+# verify outputs match:
+identical(as.data.frame(player_url_tb), as.data.frame(player_url_dt))
+# identical(player_url_map_tb, player_url_map_dt)
+```
+
+:::
+
+Now we can add add the game ID, game URL and player URL to the `player_stats_*` dataset.
+
+::: {.panel-tabset}
+
+##### Tidyverse
+
+```{r}
+player_stats_tb |> 
+  mutate(
+    home_team_code = get_team_code(Home.team),
+    away_team_code = get_team_code(Away.team),
+    game_id = get_game_id(home_team_code, away_team_code, Date),
+  ) |> 
+  left_join(match_stats_flat_tb |> select(game_id, game_afltables_url), by = "game_id") |> 
+  left_join(player_url_tb, by = "ID") |> 
+  relocate(game_id, ID, .before = Season) |>
+  arrange(game_id, Playing.for, ID) ->
+  player_stats_tb
+```
+
+##### `data.table`
+
+```{r}
+player_stats_dt[, home_team_code := get_team_code(Home.team)]
+player_stats_dt[, away_team_code := get_team_code(Away.team)]
+player_stats_dt[, game_id := get_game_id(home_team_code, away_team_code, Date)]
+
+player_stats_dt <- merge(
+  player_stats_dt, match_stats_flat_dt[, c("game_id", "game_afltables_url")], 
+  by = "game_id")
+
+player_stats_dt <- merge(player_stats_dt, player_url_dt, by = "ID")
+
+setcolorder(player_stats_dt, c(c("game_id", "ID"), setdiff(names(player_stats_dt), c("game_id", "ID"))))
+setkey(player_stats_dt, game_id, Playing.for, ID)
+# verify outputs match:
+identical(as.data.frame(player_stats_tb), as.data.frame(player_stats_dt))
+```
+
+:::
+
+
+
+
+## Finding the Infamous Game
+
+Let's use this new datasets to perform the simple exercise of obtaining the match ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game.
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+(
+  results_tb |> 
+    filter(Season == 2023, Round == "R15", Home.Team == "Sydney", 
+           Away.Team == "West Coast") |> 
+    pull(Game) ->
+    infamous_game_id_tb
+)
+
+```
+
+#### `data.table`
+
+```{r}
+(
+  infamous_game_id_dt <- results_dt[
+    Season == 2023 & Round == "R15" & Home.Team == "Sydney" & 
+      Away.Team == "West Coast", 
+    Game
+    ]
+)
+
+# confirming:
+identical(infamous_game_id_tb, infamous_game_id_dt)
 
 ```
 
 :::
 
+We can henceforth use this game ID whenever relevant to rank the swans.
 
 
 ## Highest Scoring Quarter
@@ -513,13 +768,13 @@ Break down by
 library(dplyr)
 library(stringr)
 
-player_stats_afltables_tb |> 
+player_stats_tb |> 
   group_by(
     Season, Round, Date, Local.start.time, Venue, Attendance, Home.team, 
     Away.team, Home.score, .data[["Away.score"]]
   ) |> 
   summarise(count = n())
-results_afltables_tb <- as_tibble(results_afltables)
+results_tb <- as_tibble(results)
 ```
 
 
@@ -527,8 +782,8 @@ results_afltables_tb <- as_tibble(results_afltables)
 
 ```{r}
 
-player_stats_afltables_tb <- as_tibble(player_stats_afltables)
-results_afltables_tb <- as_tibble(results_afltables)
+player_stats_tb <- as_tibble(player_stats)
+results_tb <- as_tibble(results)
 
 # verify that it has the same number of rows as the results data.
 
@@ -540,8 +795,8 @@ results_afltables_tb <- as_tibble(results_afltables)
 ```{r}
 #| message: FALSE
 library(data.table)
-player_stats_afltables_dt <- as.data.table(player_stats_afltables)
-results_afltables_dt <- as.data.table(results_afltables)
+player_stats_dt <- as.data.table(player_stats)
+results_dt <- as.data.table(results)
 ```
 
 
@@ -562,33 +817,17 @@ where AA and BB are the team codes for two teams (described below) playing in as
 e.g. https://afltables.com/afl/stats/games/1991/020419910803.html
 
 
-01: Adelaide Crows
-02: Brisbane Bears (team=brisbane lions for 1987-1996)
-03: Carlton
-04: Collingwoord
-05: Essendon
-06: Fitzroy
-07: Western Bulldogs/Footscray
-08: Fremantle
-09: Geelong
-10: Hawthorn
-11: Melbourne
-12: North Melbourne
-13: Port Adelaide
-14: Richmond
-15: St Kilda
-16: Sydney/South Melbourne
-17 University
-18: West Coast
-19: Brisbane Lions (team=brisbane lions for 1997 onwards)
-20: Gold Coast
-21: GWS
+
 
 ### Individual
 
 ### Multiple
 
 ### Five or More (Bags)
+
+## Most One-sided Games
+
+
 
 ## Most Clangers
 
@@ -599,7 +838,7 @@ Define clanger
 Define disposal efficiency
 
 
-## The norm smith
+## Youngest Norm Smith Medalist
 
 Make the below a collapsible callout (some of it doesn't need to be)
 
@@ -634,6 +873,8 @@ Summarise by player, team player and season where relevant (grouped columns or p
 # Notable AFL Stats Figures
 
 I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package):
+
+- [`fitzRoy`](https://github.com/jimmyday12/fitzRoy): as outlined in this article, this R package is the de facto way of sourcing AFL data.
 
 - [Useless AFL Stats](https://www.facebook.com/uselessaflstats){target="_blank"}: a Facebook page which shares always interesting, sometimes abstract and often amusing AFL stats content. [Liam Crow](https://twitter.com/crow_data_sci){target="_blank"} is their data scientist and posts some interesting content of his own on his website: [https://www.crowdatascience.com](https://www.crowdatascience.com){target="_blank"}.
 
