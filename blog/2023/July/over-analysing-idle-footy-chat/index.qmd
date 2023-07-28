@@ -26,6 +26,7 @@ reading-time: true
 #| message: false
 
 library(reactable)
+library(htmltools)
 source("../../../../scripts/reactable-theming.R")
 
 
@@ -678,10 +679,11 @@ player_stats_tb |>
     home_team_code = get_team_code(Home.team),
     away_team_code = get_team_code(Away.team),
     game_id = get_game_id(home_team_code, away_team_code, Date),
+    player = paste0(First.name, " ", Surname, " (", Playing.for,")")
   ) |> 
   left_join(match_stats_flat_tb |> select(game_id, game_afltables_url), by = "game_id") |> 
   left_join(player_url_tb, by = "ID") |> 
-  relocate(game_id, ID, .before = Season) |>
+  relocate(c("game_id", "player", "ID"), .before = Season) |>
   arrange(game_id, Playing.for, ID) ->
   player_stats_tb
 ```
@@ -692,6 +694,7 @@ player_stats_tb |>
 player_stats_dt[, home_team_code := get_team_code(Home.team)]
 player_stats_dt[, away_team_code := get_team_code(Away.team)]
 player_stats_dt[, game_id := get_game_id(home_team_code, away_team_code, Date)]
+player_stats_dt[, player := paste0(First.name, " ", Surname, " (", Playing.for,")")]
 
 player_stats_dt <- merge(
   player_stats_dt, match_stats_flat_dt[, c("game_id", "game_afltables_url")], 
@@ -699,7 +702,7 @@ player_stats_dt <- merge(
 
 player_stats_dt <- merge(player_stats_dt, player_url_dt, by = "ID")
 
-setcolorder(player_stats_dt, c(c("game_id", "ID"), setdiff(names(player_stats_dt), c("game_id", "ID"))))
+setcolorder(player_stats_dt, c(c("game_id", "player"), setdiff(names(player_stats_dt), c("game_id", "player"))))
 setkey(player_stats_dt, game_id, Playing.for, ID)
 # verify outputs match:
 identical(as.data.frame(player_stats_tb), as.data.frame(player_stats_dt))
@@ -712,7 +715,7 @@ identical(as.data.frame(player_stats_tb), as.data.frame(player_stats_dt))
 
 ## Finding the Infamous Game
 
-Let's use this new datasets to perform the simple exercise of obtaining the game ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game.
+Let's use these new datasets to perform the simple exercise of obtaining the game ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game. We can henceforth use this game ID whenever relevant to rank the swans in the statistical category we investigate.
 
 ```{r}
 (
@@ -740,12 +743,18 @@ library(reactable)
 # Match Stats:
 match_stats_flat_tb |> 
   filter(game_id == infamous_game_id) |> 
-  reactable()
+  reactable(
+    # formatting code omitted
+  ) 
 
 # Player Stats:
 player_stats_tb |> 
+  mutate(full_name = paste0(First.name, " ", Surname, " (", Playing.for,")")) |> 
   filter(game_id == infamous_game_id) |> 
-  reactable()
+  reactable(
+    # formatting code omitted
+  ) 
+
 ```
 
 #### `data.table`
@@ -755,34 +764,59 @@ player_stats_tb |>
 library(reactable)
 
 # Match Stats:
-reactable(match_stats_flat_dt[game_id == infamous_game_id, ])
+reactable(match_stats_flat_dt[game_id == infamous_game_id, ], )# formatting code omitted
 # Player Stats:
-reactable(player_stats_dt[game_id == infamous_game_id, ])
+reactable(player_stats_dt[, player := paste0(First.name, " ", Surname, " (", Playing.for,")")]
+          [game_id == infamous_game_id, ])# formatting code omitted
 ```
 
 :::
 
-Match Stats:
+### Match Stats
 
 ```{r}
 #| echo: false
+# TODO: add format and freeze game URL (open in a new tab)
 match_stats_flat_tb |> 
   filter(game_id == infamous_game_id) |> 
-  reactable_themed()
+  reactable_themed(
+    columns = list(
+      game_afltables_url = colDef(
+        sticky = "right",
+        cell = function(cell_value) {
+          tags$a(href = cell_value, target = "_blank", "Game on AFL Tables")
+        }
+        )
+      )
+    )
 ```
 
-Player Stats:
+### Player Stats
 
 ```{r}
-player_stats_tb |> 
+# TODO: add format and freeze player URL (open in a new tab) and name and team
+player_stats_tb |>
   filter(game_id == infamous_game_id) |> 
-  reactable_themed()
+  reactable_themed(
+    columns = list(
+      game_afltables_url = colDef(
+        cell = function(cell_value) {
+          tags$a(href = cell_value, target = "_blank", "Game on AFL Tables")
+        }
+        ),
+      player_afltables_url = colDef(
+        sticky = "right",
+        cell = function(cell_value) {
+          tags$a(href = cell_value, target = "_blank", "Player on AFL Tables")
+        }
+        ),
+      player = colDef(sticky = "left")
+      )
+  )
 
 ```
 
 
-
-We can henceforth use this game ID whenever relevant to rank the swans.
 
 
 ## Highest Scoring Quarter
