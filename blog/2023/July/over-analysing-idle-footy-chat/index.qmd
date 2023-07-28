@@ -542,7 +542,7 @@ team_code_map <- c(
 
 # The three functions below are all vectorised for efficiency purposes
 get_team_code <- function(team_name) {
- team_code_map[team_name]
+ unname(team_code_map[team_name])
 }
 
 get_game_id <- function(home_team_code, away_team_code, game_date) {
@@ -712,41 +712,75 @@ identical(as.data.frame(player_stats_tb), as.data.frame(player_stats_dt))
 
 ## Finding the Infamous Game
 
-Let's use this new datasets to perform the simple exercise of obtaining the match ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game.
+Let's use this new datasets to perform the simple exercise of obtaining the game ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game.
 
+```{r}
+(
+  infamous_game_id <- get_game_id(
+    home_team_code = get_team_code("Sydney"),
+    away_team_code = get_team_code("West Coast"),
+    game_date = as.Date("2023-06-24")
+  )
+)
+```
+
+
+We can then filter the data and present it below in a table below[^table-code-omitted].
+
+[^table-code-omitted]: note that the code to format the table is omitted.
 
 ::: {.panel-tabset}
 
 #### Tidyverse
 
 ```{r}
-(
-  results_tb |> 
-    filter(Season == 2023, Round == "R15", Home.Team == "Sydney", 
-           Away.Team == "West Coast") |> 
-    pull(Game) ->
-    infamous_game_id_tb
-)
+#| eval: false
+library(reactable)
 
+# Match Stats:
+match_stats_flat_tb |> 
+  filter(game_id == infamous_game_id) |> 
+  reactable()
+
+# Player Stats:
+player_stats_tb |> 
+  filter(game_id == infamous_game_id) |> 
+  reactable()
 ```
 
 #### `data.table`
 
 ```{r}
-(
-  infamous_game_id_dt <- results_dt[
-    Season == 2023 & Round == "R15" & Home.Team == "Sydney" & 
-      Away.Team == "West Coast", 
-    Game
-    ]
-)
+#| eval: false
+library(reactable)
 
-# confirming:
-identical(infamous_game_id_tb, infamous_game_id_dt)
-
+# Match Stats:
+reactable(match_stats_flat_dt[game_id == infamous_game_id, ])
+# Player Stats:
+reactable(player_stats_dt[game_id == infamous_game_id, ])
 ```
 
 :::
+
+Match Stats:
+
+```{r}
+#| echo: false
+match_stats_flat_tb |> 
+  filter(game_id == infamous_game_id) |> 
+  reactable_themed()
+```
+
+Player Stats:
+
+```{r}
+player_stats_tb |> 
+  filter(game_id == infamous_game_id) |> 
+  reactable_themed()
+
+```
+
+
 
 We can henceforth use this game ID whenever relevant to rank the swans.
 
