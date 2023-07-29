@@ -2,7 +2,7 @@
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
   This blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
-date: 2023-07-29
+date: 2023-07-30
 categories: 
   - Sport
   - AFL
@@ -12,10 +12,6 @@ image: fitzroy-lions-logo.png
 reference-location: margin
 draft: false
 reading-time: true
-# format:
-#   html:
-#     include-before-body: ../../html/margin_image.html
-#     include-after-body: ../../html/blog_footer.html
 ---
 
 
@@ -37,7 +33,7 @@ source("../../../../scripts/reactable-theming.R")
 
 # Prelude
 
-Since antiquity (or at the very least living memory), sporting data have been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics are constantly being recorded and opined on by teams, the press and your average punter alike. 
+Since antiquity (or at the very least living memory), sporting data has been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics are constantly being recorded and opined on by teams, the press and your average punter alike. 
 
 My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]) is no different. Indeed some have even described the AFL (Australia's nation competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
 
@@ -61,11 +57,14 @@ I believe a contributor to this is that we are emulating what we hear on the bro
 
 Well, a quick Google search will make short work of questions of a more trivial nature such as "which player has kicked the most career goals"[^tony-lockett] or "which team has won the most premierships"[^most-premierships]. The more savvy among us may find answers to slightly more edifying questions by performing pro gamer moves such as
 
-* Trawling through more obscure websites such as [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"} to answer things like "what is the most disposal Zac Dawson had in a game"[^zac-dawson]; or
+* Trawling through more obscure websites such as [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}[^baseball-reference] to answer things like "what is the most disposal Zac Dawson had in a game"[^zac-dawson]; or
 
 * Digging into the deep recesses of the AFL Live App to answer questions like "what is the record for the longest distance run in a game"[^telstra-tracker]
 
 but some questions will still go unanswered.
+
+[^baseball-reference]: the [baseball/basketball reference](https://www.sports-reference.com/){target="_blank"} of the footy world (but maybe not quite as extensive)
+
 
 ```{r}
 #| echo: false
@@ -118,7 +117,9 @@ In one-sided games like this, it seems to me that footy stats questions become m
 
 2. These games are often filled with large statistical anomalies that might set new records
 
-If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions listed below:
+If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions.
+
+This article aims to tackle the questions listed below:
 
 ```{=html}
 <div id = "question-list"> </div>
@@ -129,7 +130,6 @@ If we also consider that it was two actuaries talking, it is safe to say that fo
 - [What is the record for the most individual goal kickers in a single game?](#individual)
 - [What is the record for the most multiple goal kickers in a single game?](#multiple)
 - [What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?](#five-or-more-bags)
-- [Where does the aforementioned game rank among the most one-sided games?](#most-one-sided-games)
 - [What is the record for the most clangers in a game?](#most-clangers)
 - [What is the record for the worst disposal efficiency in a game by a player?](#worst-disposal-efficiency)
 - [Has anyone won a Norm Smith Medal in their first season in the AFL?](#youngest-norm-smith-medalist)
@@ -190,7 +190,9 @@ library(data.table)
 
 library(rvest)
 library(stringr)
+library(tidyr)
 
+library(reactable)
 ```
 
 
@@ -211,7 +213,10 @@ library(stringr)
 Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. However if we require stats that it is missing, we will simply have to adopt a different data source and caveat it by saying it is only for a subset of the full history of the competition.
 
 
-The `fetch_*` family of functions from the `fitzRoy` package allow us to read the package. Consult the [documentation site](https://jimmyday12.github.io/fitzRoy/reference/index.html){target="_blank"} for a complete list of all the available functions. Below we will get the data we need to answer our questions:
+The `fetch_*` family of functions from the `fitzRoy` package allow us to read the package. Consult the [documentation site](https://jimmyday12.github.io/fitzRoy/reference/index.html){target="_blank"} for a complete list of all the available functions.
+
+
+For the purposes of the [questions listed above](#question-list) we will be using the full history of the AFL (1897 to present) using AFL Tables as a data source. We can *fetch* this data via `fitzRoy` with the following code:
 
 ```{r}
 #| eval: FALSE
@@ -324,15 +329,10 @@ While the majority of our data will be sourced using the `fitzRoy` package, a sm
 
 
 
-# Figuring Out the Answers
-
-In this section I will provide my working using R for each of the [aforementioned questions](#question-list). Where relevant, I will figure out where the [aforementioned infamous game](#a-concrete-example) places in the history of the AFL for that particular category.
+# Preliminary Data Wrangling
 
 
-## Preliminary Data Work
-
-
-### Flattening the Data
+## Flattening the Data
 
 
 To begin with, let's scrutinise the results data in order to figure out what we have to work with.
@@ -343,14 +343,14 @@ str(results)
 ```
 
 
-While inspecting the `results` we may note that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our question is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will create a 'flattened' version of `player_stats_afl_tables` with all the match-level fields available to us on both datasets.
+While inspecting the `results` we may note that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our question is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will opt to create a 'flattened' version of `player_stats_afl_tables` with all the match-level fields available to us on both datasets and discard the `results` dataset (save for some quick checks to make sure the player data 'flattening' worked as expected).
 
 
 Now, let's take a look at the `player_stats_afl_tables` dataset to determine which fields are player-level and which are match-level.
 
 ::: {.panel-tabset}
 
-#### Code
+### Code
 
 
 ```{r}
@@ -360,7 +360,7 @@ str(player_stats)
 
 Note that the output has been placed into another tab as it is rather long.
 
-#### Output
+### Output
 
 ```{r}
 #| echo: false
@@ -391,7 +391,7 @@ We can now safely group and aggregate by the `match_level_fields` below:
 
 ::: {.panel-tabset}
 
-#### Tidyverse
+### Tidyverse
 
 
 ```{r}
@@ -448,7 +448,7 @@ player_stats_tb |>
 nrow(match_stats_flat_tb) == nrow(results_tb)
 ```
 
-#### `data.table`
+### `data.table`
 
 
 ```{r}
@@ -507,11 +507,11 @@ identical(as.data.frame(match_stats_flat_tb), as.data.frame(match_stats_flat_dt)
 
 Henceforth, `player_stats_*` and `match_stats_flat_*` will be the two datasets we will use predominantly.
 
-### IDs and URLs
+## IDs and URLs
 
 One thing that our `match_stats_flat_*` dataset is currently lacking is a game ID for use as a primary key. In addition, being able to link directly to AFL tables when talking about particular game or players would be handy.
 
-#### Game ID and URL
+### Game ID and URL
 
 Let's tackle the game ID by writing some functions to an ID which also conveniently lines up with the way AFL Tables game URLs work (two birds with one stone). 
 
@@ -572,7 +572,7 @@ Now lets use these functions[^vectorisation-benefits] to add a primary key to ou
 
 ::: {.panel-tabset}
 
-##### Tidyverse
+#### Tidyverse
 
 ```{r}
 match_stats_flat_tb |> 
@@ -588,7 +588,7 @@ match_stats_flat_tb |>
 
 ```
 
-##### `data.table`
+#### `data.table`
 
 ```{r}
 match_stats_flat_dt[, home_team_code := get_team_code(Home.team)]
@@ -605,14 +605,14 @@ identical(as.data.frame(match_stats_flat_tb), as.data.frame(match_stats_flat_dt)
 
 :::
 
-#### Player URLs
+### Player URLs
 
 In a similar way we can add a player URL to our `player_stats_*` datasets, we start by creating a mapping table.
 
 
 ::: {.panel-tabset}
 
-##### Tidyverse
+#### Tidyverse
 
 ```{r}
 # non-duplicate URL: https://afltables.com/afl/stats/players/E/Errol_Gulden.html
@@ -637,10 +637,9 @@ player_stats_tb |>
   select(ID, player_afltables_url) ->
   player_url_tb
 
-# player_url_map_tb <- `names<-`(player_url_tb$player_url, player_url_tb$ID)
 ```
 
-##### `data.table`
+#### `data.table`
 
 ```{r}
 player_url_dt <- copy(player_stats_dt)
@@ -658,11 +657,9 @@ player_url_dt[, first_letter := str_sub(full_name, 1, 1)]
 player_url_dt[, player_afltables_url := paste0("https://afltables.com/afl/stats/players/", 
                                      first_letter, "/", full_name, number_suffix, ".html")]
 player_url_dt <- player_url_dt[, .(ID, player_afltables_url)]
-# player_url_map_dt <- `names<-`(player_url_dt$player_url, player_url_dt$ID)
 
 # verify outputs match:
 identical(as.data.frame(player_url_tb), as.data.frame(player_url_dt))
-# identical(player_url_map_tb, player_url_map_dt)
 ```
 
 :::
@@ -671,9 +668,11 @@ Now we can add add the game ID, game URL and player URL to the `player_stats_*` 
 
 ::: {.panel-tabset}
 
-##### Tidyverse
+#### Tidyverse
 
 ```{r}
+player_stats_tb <- as_tibble(player_stats) # copied from above
+
 player_stats_tb |> 
   mutate(
     home_team_code = get_team_code(Home.team),
@@ -688,9 +687,11 @@ player_stats_tb |>
   player_stats_tb
 ```
 
-##### `data.table`
+#### `data.table`
 
 ```{r}
+player_stats_dt <- as.data.table(player_stats) # copied from above
+
 player_stats_dt[, home_team_code := get_team_code(Home.team)]
 player_stats_dt[, away_team_code := get_team_code(Away.team)]
 player_stats_dt[, game_id := get_game_id(home_team_code, away_team_code, Date)]
@@ -734,40 +735,22 @@ We can then filter the data and present it below in a table below[^table-code-om
 
 ::: {.panel-tabset}
 
-#### Tidyverse
+### Tidyverse
 
 ```{r}
 #| eval: false
-library(reactable)
-
-# Match Stats:
 match_stats_flat_tb |> 
   filter(game_id == infamous_game_id) |> 
   reactable(
     # formatting code omitted
   ) 
-
-# Player Stats:
-player_stats_tb |> 
-  mutate(full_name = paste0(First.name, " ", Surname, " (", Playing.for,")")) |> 
-  filter(game_id == infamous_game_id) |> 
-  reactable(
-    # formatting code omitted
-  ) 
-
 ```
 
-#### `data.table`
+### `data.table`
 
 ```{r}
 #| eval: false
-library(reactable)
-
-# Match Stats:
-reactable(match_stats_flat_dt[game_id == infamous_game_id, ], )# formatting code omitted
-# Player Stats:
-reactable(player_stats_dt[, player := paste0(First.name, " ", Surname, " (", Playing.for,")")]
-          [game_id == infamous_game_id, ])# formatting code omitted
+reactable(match_stats_flat_dt[game_id == infamous_game_id, ])# reactable formatting code omitted
 ```
 
 :::
@@ -776,7 +759,6 @@ reactable(player_stats_dt[, player := paste0(First.name, " ", Surname, " (", Pla
 
 ```{r}
 #| echo: false
-# TODO: add format and freeze game URL (open in a new tab)
 match_stats_flat_tb |> 
   filter(game_id == infamous_game_id) |> 
   reactable_themed(
@@ -793,8 +775,30 @@ match_stats_flat_tb |>
 
 ### Player Stats
 
+::: {.panel-tabset}
+
+#### Tidyverse
+
 ```{r}
-# TODO: add format and freeze player URL (open in a new tab) and name and team
+#| eval: false
+player_stats_tb |> 
+  filter(game_id == infamous_game_id) |> 
+  reactable(
+    # formatting code omitted
+  ) 
+```
+
+#### `data.table`
+
+```{r}
+#| eval: false
+reactable(player_stats_dt[game_id == infamous_game_id, ])# reactable formatting code omitted
+```
+
+:::
+
+
+```{r}
 player_stats_tb |>
   filter(game_id == infamous_game_id) |> 
   reactable_themed(
@@ -802,7 +806,7 @@ player_stats_tb |>
       game_afltables_url = colDef(
         cell = function(cell_value) {
           tags$a(href = cell_value, target = "_blank", "Game on AFL Tables")
-        }
+          }
         ),
       player_afltables_url = colDef(
         sticky = "right",
@@ -811,91 +815,564 @@ player_stats_tb |>
         }
         ),
       player = colDef(sticky = "left")
-      )
+      ),
+    defaultPageSize = 5
   )
 
 ```
 
 
 
+# Figuring Out the Answers
+
+In this section I will provide my working using R for each of the [aforementioned questions](#question-list). Where relevant, I will figure out where the [aforementioned infamous game](#a-concrete-example) places in the history of the AFL for that particular category.
+
+These provide examples of pathways you can go down, the permutations of stats you can look at and angles you can approach things from are endless.
+
 
 ## Highest Scoring Quarter
+
+As listed [above](#question-list), our first question was:
+
+> What is the record for the highest scoring quarter?
+
+::: {.callout-info}
+
+Not that there is already a [page](https://afltables.com/afl/teams/allteams/qh.html){target="_blank"} on this topic on AFL Tables, but it is a good one to start with regardless.
+
+:::
+
+To answer this question, we will first we should begin by creating a reshaped version of the  `match_stats_flat_*` dataset that is structured around quarters.
 
 
 ::: {.panel-tabset}
 
 ### Tidyverse
 
-Break down by
-
-* Each quarter
-
 
 ```{r}
-#| eval: FALSE
-library(dplyr)
-library(stringr)
+#| message: FALSE
+game_level_columns <- c("game_id", "game_afltables_url", "Season", "Round", "Venue", "Home.team", "Away.team", "Home.score", "Away.score")
 
-player_stats_tb |> 
-  group_by(
-    Season, Round, Date, Local.start.time, Venue, Attendance, Home.team, 
-    Away.team, Home.score, .data[["Away.score"]]
+match_stats_flat_tb |> 
+  select(all_of(game_level_columns), starts_with("HQ"), starts_with("AQ")) |> 
+  pivot_longer(cols = c(starts_with("HQ"), starts_with("AQ")), names_to = "quarter_gb", values_to = "gb_count") |>
+  mutate(
+    quarter = str_extract(quarter_gb, "\\d"),
+    gb_label = if_else(str_detect(quarter_gb, "G$"), "goals", "behinds"),
+    is_home_score = str_detect(quarter_gb, "^H")
+    ) |>
+  pivot_wider(id_cols = all_of(c(game_level_columns, "quarter", "is_home_score")), names_from = gb_label, values_from = gb_count) |>
+  arrange(game_id, is_home_score, quarter) |> 
+  group_by(game_id, is_home_score) |> 
+  mutate(# make quarters incremental
+    goals = c(head(goals, 1), diff(goals)),
+    behinds = c(head(behinds, 1), diff(behinds))
   ) |> 
-  summarise(count = n())
-results_tb <- as_tibble(results)
+  ungroup() |> 
+  mutate(
+    score = goals * 6 + behinds,
+    team = if_else(is_home_score, Home.team, Away.team),
+    opposition = if_else(!is_home_score, Home.team, Away.team)
+    ) |> 
+  select(-is_home_score) -> quarter_stats_tb
+  
 ```
-
-
-
-
-```{r}
-
-player_stats_tb <- as_tibble(player_stats)
-results_tb <- as_tibble(results)
-
-# verify that it has the same number of rows as the results data.
-
-```
-
 
 ### `data.table`
 
 ```{r}
 #| message: FALSE
-library(data.table)
-player_stats_dt <- as.data.table(player_stats)
-results_dt <- as.data.table(results)
+game_level_columns <- c("game_id", "game_afltables_url", "Season", "Round", "Venue", "Home.team", "Away.team", "Home.score", "Away.score")
+
+quarter_stats_dt <- copy(match_stats_flat_dt)
+quarter_stats_dt <- quarter_stats_dt[, .SD, .SDcols = names(quarter_stats_dt) %like% paste(
+  paste(game_level_columns, collapse = "|"), "^HQ", "^AQ", 
+  sep = "|")]
+quarter_stats_dt <- melt(quarter_stats_dt, id.vars = game_level_columns, variable.name =  "quarter_gb", value.name = "gb_count")
+
+quarter_stats_dt[, quarter := str_extract(quarter_gb, "\\d")]
+quarter_stats_dt[, gb_label := fifelse(str_detect(quarter_gb, "G$"), "goals", "behinds")]
+quarter_stats_dt[, is_home_score := str_detect(quarter_gb, "^H")]
+
+quarter_stats_dt[, quarter_gb:=NULL]
+quarter_stats_dt <- dcast(quarter_stats_dt, ... ~ gb_label, value.var = "gb_count")
+
+# make quarters incremental
+setorder(quarter_stats_dt, game_id, is_home_score, quarter)
+quarter_stats_dt[, goals := c(head(goals, 1), diff(goals)), c("game_id", "is_home_score")]
+quarter_stats_dt[, behinds := c(head(behinds, 1), diff(behinds)), c("game_id", "is_home_score")]
+
+quarter_stats_dt[, score := goals * 6 + behinds]
+quarter_stats_dt[, team := fifelse(is_home_score, Home.team, Away.team)]
+quarter_stats_dt[, opposition := fifelse(!is_home_score, Home.team, Away.team)]
+
+quarter_stats_dt <- quarter_stats_dt[, .SD, .SDcols = c(game_level_columns, c("quarter", "goals", "behinds", "score", "team", "opposition"))]
+
+# verify outputs match:
+identical(as.data.frame(quarter_stats_tb), as.data.frame(quarter_stats_dt))
 ```
 
 
 :::
 
-### Comparing to the Swans Eagles Game
+We will answer this question for each quarter (first, second, third and fourth), as well as overall. This means we we will be repeating the same process five times, so this calls for writing a function. The function will give us the top 5 scoring quarters, as well as ranking for the [aforementioned infamous game](#a-concrete-example) on the all time list of quarters.
 
-While the swans scored heavily in the aforementioned game, it was not loaded so heavily in any particular so they are not really close to the highest scoring quarters. However, their third quarter score of 11 goals 5, 71 made it into the top ten of their highest scoring quarters. I actually didn't need to run any R code to find this out as there is a page on AFL tables that summarises quarter score records [here](https://afltables.com/afl/teams/swans/qh.html){targer = "_blank"}.
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+get_top_quarter_scores_tb <- function(data, quarter_selection) {
+  data |> 
+    filter(quarter %in% quarter_selection) |>
+    arrange(desc(score)) |> 
+    mutate(rank = seq_along(team)) |> 
+    filter(rank %in% 1:5 | (game_id == infamous_game_id & team == "Sydney")) |> 
+    select(rank, team, opposition, score, quarter, Season, Round, Venue, game_afltables_url, game_id)
+}
+```
+
+
+#### `data.table`
+
+```{r}
+get_top_quarter_scores_dt <- function(data, quarter_selection) {
+  top_quarters_q1_dt <- copy(quarter_stats_dt)
+  top_quarters_q1_dt <- top_quarters_q1_dt[
+    quarter %in% quarter_selection, ]
+  setorder(top_quarters_q1_dt, -score)
+  top_quarters_q1_dt[, rank := seq_along(team)]
+  top_quarters_q1_dt[rank %in% 1:5 | (game_id == infamous_game_id & team == "Sydney"), 
+                     .(rank, team, opposition, score, quarter, Season, Round, Venue, game_afltables_url, game_id)]
+}
+```
+
+:::
+
+
+```{r}
+#| echo: FALSE
+top_quarters_reactable <- function(data) {
+  data |> 
+    reactable_themed(
+      rowStyle = function(index) {
+        data |> 
+          slice(index) |> 
+          pull(game_id) -> row_game_id
+        if(row_game_id == infamous_game_id) {
+          list(background = "red", color = "white")
+          }
+        },
+      columns = list(
+        game_afltables_url = colDef(
+          name = "AFL Tables Link",
+          sticky = "right",
+          cell = function(cell_value, row_index) {
+            tags$a(href = cell_value, target = "_blank", "🔗")
+            }
+        ),
+        Season = colDef(show = FALSE),
+        Round = colDef(
+          cell = function(cell_value, row_index) {
+            data |> 
+              slice(row_index) |> 
+              pull(Season) -> season
+            paste("Round", cell_value, season)
+          }
+        ),
+        rank = colDef(name = "Rank"),
+        score = colDef(name = "Quarter Score"),
+        team = colDef(name = "Team"),
+        quarter = colDef(name = "Quarter"),
+        opposition = colDef(name = "Oposition"),
+        game_id = colDef(show = FALSE)
+      )
+    )
+}
+```
+
+
+
+### First Quarter
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_quarter_scores_q1_tb <- get_top_quarter_scores_tb(quarter_stats_tb, 1L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_quarter_scores_q1_dt <- get_top_quarter_scores_dt(quarter_stats_tb, 1L)
+# verify outputs match:
+identical(as.data.frame(top_quarter_scores_q1_tb), as.data.frame(top_quarter_scores_q1_dt))
+```
+:::
+
+
+```{r}
+#| echo: FALSE
+top_quarters_reactable(top_quarter_scores_q1_tb)
+```
+
+The record for the highest-scoring first quarter occurred during the bloodbath of an encounter that was the game the Bombers first ever clash with the Gary Ablett Jr-led Gold Coast Suns in their inaugural season in the AFL. The Bombers came out of the blocks in a flash and mercilessly obliterated the inexperienced Gold Coast side, notching up a 93 point lead at quarter time. Interestingly, the Sun actually managed to win the second quarter as the bombers appeared to take there foot off the gas a little to *only* win by 139 points when all was said and done. 
+
+
+```{=html}
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ZPk_ao098ds" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+
+Perhaps the Suns' lethargy in the first quarter against the Dons can be explained as a hangover[^sun-festivities] following on from their [first ever win](https://afltables.com/afl/stats/games/2011/132020110423.html){target="_blank"} the previous week[^first-win]. It is exciting to me that this is a game that I can remember watching on the television at the time, it may have even been the first Gold Coast game I ever watched[^gold-coast]. Footy is full of narratives and it fun to spin one around this particular game (the context and stories make footy stats even more fun).
+
+[^sun-festivities]: As a club with an abundance of 18 or 19 year old blokes living out of home for the first time, the Suns were known to [over-indulge](https://youtu.be/Roehqg0Dd5k?t=61){target="_blank"} in the Gold Coast party culture in those days.
+
+[^first-win]: Courtesy of a [(missed) shot at goal after the siren](https://youtu.be/CbJMAHRzHEo?t=318){target="_blank"} from Justin Westhoff.
+
+[^gold-coast]: And thank god I didn't give up on watching them after that (mainly due to Gary Ablett I will admit) because otherwise I would have missed *unbelievable goals* like [this](https://www.youtube.com/watch?v=2Ae5byjzUKg){target="_blank"}.
+
+
+
+### Second Quarter
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_quarter_scores_q2_tb <- get_top_quarter_scores_tb(quarter_stats_tb, 2L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_quarter_scores_q2_dt <- get_top_quarter_scores_dt(quarter_stats_tb, 2L)
+# verify outputs match:
+identical(as.data.frame(top_quarter_scores_q2_tb), as.data.frame(top_quarter_scores_q2_dt))
+```
+:::
+
+
+```{r}
+#| echo: FALSE
+top_quarters_reactable(top_quarter_scores_q2_tb)
+```
+
+From one teams first season, to another's last. It is quite fitting (although a little sad) that the highest scoring second quarter was against a floundering ([aforementioned](#the-fitzroy-package)) `fitzRoy` Football Club (to which we owe the ease with which we obtained this data) en-route to a wooden spoon in their [final season](https://www.youtube.com/watch?v=Ykfsk0pXt9E){target="_blank"} prior to merging with Brisbane Bears to form the Brisbane Lions.
+
+As I was not yet born, I do not remember the game, but on the video below, the commentator shrewdly points to a strong wind prevailing towards the Crows' goal at the beginning of the second quarter which certainly didn't bode well for the *Lions*.
+
+```{=html}
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/sSKOcl03u3M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+
+### Third Quarter
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_quarter_scores_q3_tb <- get_top_quarter_scores_tb(quarter_stats_tb, 3L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_quarter_scores_q3_dt <- get_top_quarter_scores_dt(quarter_stats_tb, 3L)
+# verify outputs match:
+identical(as.data.frame(top_quarter_scores_q3_tb), as.data.frame(top_quarter_scores_q3_dt))
+```
+:::
+
+
+```{r}
+#| echo: FALSE
+top_quarters_reactable(top_quarter_scores_q3_tb)
+```
+
+The Swans's third quarter appears in 28th position here, which is the best position it gets. The game on top, the Bombers had a very even distribution of goal-kickers and kicked 32 goals so they may appear later in our list of [multiple goal kickers question](#individual).
+
+
+### Fourth Quarter
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_quarter_scores_q4_tb <- get_top_quarter_scores_tb(quarter_stats_tb, 4L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_quarter_scores_q4_dt <- get_top_quarter_scores_dt(quarter_stats_tb, 4L)
+# verify outputs match:
+identical(as.data.frame(top_quarter_scores_q4_tb), as.data.frame(top_quarter_scores_q4_dt))
+```
+:::
+
+
+```{r}
+#| echo: FALSE
+top_quarters_reactable(top_quarter_scores_q4_tb)
+```
+
+
+Well this was slightly unexpected, the Bloods[^incorrect-label] came home like a freight train against the woeful Saints in a game that took place over 100 years ago. It is also the only quarter in AFL history that has notched up a ton. Upon seeing this, given it's vintage, I though that perhaps the story of this game might have been lost to time but the Swans to have a most [insightful article](https://www.sydneyswans.com.au/news/235004/slaughter-the-true-story-behind-a-record-thats-stood-for-a-century){target="_blank"} up on their website about it. The explanation it provides is that St Kilda were undermanned through a combination of injury and player protest on account of off-field disputes. It is safe to say that the "Bloods" showed them no mercy.
+
+[^incorrect-label]: Incorrectly labelled here as "Sydney" in the table above because at the time they resided in South Melbourne (they [relocated to Sydney in 1982](https://en.wikipedia.org/wiki/Sydney_Swans#Swans_move_to_Sydney:_1982.E2.80.931984){target="_blank"}), they were also known as the "Bloods" prior to adopting their current [Swans mascot in 1933](https://en.wikipedia.org/wiki/Sydney_Swans#Club_identity){target="_blank"} due to the number of Western Australians in the side (as a WA boy I couldn't help mentioning this)
+
+### All Quarters
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_quarter_scores_tb <- get_top_quarter_scores_tb(quarter_stats_tb, 1L:4L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_quarter_scores_dt <- get_top_quarter_scores_dt(quarter_stats_tb, 1L:4L)
+# verify outputs match:
+identical(as.data.frame(top_quarter_scores_tb), as.data.frame(top_quarter_scores_dt))
+```
+:::
+
+
+```{r}
+#| echo: FALSE
+top_quarters_reactable(top_quarter_scores_tb)
+```
+
+
+In the infamous game, the Swan's third (premiership) quarter was the only one that reached the top 100 quarters of all time. The fact that no quarter was even close to the the top indicates that the swans were very consistent through-out the game. To use a cliche, they put in a consistent four-quarter effort and I support the Eagles were consistent too (consistently dismal).
 
 
 ## Most Goal-kickers
 
-URL structure:
-https://afltables.com/afl/stats/games/YYYY/AABBYYYYMMDD.html
-
-where AA and BB are the team codes for two teams (described below) playing in ascending order (not order of home and away)
-
-e.g. https://afltables.com/afl/stats/games/1991/020419910803.html
+Three of the [aforementioned](#question-list) questions concern goal kickers. We can therefore write a function that can generalise our approach like we did for the previous question. 
 
 
+These questions were:
 
+> What is the record for the most individual goal kickers in a single game?
+
+> What is the record for the most multiple goal kickers in a single game?
+
+> What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?
+
+The Swans game appeared to have a rather even distribution of goal kickers in the infamous, so it will be interesting to see where it places on the all time list in this category.
+
+
+
+::: {.panel-tabset}
+
+### Tidyverse
+
+```{r}
+get_top_goal_scorers_tb <- function(data, min_goals) {
+data |> 
+  mutate(
+    team = Playing.for,
+    opposition = if_else(team == Home.team, Away.team, Home.team)
+  ) |> 
+  group_by(team, opposition, Season, Round, Venue, game_afltables_url, game_id, Date) |> 
+  summarise(
+    goal_kickers = sum(Goals > min_goals),
+    .groups = "drop"
+  ) |> 
+  arrange(desc(goal_kickers), desc(Date)) |> 
+  mutate(rank = seq_along(game_id)) |> 
+  relocate(rank, .before = "team") |> 
+  relocate(goal_kickers, .before = "Season") |> 
+  filter(rank %in% 1:5|(game_id == infamous_game_id & team == "Sydney")) |>
+  select(-Date)
+}
+
+```
+
+
+
+
+### `data.table`
+
+```{r}
+get_top_goal_scorers_dt <- function(data, min_goals) {
+  top_goal_scorers_dt <- copy(data)
+  top_goal_scorers_dt[, team := Playing.for]
+  top_goal_scorers_dt[, opposition := fifelse(team == Home.team, Away.team, Home.team)]
+  
+  top_goal_scorers_dt <- top_goal_scorers_dt[,.(goal_kickers = sum(Goals > min_goals)),
+                                             c("team", "opposition", "Season", "Round", "Venue", 
+                                               "game_afltables_url", "game_id", "Date")]
+  setorder(top_goal_scorers_dt, -goal_kickers, -Date)
+  top_goal_scorers_dt[, rank := seq_along(game_id)]
+  
+  
+  top_goal_scorers_dt[rank %in% 1:5|(game_id == infamous_game_id & team == "Sydney"),
+                      .(rank, team, opposition, goal_kickers, Season, Round, Venue, 
+                        game_afltables_url, game_id)]
+}
+```
+
+:::
+
+
+```{r}
+#| echo: FALSE
+top_goal_scorers_reactable <- function(data, goal_kicker_label) {
+  data |> 
+    reactable_themed(
+      rowStyle = function(index) {
+        data |> 
+          slice(index) |> 
+          pull(game_id) -> row_game_id
+        if(row_game_id == infamous_game_id) {
+          list(background = "red", color = "white")
+          }
+        },
+      columns = list(
+        game_afltables_url = colDef(
+          name = "AFL Tables Link",
+          sticky = "right",
+          cell = function(cell_value, row_index) {
+            tags$a(href = cell_value, target = "_blank", "🔗")
+            }
+        ),
+        Season = colDef(show = FALSE),
+        Round = colDef(
+          cell = function(cell_value, row_index) {
+            data |>
+              slice(row_index) |>
+              pull(Season) -> season
+            paste("Round", cell_value, season)
+          }
+        ),
+        rank = colDef(name = "Rank"),
+        goal_kickers = colDef(name = goal_kicker_label),
+        team = colDef(name = "Team"),
+        opposition = colDef(name = "Oposition"),
+        game_id = colDef(show = FALSE)
+      )
+    )
+}
+```
 
 ### Individual
 
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_goal_scorers_single_tb <- get_top_goal_scorers_tb(player_stats_tb, 0L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_goal_scorers_single_dt <- get_top_goal_scorers_dt(player_stats_dt, 0L)
+# verify outputs match:
+identical(as.data.frame(top_goal_scorers_single_tb), as.data.frame(top_goal_scorers_single_dt))
+```
+
+:::
+
+```{r}
+#| echo: FALSE
+top_goal_scorers_reactable(top_goal_scorers_single_tb, "Individual Goal Kickers")
+```
+
+
+The record for most goal kickers is actually tied by multiple teams. The most recent time this happened was in the Bulldogs' 101 point drubbing of the Eagles last year[^eagles-bad]. The [infamous game](#a-concrete-example) is a bit off the pace in 238^th^ but 12 goal-kickers is still double a starting forward line.
+
+[^eagles-bad]: Yet another example of how poorly the eagles have been done in 2022 and 2023
+
+
+
 ### Multiple
+
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_goal_scorers_multiple_tb <- get_top_goal_scorers_tb(player_stats_tb, 1L)
+```
+
+
+#### `data.table`
+
+```{r}
+top_goal_scorers_multiple_dt <- get_top_goal_scorers_dt(player_stats_dt, 1L)
+# verify outputs match:
+identical(as.data.frame(top_goal_scorers_multiple_tb), as.data.frame(top_goal_scorers_multiple_dt))
+```
+
+:::
+
+```{r}
+#| echo: FALSE
+top_goal_scorers_reactable(top_goal_scorers_multiple_tb, "Multiple Goal Kickers")
+```
+
+The Swans game actually places equal 7th on the list of all time which is quite a notable result. It is also interesting that it was another one-sided Swans game[^swans-bombers] at the SCG that takes outright top spot. In that game (circa 1987) the human highlight reel [Warwick Capper](https://www.youtube.com/watch?v=iiYJ6FZWwv0){target="_blank"} led all comers for the Swans with a bag of 6 snags.
+
+[^swans-bombers]: [Full game](https://www.youtube.com/watch?v=IR2AjhhNDzE){target="_blank"}, [article](https://www.sydneyswans.com.au/news/132940/footy-flashbacks-essendon){target="_blank"}
 
 ### Five or More (Bags)
 
-## Most One-sided Games
+
+::: {.panel-tabset}
+
+#### Tidyverse
+
+```{r}
+top_goal_scorers_bags_tb <- get_top_goal_scorers_tb(player_stats_tb, 4L)
+```
 
 
+#### `data.table`
+
+```{r}
+top_goal_scorers_bags_dt <- get_top_goal_scorers_dt(player_stats_dt, 4L)
+# verify outputs match:
+identical(as.data.frame(top_goal_scorers_bags_tb), as.data.frame(top_goal_scorers_bags_dt))
+```
+
+:::
+
+```{r}
+#| echo: FALSE
+top_goal_scorers_reactable(top_goal_scorers_bags_tb, "Bags")
+```
+
+Four bags in one game has happened on two occasions, the most recent of which (in 1991) yet again featured the Fitzroy lions, who were trounced by 157 points by the Hawks in North Hobart. 
+
+The list of bag-getters in this game makes for interesting reading, all were recognisable names (although one more for his family connections that his own merit). As one might expect, one of the bags was courtesy of Hawthorn spearhead Jason Duntall (6 snags), along with 7 a piece from WA boy Ben Allan[^ben-allan] and the three-time premiership player Darren Jarmon. Rounding out the 4 was a contribution of 5 snags from Paul Hudson, who is the son of Tasmanian footy legend Peter Hudson (how fitting that this game was played in Tassie) who average more than 5 goals a game himself (an incredible feat).
+
+[^ben-allan]: Sorry I couldn't help myself, he was also a [Claremont Tiger](https://www.claremontfc.com.au/){target="_blank"} (up the mighty Tiges)
 
 ## Most Clangers
 
@@ -934,13 +1411,22 @@ Make sure it lines up with the AFL data.
 
 Find the youngest player, player with least games
 
-# Summary of Answers  (WORK IN PROGRESS)
+
+
+# Epilogue
+
+
+## Summary of Answers
 
 Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)
 
-# Notable AFL Stats Figures
 
-I will finish by listing some people who  are doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package):
+
+Interestingly, the [aforementioned infamous game](#a-concrete-example) isn't the record-holder (or even in the top 5) for any of our questions but it was remarkable enough as only one of `r sum(match_stats_flat_dt$Home.score>=200)+sum(match_stats_flat_dt$Away.score>=200)` games where a team has scored 200 points or more which is notable enough I think, particularly given I had the (mis-)fortune of witnessing it in the flesh. Perhaps we could dig deeper to find a record it holds but I somehow find more satisfaction in it being a thought-provoking enough game to coax these questions out of us without it ever being the *answer*.
+
+## Notable AFL Stats Figures
+
+I will concluse by listing some people whoare doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package) to provide further motivation:
 
 - [`fitzRoy`](https://github.com/jimmyday12/fitzRoy): as outlined in this article, this R package is the de facto way of sourcing AFL data.
 

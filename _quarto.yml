@@ -82,7 +82,7 @@ format:
   html:
     fontsize: 1.1em
     code-link: true
-#    page-layout: full # https://quarto.org/docs/output-formats/page-layout.html
+    page-layout: full # https://quarto.org/docs/output-formats/page-layout.html
     theme:
       light: [www/styles.scss, www/tgLight.scss] # flatly
       dark: [www/styles.scss, www/tgHacker.scss] # www/styles.scss, darkly

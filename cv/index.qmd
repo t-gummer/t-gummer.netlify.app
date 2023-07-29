@@ -5,9 +5,6 @@ execute:
   echo: false
   warning: false
   freeze: false
-format:
-  html:
-    page-layout: full
 engine: knitr 
 cv:
   pdf: "CV-TimothyGummer.pdf"
