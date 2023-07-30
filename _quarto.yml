@@ -83,6 +83,8 @@ format:
     fontsize: 1.1em
     code-link: true
     page-layout: full # https://quarto.org/docs/output-formats/page-layout.html
+    grid:
+      body-width:	1000px
     theme:
       light: [www/styles.scss, www/tgLight.scss] # flatly
       dark: [www/styles.scss, www/tgHacker.scss] # www/styles.scss, darkly

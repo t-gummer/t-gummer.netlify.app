@@ -22,7 +22,7 @@ format:
 # toc-title: Contents
 # toc-location: left
 
-freeze: false
+freeze: true
 
 # Default knitr options
 execute:
