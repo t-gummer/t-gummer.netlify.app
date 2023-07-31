@@ -225,14 +225,20 @@ Where possible we will use the AFL Tables data set as it has the full history of
 ```{r}
 #| echo: false
 
-x <- fitzRoy::fetch_ladder_afltables(season = 2023, round_number = 20)
-x <- fitzRoy::fetch_player_stats_fryzigg(season = 2023, round_number = 20)
+# x <- fitzRoy::fetch_ladder_afltables(season = 2023, round_number = 20)
+# x <- fitzRoy::fetch_player_stats_fryzigg(season = 2023, round_number = 20)
 
 fitzRoy_sources <- as_tibble(fread("fitzRoy_sources.csv"))
 
 fitzRoy_sources |> 
   reactable(columns = list( # add conditional formatting
-    data_source = colDef(name = "Data Source"), # add URL
+    data_source = colDef(
+      name = "Data Source",
+      cell = \(cell_value, row_index, column_name) {
+        tags$a(target = "_blank", href = fitzRoy_sources[row_index, "URL", drop = TRUE], cell_value)
+        
+        }
+      ),
     collection_method = colDef(name = "Collection Method"),
     level_of_detail = colDef(name = "Level of Detail"), # add level_of_detail_note tip
     speed_of_fetch = colDef(name = "Speed of Fetch"), # add speed_of_fetch_note tip
