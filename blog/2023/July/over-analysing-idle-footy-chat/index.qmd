@@ -39,7 +39,7 @@ Fryzigg seems to be the best unless you want live data and some of the most adva
 
 Things I wish I had done from the beginning:
 
-* Used fryzigg instead of AFL Tables (actually more complete).
+* Used fryzigg instead of AFL Tables (actually more complete). However AFL tables did allow me to link games very easily (this is also possible with fryzigg but would require additional work)
 
 
 # Prelude
@@ -221,6 +221,33 @@ library(reactable)
 [^CBAs]: Centre bounce attendances (CBAs) are a commonly-used metrics in AFL fantasy, coaches often look at tools such as [this one](https://dfsaustralia.com/afl-cbas/){target="_blank"} to help with researching their trades.
 
 Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. However if we require stats that it is missing, we will simply have to adopt a different data source and caveat it by saying it is only for a subset of the full history of the competition.
+
+```{r}
+#| echo: false
+
+x <- fitzRoy::fetch_ladder_afltables(season = 2023, round_number = 20)
+x <- fitzRoy::fetch_player_stats_fryzigg(season = 2023, round_number = 20)
+
+fitzRoy_sources <- as_tibble(fread("fitzRoy_sources.csv"))
+
+fitzRoy_sources |> 
+  reactable(columns = list( # add conditional formatting
+    data_source = colDef(name = "Data Source"), # add URL
+    collection_method = colDef(name = "Collection Method"),
+    level_of_detail = colDef(name = "Level of Detail"), # add level_of_detail_note tip
+    speed_of_fetch = colDef(name = "Speed of Fetch"), # add speed_of_fetch_note tip
+    update_frequency = colDef(name = "Update Frequency"),
+    use_case = colDef(name = "Use Case"),
+    URL = colDef(show = FALSE),
+    level_of_detail_note = colDef(show = FALSE),
+    speed_of_fetch_note = colDef(show = FALSE)
+    ))
+
+# AFL Website is slow because the data is very fragmented resulting in many api calls
+
+# turn this into a nicesly colour coded reactable with those coloured circles that are conditionally formatted
+
+```
 
 
 The `fetch_*` family of functions from the `fitzRoy` package allow us to read the package. Consult the [documentation site](https://jimmyday12.github.io/fitzRoy/reference/index.html){target="_blank"} for a complete list of all the available functions.
@@ -1436,8 +1463,18 @@ Or in more precise football statistics terms
 #### Tidyverse
 
 ```{r}
+c("team", "opposition", "Season", "Round", "Venue", "game_afltables_url", "game_id", "Date")
 
+player_stats_tb |> 
+  group_by(Home.team, Away.team, Season, Round, Venue, game_afltables_url, game_id, Date) |> 
+  summarise(
+    clangers_per_possession = sum(Clangers) / sum(Kicks + Handballs),
+    clangers = sum(Clangers)
+  ) |> 
+  arrange(desc(clangers_per_possession))
 ```
+
+The fixture between the sun
 
 
 #### `data.table`
