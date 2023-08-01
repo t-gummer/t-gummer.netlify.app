@@ -2,7 +2,7 @@
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
   This blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
-date: 2023-07-30
+date: 2023-08-02
 categories: 
   - Sport
   - AFL
@@ -24,22 +24,29 @@ reading-time: true
 
 library(reactable)
 library(htmltools)
-source("../../../../scripts/reactable-theming.R")
+source("../../../scripts/reactable-theming.R")
 
 
 ```
 
-# Addemndum
 
-Table with info and pros and cons of each data. Also if it is hit via api or web scraping (the fact it seems to fill in the gaps for footywire when it is older data).
-
-Fryzigg seems to be the best unless you want live data and some of the most advanced stats (i.e. kick ins and CBAs).
+::: {.callout-caution}
 
 
+## Apologies for the delay
 
-Things I wish I had done from the beginning:
+I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for slowness are:
 
-* Used fryzigg instead of AFL Tables (actually more complete). However AFL tables did allow me to link games very easily (this is also possible with fryzigg but would require additional work)
+* Am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice, publishable words, it become a bit of a slog.
+
+* The scope of this project was overly ambitious and expanded as I kept on branching off from the main mission in order provide additional background (when given free reign, this is my tendency).
+
+
+The R code and analysis itself did not take too long, so the main areas I am looking to improve in the future are my writing efficiency and keeping the scope of my blog posts under control. However, it would feel like going against my style to avoid going down rabbit holes and off on tangents entirely, so there is still a balance to be struck there.
+
+The out-of-control scope has also impacted the length of this article. I commend anyone who actually reads the whole thing but hopefully its also possible to jump around and only read the parts that interest you in particular using the table of contents. I will endeavour to keep future blog posts a lot shorter going forward.
+
+:::
 
 
 # Prelude
@@ -96,21 +103,6 @@ However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJ
 
 [^tipping-name]: My footy tipping username is *Gadget-type Operator* and I often use other [BT quotes](https://www.youtube.com/watch?v=E_JCdK4ah78){target="_blank"} for my username on other (even non-footy-related) accounts
 
-::: {.callout-caution collapse="true"}
-
-
-## Apologies for the delay
-
-I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for slowness are:
-
-* Am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice publishable words, it become a bit of a slog.
-
-* The scope of this project expanded as I kept on branching off from the main mission in order provide additional background.
-
-
-The R code and analysis itself did not take long at all, so the main areas I am looking to improve in the future are my writing efficiency and keeping the scope of my blog posts under control. However, it would feel like going against my style to avoid going down rabbit holes and off on tangents entirely, so there is still a balance to be struck there.
-
-:::
 
 ## Target Audience Unclear
 
@@ -118,9 +110,13 @@ The R code and analysis itself did not take long at all, so the main areas I am 
 
 # A concrete example
 
-I recently had the misfortune (as a West Coast fan) of attending a game live between the Sydney Swans and (not so) mighty West Coast Eagles with the following scoreline:
+I recently had the misfortune ([as a West Coast fan](https://www.instagram.com/p/CiRdBD9A4lU/){target="_blank"}) of attending a game live between the Sydney Swans and the (not so) mighty West Coast Eagles with the following scoreline:
 
 ![](swans-vs-eagles-score.png "How embarrassing!")
+
+::: {.column-margin}
+![Our respective reactions really tell it all](photo-at-game.jpg)
+:::
 
 In one-sided games like this, it seems to me that footy stats questions become more common than usual for two key reasons:
 
@@ -128,7 +124,8 @@ In one-sided games like this, it seems to me that footy stats questions become m
 
 2. These games are often filled with large statistical anomalies that might set new records
 
-If we also consider that it was two actuaries talking, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions.
+
+If we also consider that my usual footy-going companion (Saroop) and I are both actuaries by trade, it is safe to say that footy stats questions were flying left, right and centre on that gloomy (but not because of the weather) Saturday night at the SCG. The questions we posed did not just vanish into the aether either, I (with the idea of writing this article in mind) decided to record the more interesting (and doable) questions.
 
 ## Question List
 
@@ -141,7 +138,7 @@ This article aims to tackle the questions listed below:
 - [What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?](#five-or-more-bags)
 - [What is the record for the most clangers in a game?](#most-clangers)
 - [What is the record for the worst disposal efficiency in a game?](#worst-disposal-efficiency)
-- [Has anyone won a Norm Smith Medal in their first season in the AFL?](#youngest-norm-smith-medalist)
+- [Who was the youngest player to win a Norm Smith Medal?](#youngest-norm-smith-medalist)
 - What is the record for the most unanswered goals in a game?*
 - What is the school with the most AFL players on their list?*
 - What city/town has the most AFL players relative to population?*
@@ -164,7 +161,7 @@ The remaining questions (which have hyperlinks to later sections of this article
 :::
 
 
-If you are only really interested in the answers (and not the R coding), you can jump ahead by [clicking here](#summary-of-answers).
+Note that things are about to get very technical so if you are only really interested in the answers (and not the R coding), you can jump ahead by [clicking here](#figuring-out-the-answers).
 
 
 
@@ -173,7 +170,7 @@ If you are only really interested in the answers (and not the R coding), you can
 
 ## The `fitzRoy` Package
 
-The first step in analysing AFL data is obtaining the data ("collection"). Our first thought might be to search the web for publicly available AFL datasets and APIs or even scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
+The first step in analysing AFL data is obtaining the data (the so-called "collection" phase). Our first thought might be to search the web for publicly available AFL datasets and APIs or even scrape the data from websites such as the [official AFL website](https://www.afl.com.au/){target="_blank"}, [Footywire](https://www.footywire.com/){target="_blank"} or [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}. But there is a more straight-forward way.
 
 
 While most people now know Fitzroy as a trendy inner city suburb of Melbourne, filled with terraces and [over-priced croissants](https://www.lunecroissanterie.com/){target="_blank"}, it was once home[^bith-place] to the mighty  ([and now merged out of existence](https://en.wikipedia.org/wiki/Brisbane_Lions#Brisbane_Bears_absorb_Fitzroy_Football_Club's_AFL_operations,_become_Brisbane_Lions){target="_blank"}) Fitzroy Lions Football Club.
@@ -183,13 +180,12 @@ While most people now know Fitzroy as a trendy inner city suburb of Melbourne, f
 [^bith-place]: It is also (regrettably) the place of my birth but as a WA boy I don't like to talk about the fact that my parents happened to be in Melbourne when I was born.
 
 
+We can obtain the data we need very simply using its name-sake, the `fitzRoy` R package. This package abstracts away all the web scraping and API calls for us into a very helpful family of `fetch_*` functions.
 
-We can obtain the data we need very simply using its name-sake, the `fitzRoy` R package. It abstracts away all the web scraping and API calls for us into a very helpful family of `fetch_*` functions.
+So let's begin by loading the `fitzRoy` package and while we're at it, we will also load all the other packages we will be using later on.
 
-So let's begin by loading the `fitzRoy` package and while we're at it, I will also load all the other packages I will be using.
-
-```{r load packages}
-#| message: FALSE
+```{r}
+#| message: false
 library(fitzRoy)
 
 # Note that I generally avoid mixing dplyr and data.table at the same time
@@ -207,7 +203,6 @@ library(reactable)
 
 
 
-
 ### `fitzRoy` Data Sources
 
 `fitzRoy` provides access to a number of footy data sources[^FitzRoy] including [AFL Tables](https://afltables.com/){target="_blank"} and the [official AFL website](https://www.afl.com.au/fixture){target="_blank"}. Each data source has its own advantages and disadvantages, for example:
@@ -220,20 +215,35 @@ library(reactable)
 
 [^CBAs]: Centre bounce attendances (CBAs) are a commonly-used metrics in AFL fantasy, coaches often look at tools such as [this one](https://dfsaustralia.com/afl-cbas/){target="_blank"} to help with researching their trades.
 
-Where possible we will use the AFL Tables data set as it has the full history of the AFL on it. However if we require stats that it is missing, we will simply have to adopt a different data source and caveat it by saying it is only for a subset of the full history of the competition.
+All of the different data sources are compared in the table below:
 
 ```{r}
 #| echo: false
+fitzRoy_sources <- as_tibble(data.table::fread("fitzRoy_sources.csv"))
+fitzRoy_sources_extended <- as_tibble(data.table::fread("fitzRoy_sources_extended.csv"))
 
-# x <- fitzRoy::fetch_ladder_afltables(season = 2023, round_number = 20)
-# x <- fitzRoy::fetch_player_stats_fryzigg(season = 2023, round_number = 20)
+logical_conditional_style <- function(cell_value, row_index) {
+  list(
+    "background-color" = (if(cell_value) High = "#00FF0088" else"#FF000088")
+    )
+  }
 
-fitzRoy_sources <- as_tibble(fread("fitzRoy_sources.csv"))
+fetch_function_cell <-  function(url){
+  eval(parse(text = paste0('
+    function(cell_value, row_index) {
+      if (cell_value) {
+        tags$a("Yes", href = "', url, '", target = "_blank")
+      } else {
+        "No"
+      }
+    }
+  ')))
+} 
 
 fitzRoy_sources |> 
   reactable_themed(columns = list( # add conditional formatting
     data_source = colDef(
-      name = "Data Source",
+      name = "Start Year",
       cell = \(cell_value, row_index, column_name) {
         tags$a(target = "_blank", href = fitzRoy_sources[row_index, "URL", drop = TRUE], cell_value)
         
@@ -272,45 +282,107 @@ fitzRoy_sources |>
           )
       }
       ),
-    use_case = colDef(
-      name = "Use Case",
-      cell = \(cell_value) {
-        tags$small(cell_value)
+    first_data_year = colDef(
+      name = "Data From",
+      cell = \(cell_value, row_index, column_name) {
+          tippy::tippy(paste(cell_value, "🖱️"), paste("<b>Note</b></br>", fitzRoy_sources[row_index, "first_data_year_note", drop = TRUE]))
+        },
+      style = \(cell_value, row_index) {
+        list(
+          "background-color" = (if(cell_value > 2000) "#FF000088" else if(cell_value == 1897) "#00FF0088" else "#FFFF0088")
+          )
       }
-      ),
+    ),
+    first_data_year_note = colDef(show = FALSE),
     URL = colDef(show = FALSE),
     level_of_detail_note = colDef(show = FALSE),
     speed_of_fetch_note = colDef(show = FALSE)
     ),
+    details = \(index) {
+      fitzRoy_sources_extended |> 
+        slice(index) |> 
+        reactable_themed(
+          outlined = TRUE,
+          columns = list(
+            use_case = colDef(
+              name = "Use Case",
+              show = FALSE
+            ),
+            has_ladder_function = colDef(
+              name = "Ladder",
+              cell = fetch_function_cell("https://jimmyday12.github.io/fitzRoy/reference/fetch_ladder.html"),
+              style = logical_conditional_style
+            ),
+            has_results_function = colDef(
+              name = "Results",
+              cell = fetch_function_cell("https://jimmyday12.github.io/fitzRoy/reference/fetch_results.html"),
+              style = logical_conditional_style
+            ),
+            has_fixture_function = colDef(
+              name = "Fixtures",
+              cell = fetch_function_cell("https://jimmyday12.github.io/fitzRoy/reference/fetch_fixture.html"),
+              style = logical_conditional_style
+            ),
+            has_player_stats_function = colDef(
+              name = "Player Stats",
+              cell = fetch_function_cell("https://jimmyday12.github.io/fitzRoy/reference/fetch_player_stats.html"),
+              style = logical_conditional_style
+            ),
+            has_lineups_function = colDef(
+              name = "Lineups",
+              cell = fetch_function_cell("https://jimmyday12.github.io/fitzRoy/reference/fetch_lineup.html"),
+              style = logical_conditional_style
+            ),
+            has_player_details_function = colDef(
+              name = "Player Details",
+              cell = fetch_function_cell("https://jimmyday12.github.io/fitzRoy/reference/fetch_player_details.html"),
+              style = logical_conditional_style
+            ),
+            other_functions = colDef(
+              name = "Unqiue",
+              cell = \(cell_value) {
+                tags$a(tags$code(paste0(cell_value, "()")), href = paste0("https://jimmyday12.github.io/fitzRoy/reference/", cell_value, ".html"), target = "_blank")
+              },
+              show = (fitzRoy_sources_extended$other_functions[[index]] != "")
+            ),
+            data_source = colDef(show = FALSE)
+          ),
+          columnGroups = list(
+            colGroup(name = "Fetching function for...", columns = c("has_ladder_function", "has_results_function", "has_fixture_function", "has_player_stats_function", "has_lineups_function", "has_player_details_function"))
+          )
+        ) |> 
+  tagList(tags$p(tags$b("Use-case"), ": ", fitzRoy_sources_extended$use_case[[index]]))
+    },
     outlined = TRUE
     )
-
-
-
-# AFL Website is slow because the data is very fragmented resulting in many api calls
-
-# turn this into a nicesly colour coded reactable with those coloured circles that are conditionally formatted
 
 ```
 
 
-The `fetch_*` family of functions from the `fitzRoy` package allow us to read the package. Consult the [documentation site](https://jimmyday12.github.io/fitzRoy/reference/index.html){target="_blank"} for a complete list of all the available functions.
+## Importing the Data
 
 
-For the purposes of the [questions listed above](#question-list) we will be using the full history of the AFL (1897 to present) using AFL Tables as a data source. We will also need disposal efficiency stats which are a more advanced statistic only available on the data from the official AFL Website and therefore only available from 2014 onwards.
+As the questions we are trying to answer
+
+For the purposes of answering the questions [above](#question-list), I am most interested in the full history of the AFL and have decided to use AFL Tables as my primary data source[^data-regret]. I will also use Fryzigg for one small use-case where AFL Tables is missing key data (disposal efficiency) and some bespoke web scraping for Norm Smith Medallists.
+
+[^data-regret]: In hindsight I somewhat regret this decision and would have probably preferred to use Fryzigg for everything (with the exception of quarter scores which it doesn't have and AFL Tables does) but I only realised it had the full AFL/VFL history when I constructed the table comparing data sources above
+
+
+The `fetch_*` family of functions from the `fitzRoy` package allow us to read data from the various sources. Consult the [documentation site](https://jimmyday12.github.io/fitzRoy/reference/index.html){target="_blank"} for a complete list of all the available functions.
+
 
 We can *fetch* this data via `fitzRoy` with the following code:
 
 ```{r}
 #| eval: FALSE
-# AFL Tables has data for the full history of the AFL
 player_stats <- fetch_player_stats_afltables(season = 1897:2023)
 results <- fetch_results_afltables(season = 1897:2023)
-# AFL.com.au data only goes back to 2014
-player_stats_afl_official <-  map_dfr(2014:2023, fetch_player_stats_afl)
+player_details <- fetch_player_details_afltables()
+player_stats_fryzigg <-  fetch_player_stats_fryzigg(season = 1897:2023)
 ```
 
-Note that in the code above we have to use a `map_dfr` to get data for multuple seasons, that is because the function will only do one season at a time, whereas we can obtain the AFL Tables all in one go with a vector of years. The reason for this is that the `fetch_player_stats_afl` uses an API to get the data  where as `fetch_player_stats_afl_tables` function pulls the data from a [GitHub repository](https://github.com/jimmyday12/fitzroy_data){target = "_blank"} where data obtained from a scraping script is automatically run over night via [GitHub actions](https://github.com/features/actions){target="_blank"} (a clever solution to prevent the actual site from being overloaded from too many scraping requests). This also means the `fetch_player_stats_afl` will be as at right now whereas `fetch_player_stats_afl_tables` data is updated as at the last time the code to scrape the data was run and AFL Tables updated their website. This also renders the `fetch_player_stats_afl` function slower than the `fetch_player_stats_afl_tables` as it actually has to hit an api and then perform some data manipulations as opposed to merely pulling data directly from GitHub storage.
+Note that in the code above we have to use a `map_dfr` to get data for multuple seasons, that is because the function will only do one season at a time, whereas we can obtain the AFL Tables all in one go with a vector of years. The reason for this is that the `fetch_player_stats_afl` uses an API to get the data  where as `fetch_player_stats_afl_tables` function pulls the data from a [GitHub repository](https://github.com/jimmyday12/fitzroy_data){target="_blank"} where data obtained from a scraping script is automatically run over night via [GitHub actions](https://github.com/features/actions){target="_blank"} (a clever solution to prevent the actual site from being overloaded from too many scraping requests). This also means the `fetch_player_stats_afl` will be as at right now whereas `fetch_player_stats_afl_tables` data is updated as at the last time the code to scrape the data was run and AFL Tables updated their website. This also renders the `fetch_player_stats_afl` function slower than the `fetch_player_stats_afl_tables` as it actually has to hit an api and then perform some data manipulations as opposed to merely pulling data directly from GitHub storage.
 
 
 ::: {.callout-warning}
@@ -340,12 +412,20 @@ if(file.exists("data/results.RDS")) {
   saveRDS(results, "data/results.RDS")
 }
 
-if(file.exists("data/player_stats_afl_official.RDS")) {
-  player_stats_afl_official <- readRDS("data/player_stats_afl_official.RDS")
+if(file.exists("data/player_details.RDS")) {
+  player_details <- readRDS("data/player_details.RDS")
   
 } else {
-  player_stats_afl_official <-  map_dfr(2014:2023, fetch_player_stats_afl)
-  saveRDS(player_stats_afl_official, "data/player_stats_afl_official.RDS")
+  player_details <- fetch_player_details_afltables()
+  saveRDS(player_details, "data/player_details.RDS")
+}
+
+if(file.exists("data/player_stats_fryzigg.RDS")) {
+  player_stats_fryzigg <- readRDS("data/player_stats_fryzigg.RDS")
+  
+} else {
+  player_stats_fryzigg <-  fetch_player_stats_fryzigg(season = 1897:2023)
+  saveRDS(player_stats_fryzigg, "data/player_stats_fryzigg.RDS")
 }
 
 ```
@@ -362,10 +442,18 @@ In the R community, there is an [ongoing power struggle](https://stackoverflow.c
 
 [^previously-RStudio]: [formally known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
 
-As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages as to not alienate anyone[^base-r-dig]. Where relevant, I have used a tabbed layout for the convenience of the reader. As my personal preference for readability purposes is the tidyverse[^tidyverse-rationale], I will place this code in the first tab.
+As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages[^base-r-dig]. Where relevant, I have used a tabbed layout for the convenience of the reader. As my personal preference for readability purposes is the tidyverse[^tidyverse-rationale], I will place this code in the first tab.
 
 
-[^base-r-dig]: note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but `base` R `data.frames` will probably cause more pain than they are worth (there is a reason that tidyverse and `data.table` exist)
+::: {.callout-important}
+
+#### A cautionary tale
+
+While doing things in this way did scratch something of a perfectionist's itch in me and was a fun learning experience, I will probably refrain from doing something like this again in future posts. I don't think the additional time it took me to essentially write the same code twice is worth the effort.
+
+:::
+
+[^base-r-dig]: Note that I have not written a `base` R dataframes version because I can see arguments for using both tidyverse and `data.table` but `base` R `data.frames` will probably cause more pain than they are worth (there is a reason that tidyverse and `data.table` exist)
 
 
 [^tidyverse-rationale]: I will typically will only use `data.table` if the size of data necessitates it. In this case, the data is less than a million rows so there are no problems.
@@ -380,7 +468,8 @@ Note that the code below is somewhat redundant as the `fitzRoy` package follows 
 #| message: FALSE
 player_stats_tb <- as_tibble(player_stats)
 results_tb <- as_tibble(results)
-player_stats_afl_official_tb <- as_tibble(player_stats_afl_official)
+player_details_tb <- as_tibble(player_details)
+player_stats_fryzigg_tb <- as_tibble(player_stats_fryzigg)
 ```
 
 [^tb-abbreviation]: an abbreviation of "tibble"
@@ -394,7 +483,8 @@ Henceforth, all `data.table` code will use the `_dt` suffix[^dt-abbreviation] as
 #| message: FALSE
 player_stats_dt <- as.data.table(player_stats)
 results_dt <- as.data.table(results)
-player_stats_afl_official_dt <- as.data.table(player_stats_afl_official)
+player_details_dt <- as.data.table(player_details)
+player_stats_fryzigg_dt <- as.data.table(player_stats_fryzigg)
 ```
 
 [^dt-abbreviation]: an acronym of "data.table"
@@ -842,17 +932,14 @@ We can then filter the data and present it below in a table below[^table-code-om
 ```{r}
 #| eval: false
 match_stats_flat_tb |> 
-  filter(game_id == infamous_game_id) |> 
-  reactable(
-    # formatting code omitted
-  ) 
+  filter(game_id == infamous_game_id)
 ```
 
 ### `data.table`
 
 ```{r}
 #| eval: false
-reactable(match_stats_flat_dt[game_id == infamous_game_id, ])# reactable formatting code omitted
+match_stats_flat_dt[game_id == infamous_game_id, ]
 ```
 
 :::
@@ -884,17 +971,14 @@ match_stats_flat_tb |>
 ```{r}
 #| eval: false
 player_stats_tb |> 
-  filter(game_id == infamous_game_id) |> 
-  reactable(
-    # formatting code omitted
-  ) 
+  filter(game_id == infamous_game_id)
 ```
 
 #### `data.table`
 
 ```{r}
 #| eval: false
-reactable(player_stats_dt[game_id == infamous_game_id, ])# reactable formatting code omitted
+player_stats_dt[game_id == infamous_game_id, ]
 ```
 
 :::
@@ -930,7 +1014,7 @@ player_stats_tb |>
 
 In this section I will provide my working using R for each of the [aforementioned questions](#question-list). Where relevant, I will figure out where the [aforementioned infamous game](#a-concrete-example) places in the history of the AFL for that particular category.
 
-These provide examples of pathways you can go down, the permutations of stats you can look at and angles you can approach things from are endless. Also, the code I have written is probably more thorough an well-presented than how I would typically do it, often, when doing this with no intent on publishing (as I am doing here) my data manipulations will generally be far more ad-hoc and expedient (I will pay far less attention to reproducibility and consistent naming conventions).
+I the pathways I go down are only one of many permutations of stats you can look at and angles you can approach things from. The code I have written is also probably more thorough an well-presented than how I would typically do it. When I do this type of thing with no intent on publishing it, my data manipulations will generally be far more ad-hoc and expedient (I pay far less attention to reproducibility and consistent naming conventions).
 
 
 ## Highest Scoring Quarter
@@ -1440,7 +1524,7 @@ identical(as.data.frame(top_goal_scorers_multiple_tb), as.data.frame(top_goal_sc
 top_goal_scorers_reactable(top_goal_scorers_multiple_tb, "Multiple Goal Kickers")
 ```
 
-The Swans game actually places equal 7th on the list of all time which is quite a notable result. It is also interesting that it was another one-sided Swans game[^swans-bombers] at the SCG that takes outright top spot. In that game (circa 1987) the human highlight reel [Warwick Capper](https://www.youtube.com/watch?v=iiYJ6FZWwv0){target="_blank"} led all comers for the Swans with a bag of 6 snags.
+The Swans game actually places equal 7th on the list of all time which is quite a notable result. It is also interesting that it was a similarly one-sided Swans game[^swans-bombers] at the SCG that takes outright top spot. In that game (circa 1987) the human highlight reel [Warwick Capper](https://www.youtube.com/watch?v=iiYJ6FZWwv0){target="_blank"} led all comers for the Swans with a bag of 6 snags.
 
 [^swans-bombers]: [Full game](https://www.youtube.com/watch?v=IR2AjhhNDzE){target="_blank"}, [article](https://www.sydneyswans.com.au/news/132940/footy-flashbacks-essendon){target="_blank"}
 
@@ -1499,7 +1583,7 @@ Or in more precise football statistics terms
 
 > An error made by a player resulting in a negative result for his side. Disposal clangers are any kick or handball that directly turns the ball over to the opposition. Frees and 50-metre penalties against, No Pressure Errors, Dropped Marks and Debits are all included in clangers.[^source-champion-data]
 
-[^source-champion-data]: [Source (Champion Data)](https://www.championdata.com/glossary/afl){target-blank}
+[^source-champion-data]: [Source (Champion Data)](https://www.championdata.com/glossary/afl){target="_blank"}
 
 
 ::: {.panel-tabset}
@@ -1513,12 +1597,15 @@ player_stats_tb |>
   group_by(Home.team, Away.team, Season, Round, Venue, game_afltables_url, game_id, Date) |> 
   summarise(
     clangers_per_possession = sum(Clangers) / sum(Kicks + Handballs),
-    clangers = sum(Clangers)
+    clangers = sum(Clangers),
+    .groups = "drop"
   ) |> 
-  arrange(desc(clangers_per_possession))
-```
+  arrange(desc(clangers)) -> most_clangers_tb
 
-The fixture between the sun
+# select(
+#     rank, afl_tables_game_id, match_home_team, match_away_team, disposal_efficiency_game, season, match_round, venue_name, afl_tables_url
+#   )
+```
 
 
 #### `data.table`
@@ -1528,6 +1615,55 @@ The fixture between the sun
 ```
 
 :::
+
+```{r}
+most_clangers_tb |> 
+  reactable_themed(
+    rowStyle = function(index) {
+      most_clangers_tb |> 
+        slice(index) |> 
+        pull(afl_tables_game_id) -> row_game_id
+      if(row_game_id == infamous_game_id) {
+        list(background = "blue", color = "yellow")
+        }
+      },
+    columns = list(
+      afl_tables_url = colDef(
+        name = "AFL Tables Link",
+        sticky = "right",
+        cell = function(cell_value, row_index) {
+          tags$a(href = cell_value, target = "_blank", "🔗")
+          }
+        ),
+      season = colDef(show = FALSE),
+      match_round = colDef(
+        cell = function(cell_value, row_index) {
+          most_clangers_tb |>
+            slice(row_index) |>
+            pull(season) -> season
+          paste("match_round", cell_value, season)
+          }
+        ),
+      rank = colDef(name = "Rank"),
+      disposal_efficiency_game = colDef(
+        name = "Disposal Efficiency",
+        cell = \(cell_value) {
+          scales::percent(cell_value)
+        }
+        ),
+      Home.team = colDef(name = "Home Team"),
+      Away.team = colDef(name = "Away Team"),
+      afl_tables_game_id = colDef(show = FALSE)
+      )
+    )
+
+```
+
+
+A lot of the games in the top 5 are from very recent years, probably highlighting the more recent trend in teams rolling the dice more with possession (high risk, high reward) as popularised by Richmond and adopted to great success of late by the Magpies. Having spot-checked a few examples, there is also a bit of a pattern of wet weather impacting these games it would seem.
+
+Also notable is one of three games played in Shanghai as part of the AFL's attempt at entering into the Chinese market between 2017 and 2019. While there was some rain about, one might presume from this that the Suns and Port didn't put on a particularly impressive display of our game on that occasion, either that or they were playing the Richmond-inspired high-octane footy before a most other teams had started doing it.
+
 
 
 ### Worst Disposal Efficiency
@@ -1536,132 +1672,213 @@ Disposal efficiency is
 
 > the percentage of disposals that are effective.[^source-champion-data]
 
-Where effective disposal is any of
+Where effective disposal is any of:
 
 > * Effective handball: a handball to a teammate that hits the intended target.
   * Effective Short Kick: A kick of less than 40 metres that results in the intended target retaining possession. Does not include kicks that are spoiled by the opposition.
   * Effective Long Kick: A kick of more than 40 metres to a 50/50 contest or better for the team.[^source-champion-data]
 
-Note that the distance of the disposal is an element of how lenient the definition of "effective" is.
+Note how the distance of the disposal is an element of how lenient the definition of "effective" is.
 
 
-This statistic requires our first (and only) use of the  [official AFL website](https://www.afl.com.au/){target="_blank"} as it is not present on the AFL Tables data. Thus we only have data for it from 2014 onwards.
-
-We shall measure this by checking the most disposal with none effective being effective.
+This statistic requires our first (and only) use of the [Fryzigg](https://twitter.com/fryzigg){target="_blank"} data, as disposal efficiency is not present on the AFL Tables data. While the Fryzigg data has the full history of the AFL, disposal efficiency is missing for seasons prior to 2012 onwards. We will therefore have to make do with answering this question only for about the past decade.
 
 ::: {.panel-tabset}
 
 #### Tidyverse
 
 ```{r}
-player_stats_fryzigg <- fitzRoy::fetch_player_stats_fryzigg(season = 2010:2023)
-
-player_stats_fryzigg_all <- fitzRoy::fetch_player_stats_fryzigg(season = 1897:2023)
-
-
-player_stats_fryzigg_all |> filter(!is.na(disposal_efficiency_percentage)) |> dim()
-player_stats_fryzigg_all |> filter(!is.na(match_weather_type)) |> dim()
-
-player_stats_fryzigg |> 
+player_stats_fryzigg_tb |> 
+  filter(!is.na(disposal_efficiency_percentage)) |> 
   mutate(
     home_team_code = get_team_code(match_home_team),
     away_team_code = get_team_code(match_away_team),
     season = str_sub(match_date, 1, 4),
     afl_tables_game_id = get_game_id(home_team_code, away_team_code, as.Date(match_date)),
     afl_tables_url = get_game_afltables_url(afl_tables_game_id, season)
-  ) |> 
-  select(afl_tables_game_id, match_weather_type) |> 
-  distinct() -> match_stats_fryzigg_id
-
-
-
-player_stats_afl_official_tb |> 
-  filter(!is.na(player.player.player.playerId)) |> 
-  mutate(
-    home_team_code = get_team_code(home.team.name),
-    away_team_code = get_team_code(away.team.name),
-    season = str_sub(format(utcStartTime, format ="%y"), 1, 4),
-    afl_tables_game_id = get_game_id(home_team_code, away_team_code, as.Date(utcStartTime)),
-    afl_tables_url = get_game_afltables_url(afl_tables_game_id, season)
-  ) -> player_stats_afl_official_id_tb
-
-player_stats_afl_official_id_tb |> 
-  group_by(season, afl_tables_url, afl_tables_game_id) |> 
+  ) |>
+  group_by(afl_tables_game_id, match_home_team, match_away_team, venue_name, season, match_round, afl_tables_url) |> 
   summarise(
-    disposalEfficiency_game = sum(disposalEfficiency * disposals) / sum(disposals),
+    disposal_efficiency_game = sum(disposal_efficiency_percentage * disposals) / sum(disposals) / 100,
     .groups = "drop"
-    ) |> 
-  arrange(disposalEfficiency_game) |> 
-  left_join(match_stats_fryzigg_id, by = "afl_tables_game_id")
-
-
-
-
+  ) |> 
+  arrange(disposal_efficiency_game) |> 
+  mutate(
+    rank = seq_along(disposal_efficiency_game)
+  ) |> 
+  filter(rank %in% 1:5 | afl_tables_game_id == infamous_game_id) |> 
+  select(
+    rank, afl_tables_game_id, match_home_team, match_away_team, disposal_efficiency_game, season, match_round, venue_name, afl_tables_url
+  ) -> worst_disposal_efficiency_games_tb
 
 
 ```
-The only game with less than 50% disposal efficiency was played in torrid conditions up in Cairns. Looking at the [video highlights](https://www.youtube.com/watch?v=VI4dCyLt82c){target="_blank}, the players were running through puddles the whole game. I have however seen equal or worse conditions in the past so it is somewhat curious that this was the worst by such a margin (for reference Gold Coast we very poor that year, coming second last but the Roos came in a respectible ninth position only one game outside the top 8, this also points to them probably winning this game if has been played in more favourable conditions but they still would have missed out on finals due to the mammoth percentage of the Cats that year). The "cleanest" player on the day was Jesse Joyce, who's 8 touches came at 75% efficiency (however it was a rather low sample size).
-
-Seeing a game in 2018 is also a nice reminder of the last time the Eagles won a premiership which feels a long way off given the current predicament the club is in (in spit of their recent win against the also languishing Roos last Sunday).
-
-In the 20th century, the use of suburban grounds where the quality of the surface was subpar I am sure lead to far more games with lower disposal efficiency than this (muddy fields were far more common in those days).
-
-But we can't entirely blame the players, given the conditions the conditions. Anyone who has kick a footy around in the wet will know how much heavier and slipperier it can get, it is often described as being like a bar of soap. By looking through old highlights packages of the top two games,
 
 #### `data.table`
 
 ```{r}
+worst_disposal_efficiency_games_dt <- copy(player_stats_fryzigg_dt)
+worst_disposal_efficiency_games_dt <- worst_disposal_efficiency_games_dt[!is.na(disposal_efficiency_percentage), ]
+worst_disposal_efficiency_games_dt[, home_team_code := get_team_code(match_home_team)]
+worst_disposal_efficiency_games_dt[, away_team_code := get_team_code(match_away_team)]
+worst_disposal_efficiency_games_dt[, season := str_sub(match_date, 1, 4)]
+worst_disposal_efficiency_games_dt[, afl_tables_game_id := get_game_id(home_team_code, away_team_code, as.Date(match_date))]
+worst_disposal_efficiency_games_dt[, afl_tables_url := get_game_afltables_url(afl_tables_game_id, season)]
 
+worst_disposal_efficiency_games_dt <- worst_disposal_efficiency_games_dt[,
+                                   .(disposal_efficiency_game = sum(disposal_efficiency_percentage * disposals) / sum(disposals) / 100),
+                                   c("afl_tables_game_id", "match_home_team", "match_away_team", "venue_name", "season", "match_round", "afl_tables_url")
+                                   ]
+
+setorder(worst_disposal_efficiency_games_dt, disposal_efficiency_game)
+worst_disposal_efficiency_games_dt[, rank := seq_along(disposal_efficiency_game)]
+worst_disposal_efficiency_games_dt <- worst_disposal_efficiency_games_dt[rank %in% 1:5 | afl_tables_game_id == infamous_game_id,]
+worst_disposal_efficiency_games_dt <- worst_disposal_efficiency_games_dt[, .(rank, afl_tables_game_id, match_home_team, match_away_team, disposal_efficiency_game, season, match_round, venue_name, afl_tables_url)]
+
+# verify outputs match:
+identical(as.data.table(worst_disposal_efficiency_games_tb), as.data.table(worst_disposal_efficiency_games_dt))
 ```
 
 :::
 
 
+```{r}
+#| echo: false 
+worst_disposal_efficiency_games_tb |> 
+  reactable_themed(
+    rowStyle = function(index) {
+      worst_disposal_efficiency_games_tb |> 
+        slice(index) |> 
+        pull(afl_tables_game_id) -> row_game_id
+      if(row_game_id == infamous_game_id) {
+        list(background = "blue", color = "yellow")
+        }
+      },
+    columns = list(
+      afl_tables_url = colDef(
+        name = "AFL Tables Link",
+        sticky = "right",
+        cell = function(cell_value, row_index) {
+          tags$a(href = cell_value, target = "_blank", "🔗")
+          }
+        ),
+      season = colDef(show = FALSE),
+      match_round = colDef(
+        cell = function(cell_value, row_index) {
+          worst_disposal_efficiency_games_tb |>
+            slice(row_index) |>
+            pull(season) -> season
+          paste("Round", cell_value, season)
+          }
+        ),
+      rank = colDef(name = "Rank"),
+      disposal_efficiency_game = colDef(
+        name = "Disposal Efficiency",
+        cell = \(cell_value) {
+          scales::percent(cell_value)
+        }
+        ),
+      match_home_team = colDef(name = "Home Team"),
+      match_away_team = colDef(name = "Away Team"),
+      afl_tables_game_id = colDef(show = FALSE)
+      )
+    )
+
+```
+
+
+
+The only game with less than 50% disposal efficiency was played in torrid conditions up in Cairns. Looking at the [video highlights](https://www.youtube.com/watch?v=VI4dCyLt82c){target="_blank"}, the players were running through puddles the whole game. I have however seen equal or worse conditions in the past so it is somewhat curious that this was the worst by such a margin. For reference, Gold Coast were very poor that year, coming second last but the Roos came in a respectable ninth position (only one win and percentage outside the top 8), this also points to them probably winning this game if has been played in more favourable conditions but they still would have missed out on finals due to the mammoth percentage of the Cats that year. The "cleanest" player on the day was Jesse Joyce, who's 8 touches came at 75% efficiency (however it was a rather low sample size).
+
+
+Further disjointed musings:
+
+* Seeing a game in 2018 is also a fun reminder of the last time the Eagles won a premiership which feels a long way off given the current predicament the club is in, in spite of their recent win against the also similarly languishing[^roos-optimism] Roos last Sunday.
+
+[^roos-optimism]: But far more optimistic due to a combination of Clarko (he returns from his hiatus this week) and promising talent on their list such as Harry Sheezel
+
+* In the 20th century, the use of suburban grounds where the quality of the surface was subpar I am sure lead to far more games with lower disposal efficiency than this (muddy fields were far more common in those days). 
+
+* We can't entirely blame the players, given the conditions the conditions. Anyone who has kick a footy around in the wet will know how much heavier and slipperier than usual it can get (it is often described as being like a bar of soap). By looking through old highlights packages of the top several games in this metric, all of them appear to have impacted significantly by weather conditions.
+
+* The Fryzigg data actually has weather conditions as a field on it but it appears to be somewhat unreliable, when I cross referenced the games with match reports and highlights some of the "sunny" games turned out to be played in torrential rain.
+
+
 
 ## Youngest Norm Smith Medalist
 
-Make the below a collapsible callout (some of it doesn't need to be)
 
-This illustrates the fact that sometimes you need to stray outside of fitzRoy but it give most of the data you could ever want.
+Our question regarding Norm Smith medallists from above reads:
 
-### Background
-
-The norm smith medal is award to the player adjudged best a field (best on ground) in the Grand Final.
-
-The Norm Smith was first instituted in 1979 and prior to this, there was no official award given. However there is a source someone has provided of who they (and the media of the day) adjudged as being.
-
-While as a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons, if not for the fact more data available is always nice (even if it is of more dubious quality).
-
-Unofficial source of older data
-https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979/#:~:text=Robert%20Dipierdomenico%20was%20arguably%20best,the%2077%20Grand%20Final%20Replay.
+> Who was the youngest player to win a Norm Smith Medal?
 
 
-For official norm smith which ever of the following are easier:
+::: {.callout-note collapse="true"}
 
-- https://www.afl.com.au/stats/leaders-awards/norm-smith-medal
+### Background on the Norm Smith
 
-- https://en.wikipedia.org/wiki/Norm_Smith_Medal#Recipients
+* The Norm Smith Medal is awarded to the player who is adjusted best on ground in the AFL grand final. 
 
-Make sure it lines up with the AFL data.
+* The Norm Smith medal is usually given to a player on the winning team but very occasionally, players have managed to win the award in a losing side. This has only happened 4 out of 45 times and the last time was Eagles (and Carlton) superstar Chris Judd in 2005.
 
-Find the youngest player, player with least games
+* The Norm Smith was first instituted in 1979. Prior to this, there was no official award given however the media and fans of the day had their opinions of who the best on ground was in prior grand finals. While [this article](https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979){target="_blank"} lists some "unofficial" best on ground performances in grand finals prior to 1979, I will stick with the official list. As a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons particularly as this data is of dubious reliability.
+
+
+
+:::
+
+### Data sources
+
+As previously mentioned, norm smith data is not available on FitzRoy, so we will have to scrape it with some of our own bespoke code[^illustrates-fitzroy-point]. The AFL website conveniently has a nice table, listing all the winners since the award began in 1979.
+
+
+[^illustrates-fitzroy-point]: This illustrates the fact that sometimes you need to stray outside of `fitzRoy` but it give most of the footy data you could ever want.
+
+
+```{r}
+norm_smith_url <- "https://www.afl.com.au/stats/leaders-awards/norm-smith-medal"
+norm_smith_html <- read_html(norm_smith_url)
+
+norm_smith_html |> 
+  html_table(header = TRUE) |> 
+  _[[1]] |> 
+  mutate( #manually adjust to help mapping
+    Club = case_when(
+      Club == "Geelong Cats" ~ "Geelong",
+      Club == "West Coast Eagles" ~ "West Coast",
+      Club == "Sydney Swans" ~ "Sydney",
+      TRUE ~ Club
+    ),
+    Player = case_when(
+      Player == "Billy Duckworth" ~ "Bill Duckworth",
+      Player == "Ryan O'Keefe" ~ "Ryan OKeefe",
+      TRUE ~ Player 
+    )
+  ) -> norm_smith_tb
+
+norm_smith_tb |> 
+  left_join(
+    player_details_tb |> select(Player, Team, Games),
+    by = c("Player" = "Player", "Club" = "Team")
+    ) |> View()
+
+
+
+```
 
 
 
 # Epilogue
 
 
-## Summary of Answers
-
-Summarise by player, team player and season where relevant (grouped columns or potentially a tabbed layout if needed)
-
+## Closing Remarks
 
 
 Interestingly, the [aforementioned infamous game](#a-concrete-example) isn't the record-holder (or even in the top 5) for any of our questions but it was remarkable enough as only one of `r sum(match_stats_flat_dt$Home.score>=200)+sum(match_stats_flat_dt$Away.score>=200)` games where a team has scored 200 points or more which is notable enough I think, particularly given I had the (mis-)fortune of witnessing it in the flesh. Perhaps we could dig deeper to find a record it holds but I somehow find more satisfaction in it being a thought-provoking enough game to coax these questions out of us without it ever being the *answer*.
 
 ## Notable AFL Stats Figures
 
-I will concluse by listing some people whoare doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package) to provide further motivation:
+I will conclude by listing some people who are doing interesting work with AFL stats (often with heavy use of R and the `fitzRoy` package) to provide further motivation:
 
 - [`fitzRoy`](https://github.com/jimmyday12/fitzRoy): as outlined in this article, this R package is the de facto way of sourcing AFL data.
 

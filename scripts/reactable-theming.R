@@ -6,6 +6,10 @@ reactableTheme_dark <- function(primary_colour = "#0F0") { # could try pink as a
     headerStyle = list(
       color = primary_colour,
       "background-color" = "#060708"
+      ),
+    groupHeaderStyle = list(
+      color = primary_colour,
+      "background-color" = "#060708"
       )
     )
 }
@@ -14,8 +18,12 @@ reactableTheme_light <- function(primary_colour = "#FF7415") { # could try maroo
   reactable::reactableTheme(
     color = "#060708",
     backgroundColor = "white",
-    borderColor = primary_colour,
+    borderColor = "#E1E1DE",
     headerStyle = list(
+      color = "white",
+      "background-color" = primary_colour
+      ),
+    groupHeaderStyle = list(
       color = "white",
       "background-color" = primary_colour
       )
