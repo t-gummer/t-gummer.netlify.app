@@ -231,7 +231,7 @@ Where possible we will use the AFL Tables data set as it has the full history of
 fitzRoy_sources <- as_tibble(fread("fitzRoy_sources.csv"))
 
 fitzRoy_sources |> 
-  reactable(columns = list( # add conditional formatting
+  reactable_themed(columns = list( # add conditional formatting
     data_source = colDef(
       name = "Data Source",
       cell = \(cell_value, row_index, column_name) {
@@ -239,15 +239,53 @@ fitzRoy_sources |>
         
         }
       ),
-    collection_method = colDef(name = "Collection Method"),
-    level_of_detail = colDef(name = "Level of Detail"), # add level_of_detail_note tip
-    speed_of_fetch = colDef(name = "Speed of Fetch"), # add speed_of_fetch_note tip
-    update_frequency = colDef(name = "Update Frequency"),
-    use_case = colDef(name = "Use Case"),
+    collection_method = colDef(
+      name = "Collection Method"
+      ),
+    level_of_detail = colDef(
+      name = "Level of Detail",
+      cell = \(cell_value, row_index, column_name) {
+          tippy::tippy(paste(cell_value, "🖱️"), paste("<b>Note</b></br>", fitzRoy_sources[row_index, "level_of_detail_note", drop = TRUE]))
+        },
+      style = \(cell_value, row_index) {
+        list(
+          "background-color" = switch(cell_value, High = "#00FF0088", Moderate = "#FFFF0088", Low = "#FF000088")
+        )
+      }
+      ),
+    speed_of_fetch = colDef(
+      name = "Speed of Fetch",
+      cell = \(cell_value, row_index, column_name) {
+          tippy::tippy(paste(cell_value, "🖱️"), paste("<b>Note</b></br>", fitzRoy_sources[row_index, "speed_of_fetch_note", drop = TRUE]))
+        },
+      style = \(cell_value, row_index) {
+        list(
+          "background-color" = switch(cell_value, Slow = "#FF000088", Varies = "#FFFF0088", Fast = "#00FF0088")
+          )
+      }
+      ),
+    update_frequency = colDef(
+      name = "Update Frequency",
+      style = \(cell_value, row_index) {
+        list(
+          "background-color" = switch(cell_value, Live = "#00FF0088", "End of round" = "#FF000088")
+          )
+      }
+      ),
+    use_case = colDef(
+      name = "Use Case",
+      cell = \(cell_value) {
+        tags$small(cell_value)
+      }
+      ),
     URL = colDef(show = FALSE),
     level_of_detail_note = colDef(show = FALSE),
     speed_of_fetch_note = colDef(show = FALSE)
-    ))
+    ),
+    outlined = TRUE
+    )
+
+
 
 # AFL Website is slow because the data is very fragmented resulting in many api calls
 
