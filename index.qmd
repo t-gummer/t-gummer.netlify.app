@@ -2,7 +2,7 @@
 title: Tim Gummer
 description: |
   <blockquote class="blockquote">
-  Those who have seen me recently might observe that I currently look rather diffierent to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
+  Those who have seen me recently might observe that I currently look rather different to this photo. It was taken in April 2021 which was the last time I had a haircut and it is also the most recent (and only) professional photo which has been taken of me since high school (although some have suggested that it looks like a school photo anyway).
   </blockquote>
 title-block-banner: FALSE
 about:
@@ -19,9 +19,6 @@ about:
     - icon: envelope
       text: Email
       href: "mailto:timothy.gummer@gmail.com"
-format:
-  html:
-    page-layout: full
 ---
 
 ::: {#about-block}
@@ -69,7 +66,11 @@ This website is built using [Quarto](https://quarto.org){target="_blank"}'s [sta
 
 > But don't thank Quarto, thank the web development family: HTML, CSS and JavaScript, [the three amigos](https://www.youtube.com/clip/UgkxcSHiSuPrAwey1tAcLisvcYFd7h65RmT4){target="_blank"}.
 
+```{=html}
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ZZBHtCh69TY?controls=0&amp;clip=UgkxcSHiSuPrAwey1tAcLisvcYFd7h65RmT4&amp;clipt=EMjsBhjvmQc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+
 
 :::
 

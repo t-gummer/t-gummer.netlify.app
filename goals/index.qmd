@@ -7,9 +7,6 @@ title-block-style: default
 execute:
   echo: false
   warning: false
-format:
-  html:
-    page-layout: full
 ---
 
 

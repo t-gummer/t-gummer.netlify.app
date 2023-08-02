@@ -8,6 +8,7 @@ listing:
     contents: "2023/**/index.qmd"
     sort: "date desc"
     categories: true
+    fields: [image, date, title, author, reading-time, description, categories]
 # toc-location: right
 date-format: "D MMMM YYYY"
 code-tools: false
