@@ -2,7 +2,7 @@
 title: "(Over-)Analysing Idle Footy Chat"
 description: |
   This blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.
-date: 2023-08-02
+date: 2023-08-03
 categories: 
   - Sport
   - AFL
@@ -11,7 +11,7 @@ categories:
 image: fitzroy-lions-logo.png
 reference-location: margin
 draft: false
-freeze: false
+freeze: true
 reading-time: true
 ---
 
@@ -35,9 +35,9 @@ source("../../../scripts/reactable-theming.R")
 
 ## Apologies for the delay
 
-I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for slowness are:
+I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for my slowness are:
 
-* Am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice, publishable words, it become a bit of a slog.
+* I am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice, publishable words, it become a bit of a slog.
 
 * The scope of this project was overly ambitious and expanded as I kept on branching off from the main mission in order provide additional background (when given free reign, this is my tendency).
 
@@ -53,7 +53,7 @@ The out-of-control scope has also impacted the length of this article. I commend
 
 Since antiquity (or at the very least living memory), sporting data has been recorded, published and analysed for almost every professional sport known to man. In the modern day of analytics and social media it has reached a point where sports statistics are constantly being recorded and opined on by teams, the press and your average punter alike. 
 
-My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]) is no different. Indeed some have even described the AFL (Australia's nation competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
+My beloved sport of *Australian Rules Football* (which I will henceforth refer to as "footy"[^footy]) is no different. Indeed some have even described the AFL (Australia's national competition) as "the most data rich sport on Earth"[^data-rich-sport-source], although I would suggest that certain American sports such as baseball (i.e. [Moneyball](https://www.youtube.com/watch?v=PlKDQqKh03Y){target="_blank"}) have made far better use of their data.
 
 [^footy]: As a Western Australian this is how I define it (along with the majority of Australia) but I am aware that this term is reserved for rugby league in New South Wales and Queensland
 [^data-rich-sport-source]: [Source](https://www.youtube.com/watch?v=i_mePwh_02M){target="_blank"}
@@ -110,7 +110,7 @@ However if you are a [gadget-type operator](https://www.youtube.com/clip/UgkxtEJ
 
 # A concrete example
 
-I recently had the misfortune ([as a West Coast fan](https://www.instagram.com/p/CiRdBD9A4lU/){target="_blank"}) of attending a game live between the Sydney Swans and the (not so) mighty West Coast Eagles with the following scoreline:
+I recently had the misfortune ([as a West Coast fan](https://www.instagram.com/p/CiRdBD9A4lU/){target="_blank"}) of attending a game live between the Sydney Swans and the (not so) mighty West Coast Eagles with the following score line (the equal fourth highest margin of all time):
 
 ![](swans-vs-eagles-score.png "How embarrassing!")
 
@@ -197,8 +197,8 @@ library(rvest)
 library(stringr)
 library(tidyr)
 library(purrr)
+library(lubridate)
 
-library(reactable)
 ```
 
 
@@ -362,7 +362,6 @@ fitzRoy_sources |>
 ## Importing the Data
 
 
-As the questions we are trying to answer
 
 For the purposes of answering the questions [above](#question-list), I am most interested in the full history of the AFL and have decided to use AFL Tables as my primary data source[^data-regret]. I will also use Fryzigg for one small use-case where AFL Tables is missing key data (disposal efficiency) and some bespoke web scraping for Norm Smith Medallists.
 
@@ -382,7 +381,6 @@ player_details <- fetch_player_details_afltables()
 player_stats_fryzigg <-  fetch_player_stats_fryzigg(season = 1897:2023)
 ```
 
-Note that in the code above we have to use a `map_dfr` to get data for multuple seasons, that is because the function will only do one season at a time, whereas we can obtain the AFL Tables all in one go with a vector of years. The reason for this is that the `fetch_player_stats_afl` uses an API to get the data  where as `fetch_player_stats_afl_tables` function pulls the data from a [GitHub repository](https://github.com/jimmyday12/fitzroy_data){target="_blank"} where data obtained from a scraping script is automatically run over night via [GitHub actions](https://github.com/features/actions){target="_blank"} (a clever solution to prevent the actual site from being overloaded from too many scraping requests). This also means the `fetch_player_stats_afl` will be as at right now whereas `fetch_player_stats_afl_tables` data is updated as at the last time the code to scrape the data was run and AFL Tables updated their website. This also renders the `fetch_player_stats_afl` function slower than the `fetch_player_stats_afl_tables` as it actually has to hit an api and then perform some data manipulations as opposed to merely pulling data directly from GitHub storage.
 
 
 ::: {.callout-warning}
@@ -432,7 +430,7 @@ if(file.exists("data/player_stats_fryzigg.RDS")) {
 
 :::
 
-The data we have read in is as at round `R tail(player_stats$Round, 1)` of the `R tail(player_stats$Season, 1)` AFL season.
+The data we have read in is as at round `r tail(player_stats$Round, 1)` of the `r tail(player_stats$Season, 1)` AFL season.
 
 ## Finicky Details About Other R Packages
 
@@ -529,7 +527,7 @@ str(results)
 ```
 
 
-While inspecting the `results` we may note that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our question is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will opt to create a 'flattened' version of `player_stats_afl_tables` with all the match-level fields available to us on both datasets and discard the `results` dataset (save for some quick checks to make sure the player data 'flattening' worked as expected).
+While inspecting the `results` we may note that certain key match-level information (e.g. quarter-by-quarter scores) for answering some of our [questions](#question-list) is missing from it. As it turns out, this data is actually available on the `player_stats_afl_tables` data (one row per player per match) instead. Thus, we will opt to create a 'flattened' version of `player_stats_afl_tables` with all the match-level fields available to use on both datasets and discard the `results` dataset (save for some quick checks to make sure the player data 'flattening' worked as expected).
 
 
 Now, let's take a look at the `player_stats_afl_tables` dataset to determine which fields are player-level and which are match-level.
@@ -695,7 +693,7 @@ Henceforth, `player_stats_*` and `match_stats_flat_*` will be the two datasets w
 
 ## IDs and URLs
 
-One thing that our `match_stats_flat_*` dataset is currently lacking is a game ID for use as a primary key. In addition, being able to link directly to AFL tables when talking about particular game or players would be handy.
+One thing that our `match_stats_flat_*` dataset is currently lacking is a game ID for use as a primary key. In addition, being able to link directly to AFL tables when talking about a particular game or player would be handy.
 
 ### Game ID and URL
 
@@ -908,7 +906,7 @@ identical(as.data.frame(player_stats_tb), as.data.frame(player_stats_dt))
 
 ## Finding the Infamous Game
 
-Let's use these new datasets to perform the simple exercise of obtaining the game ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game. We can henceforth use this game ID whenever relevant to rank the swans in the statistical category we investigate.
+Let's use these new datasets to perform the simple exercise of obtaining the game ID for the [aforementioned](#a-concrete-example) Swans versus Eagles game. We can henceforth use this game ID whenever relevant to rank the Swans in the statistical category we investigate.
 
 ```{r}
 (
@@ -996,6 +994,7 @@ player_stats_tb |>
           }
         ),
       player_afltables_url = colDef(
+        name = "AFL Tables URL",
         sticky = "right",
         cell = function(cell_value) {
           tags$a(href = cell_value, target = "_blank", "Player on AFL Tables")
@@ -1014,7 +1013,7 @@ player_stats_tb |>
 
 In this section I will provide my working using R for each of the [aforementioned questions](#question-list). Where relevant, I will figure out where the [aforementioned infamous game](#a-concrete-example) places in the history of the AFL for that particular category.
 
-I the pathways I go down are only one of many permutations of stats you can look at and angles you can approach things from. The code I have written is also probably more thorough an well-presented than how I would typically do it. When I do this type of thing with no intent on publishing it, my data manipulations will generally be far more ad-hoc and expedient (I pay far less attention to reproducibility and consistent naming conventions).
+The pathways I go down are only one of many permutations of stats you can look at and angles you can approach things from. The code I have written is also probably more thorough and well-presented than how I would typically do it. When I do this type of thing with no intent on publishing it, my data manipulations will generally be far more ad-hoc and expedient (I pay far less attention to reproducibility and consistent naming conventions).
 
 
 ## Highest Scoring Quarter
@@ -1172,7 +1171,7 @@ top_quarters_reactable <- function(data) {
         score = colDef(name = "Quarter Score"),
         team = colDef(name = "Team"),
         quarter = colDef(name = "Quarter"),
-        opposition = colDef(name = "Oposition"),
+        opposition = colDef(name = "Opposition"),
         game_id = colDef(show = FALSE)
       )
     )
@@ -1208,7 +1207,7 @@ identical(as.data.frame(top_quarter_scores_q1_tb), as.data.frame(top_quarter_sco
 top_quarters_reactable(top_quarter_scores_q1_tb)
 ```
 
-The record for the highest-scoring first quarter occurred during the bloodbath of an encounter that was the game the Bombers first ever clash with the Gary Ablett Jr-led Gold Coast Suns in their inaugural season in the AFL. The Bombers came out of the blocks in a flash and mercilessly obliterated the inexperienced Gold Coast side, notching up a 93 point lead at quarter time. Interestingly, the Sun actually managed to win the second quarter as the bombers appeared to take there foot off the gas a little to *only* win by 139 points when all was said and done. 
+The record for the highest-scoring first quarter occurred during the bloodbath of an encounter that was the Bombers' first ever clash with the Gary Ablett Junior-led Gold Coast Suns in their inaugural season in the AFL. The Bombers came out of the blocks in a flash and mercilessly obliterated the inexperienced Gold Coast side, notching up a 93 point lead at quarter time. Interestingly, the Sun actually managed to win the second quarter as the Bombers appeared to take there foot off the gas a little to *only* win by 139 points when all was said and done. 
 
 
 ```{=html}
@@ -1222,8 +1221,7 @@ Perhaps the Suns' lethargy in the first quarter against the Dons can be explaine
 
 [^first-win]: Courtesy of a [(missed) shot at goal after the siren](https://youtu.be/CbJMAHRzHEo?t=318){target="_blank"} from Justin Westhoff.
 
-[^gold-coast]: And thank god I didn't give up on watching them after that (mainly due to Gary Ablett I will admit) because otherwise I would have missed *unbelievable goals* like [this](https://www.youtube.com/watch?v=2Ae5byjzUKg){target="_blank"}.
-
+[^gold-coast]: I am glad that I didn't give up on watching them after that (mainly due to Gary Ablett I will admit) because otherwise I would have missed *unbelievable goals* like [this](https://www.youtube.com/watch?v=2Ae5byjzUKg){target="_blank"}.
 
 
 ### Second Quarter
@@ -1253,7 +1251,7 @@ identical(as.data.frame(top_quarter_scores_q2_tb), as.data.frame(top_quarter_sco
 top_quarters_reactable(top_quarter_scores_q2_tb)
 ```
 
-From one teams first season, to another's last. It is quite fitting (although a little sad) that the highest scoring second quarter was against a floundering ([aforementioned](#the-fitzroy-package)) `fitzRoy` Football Club (to which we owe the ease with which we obtained this data) en-route to a wooden spoon in their [final season](https://www.youtube.com/watch?v=Ykfsk0pXt9E){target="_blank"} prior to merging with Brisbane Bears to form the Brisbane Lions.
+From one teams' first season, to another's last. It is quite fitting (although a little sad) that the highest scoring second quarter was against a floundering ([aforementioned](#the-fitzroy-package)) `fitzRoy` Football Club (to which we owe the ease with which we obtained this data) en-route to a wooden spoon in their [final season](https://www.youtube.com/watch?v=Ykfsk0pXt9E){target="_blank"} prior to merging with Brisbane Bears to form the Brisbane Lions.
 
 As I was not yet born, I do not remember the game, but on the video below, the commentator shrewdly points to a strong wind prevailing towards the Crows' goal at the beginning of the second quarter which certainly didn't bode well for the *Lions*.
 
@@ -1288,7 +1286,7 @@ identical(as.data.frame(top_quarter_scores_q3_tb), as.data.frame(top_quarter_sco
 top_quarters_reactable(top_quarter_scores_q3_tb)
 ```
 
-The Swans's third quarter appears in 28th position here, which is the best position it gets. The game on top, the Bombers had a very even distribution of goal-kickers and kicked 32 goals so they may appear later in our list of [multiple goal kickers question](#individual).
+The Swans' third quarter appears in 28^th^ position here, which is the best position it gets. The game on top, the Bombers had a very even distribution of goal-kickers and kicked 32 goals so they may appear later in our list of [multiple goal kickers question](#individual).
 
 
 ### Fourth Quarter
@@ -1319,7 +1317,7 @@ top_quarters_reactable(top_quarter_scores_q4_tb)
 ```
 
 
-Well this was slightly unexpected, the Bloods[^incorrect-label] came home like a freight train against the woeful Saints in a game that took place over 100 years ago. It is also the only quarter in AFL history that has notched up a ton. Upon seeing this, given it's vintage, I though that perhaps the story of this game might have been lost to time but the Swans to have a most [insightful article](https://www.sydneyswans.com.au/news/235004/slaughter-the-true-story-behind-a-record-thats-stood-for-a-century){target="_blank"} up on their website about it. The explanation it provides is that St Kilda were undermanned through a combination of injury and player protest on account of off-field disputes. It is safe to say that the "Bloods" showed them no mercy.
+Well this was slightly unexpected, the Bloods[^incorrect-label] came home like a freight train against the woeful Saints in a game that took place over 100 years ago. It is also the only quarter in AFL history that has notched up a ton. Upon seeing this, given it's vintage, I though that perhaps the story of this game might have been lost to time but the Swans have a most [insightful article](https://www.sydneyswans.com.au/news/235004/slaughter-the-true-story-behind-a-record-thats-stood-for-a-century){target="_blank"} up on their website about it. The explanation it provides is that St Kilda were undermanned through a combination of injury and player protest on account of off-field disputes. It is safe to say that the "Bloods" showed them no mercy.
 
 [^incorrect-label]: Incorrectly labelled here as "Sydney" in the table above because at the time they resided in South Melbourne (they [relocated to Sydney in 1982](https://en.wikipedia.org/wiki/Sydney_Swans#Swans_move_to_Sydney:_1982.E2.80.931984){target="_blank"}), they were also known as the "Bloods" prior to adopting their current [Swans mascot in 1933](https://en.wikipedia.org/wiki/Sydney_Swans#Club_identity){target="_blank"} due to the number of Western Australians in the side (as a WA boy I couldn't help mentioning this)
 
@@ -1351,7 +1349,7 @@ top_quarters_reactable(top_quarter_scores_tb)
 ```
 
 
-In the infamous game, the Swan's third (premiership) quarter was the only one that reached the top 100 quarters of all time. The fact that no quarter was even close to the the top indicates that the swans were very consistent through-out the game. To use a cliche, they put in a consistent four-quarter effort and I support the Eagles were consistent too (consistently dismal).
+In the infamous game, the Swans' third (premiership) quarter was the only one that reached the top 100 quarters of all time. The fact that no quarter was even close to the the top indicates that the Swans were very consistent through-out the game. To use a cliche, they put in a consistent four-quarter effort and I suppose the Eagles were consistent too (consistently dismal).
 
 
 ## Most Goal-kickers
@@ -1367,7 +1365,7 @@ These questions were:
 
 > What is the record for the most players kicking five or more goals in a single game (i.e. the most "bags")?
 
-The Swans game appeared to have a rather even distribution of goal kickers in the infamous, so it will be interesting to see where it places on the all time list in this category.
+The Swans game appeared to have a rather even distribution of goal kickers in the [infamous game](#a-concrete-example), so it will be interesting to see where it places on the all time list in this category.
 
 
 
@@ -1457,7 +1455,7 @@ top_goal_scorers_reactable <- function(data, goal_kicker_label) {
         rank = colDef(name = "Rank"),
         goal_kickers = colDef(name = goal_kicker_label),
         team = colDef(name = "Team"),
-        opposition = colDef(name = "Oposition"),
+        opposition = colDef(name = "Opposition"),
         game_id = colDef(show = FALSE)
       )
     )
@@ -1493,7 +1491,7 @@ top_goal_scorers_reactable(top_goal_scorers_single_tb, "Individual Goal Kickers"
 
 The record for most goal kickers is actually tied by multiple teams. The most recent time this happened was in the Bulldogs' 101 point drubbing of the Eagles last year[^eagles-bad]. The [infamous game](#a-concrete-example) is a bit off the pace in 238^th^ but 12 goal-kickers is still double a starting forward line.
 
-[^eagles-bad]: Yet another example of how poorly the eagles have been done in 2022 and 2023
+[^eagles-bad]: Yet another example of how poorly the Eagles have been done in 2022 and 2023
 
 
 
@@ -1524,7 +1522,7 @@ identical(as.data.frame(top_goal_scorers_multiple_tb), as.data.frame(top_goal_sc
 top_goal_scorers_reactable(top_goal_scorers_multiple_tb, "Multiple Goal Kickers")
 ```
 
-The Swans game actually places equal 7th on the list of all time which is quite a notable result. It is also interesting that it was a similarly one-sided Swans game[^swans-bombers] at the SCG that takes outright top spot. In that game (circa 1987) the human highlight reel [Warwick Capper](https://www.youtube.com/watch?v=iiYJ6FZWwv0){target="_blank"} led all comers for the Swans with a bag of 6 snags.
+The Swans game actually places equal 7^th^ on the list of all time which is quite a notable result. It is also interesting that it was a similarly one-sided Swans game[^swans-bombers] at the SCG that takes outright top spot. In that game (circa 1987) the human highlight reel [Warwick Capper](https://www.youtube.com/watch?v=iiYJ6FZWwv0){target="_blank"} led all comers for the Swans with a bag of 6 snags.
 
 [^swans-bombers]: [Full game](https://www.youtube.com/watch?v=IR2AjhhNDzE){target="_blank"}, [article](https://www.sydneyswans.com.au/news/132940/footy-flashbacks-essendon){target="_blank"}
 
@@ -1555,9 +1553,9 @@ identical(as.data.frame(top_goal_scorers_bags_tb), as.data.frame(top_goal_scorer
 top_goal_scorers_reactable(top_goal_scorers_bags_tb, "Bags")
 ```
 
-Four bags in one game has happened on two occasions, the most recent of which (in 1991) yet again featured the Fitzroy lions, who were trounced by 157 points by the Hawks in North Hobart. 
+Four bags in one game has happened on two occasions, the most recent of which (in 1991) yet again featured the Fitzroy Lions, who were trounced by 157 points by the Hawks in North Hobart. 
 
-The list of bag-getters in this game makes for interesting reading, all were recognisable names (although one more for his family connections that his own merit). As one might expect, one of the bags was courtesy of Hawthorn spearhead Jason Duntall (6 snags), along with 7 a piece from WA boy Ben Allan[^ben-allan] and the three-time premiership player Darren Jarmon. Rounding out the 4 was a contribution of 5 snags from Paul Hudson, who is the son of Tasmanian footy legend Peter Hudson (how fitting that this game was played in Tassie) who average more than 5 goals a game himself (an incredible feat).
+The list of bag-getters in this game makes for interesting reading, all were recognisable names (although one more for his family connections that his own merit). As one might expect, one of the bags was courtesy of Hawthorn spearhead Jason Duntall (6 snags), along with 7 apiece from WA boy Ben Allan[^ben-allan] and the three-time premiership player Darren Jarmon. Rounding out the 4 was a contribution of 5 snags from Paul Hudson, who is the son of Tasmanian footy legend Peter Hudson (how fitting that this game was played in Tassie) who averaged more than 5 goals a game himself (an incredible feat).
 
 [^ben-allan]: Sorry I couldn't help myself, he was also a [Claremont Tiger](https://www.claremontfc.com.au/){target="_blank"} (up the mighty Tiges)
 
@@ -1570,7 +1568,7 @@ Two of the [questions](#question-list) concerned clangers and disposal efficienc
 
 > What is the record for the worst disposal efficiency in a game?
 
-These statistics (which we will define below) are more advanced and have only been recorded more recently, so we will therefore have to check which 
+These statistics (which we will define below) are more advanced and have only been recorded more recently, so we will therefore have to check which data sources to use and what years they are available for.
 
 ### Most Clangers
 
@@ -1586,74 +1584,82 @@ Or in more precise football statistics terms
 [^source-champion-data]: [Source (Champion Data)](https://www.championdata.com/glossary/afl){target="_blank"}
 
 
+Clanger data is available on  the AFL Tables data from 1998 onwards, so we will have to make do with only recent memory.
+
 ::: {.panel-tabset}
 
 #### Tidyverse
 
 ```{r}
-c("team", "opposition", "Season", "Round", "Venue", "game_afltables_url", "game_id", "Date")
-
 player_stats_tb |> 
-  group_by(Home.team, Away.team, Season, Round, Venue, game_afltables_url, game_id, Date) |> 
+  filter(!is.na(Clangers)) |> 
+  group_by(Home.team, Away.team, Season, Round, Venue, game_afltables_url, game_id) |> 
   summarise(
-    clangers_per_possession = sum(Clangers) / sum(Kicks + Handballs),
     clangers = sum(Clangers),
     .groups = "drop"
   ) |> 
-  arrange(desc(clangers)) -> most_clangers_tb
+  arrange(desc(clangers), Season, Round) |> 
+  mutate(
+    rank = seq_along(clangers)
+  ) |> 
+  filter(rank %in% 1:5 | game_id == infamous_game_id) |> 
+  select(
+    rank, game_id, Home.team, Away.team, clangers, Season, Round, Venue, game_afltables_url
+  ) -> most_clangers_tb
 
-# select(
-#     rank, afl_tables_game_id, match_home_team, match_away_team, disposal_efficiency_game, season, match_round, venue_name, afl_tables_url
-#   )
 ```
 
 
 #### `data.table`
 
 ```{r}
-
+most_clangers_dt <- copy(player_stats_dt)
+most_clangers_dt <- most_clangers_dt[!is.na(Clangers),]
+most_clangers_dt <- most_clangers_dt[, .(clangers = sum(Clangers)), c("Home.team", "Away.team", "Season", "Round", "Venue", "game_afltables_url", "game_id")]
+setorder(most_clangers_dt, -clangers, Season, Round)
+most_clangers_dt[,rank := seq_along(clangers)]
+most_clangers_dt <- most_clangers_dt[rank %in% 1:5 | game_id == infamous_game_id,]
+most_clangers_dt <- most_clangers_dt[, .(rank, game_id, Home.team, Away.team, clangers, Season, Round, Venue, game_afltables_url)]
+# verify outputs match:
+identical(as.data.table(most_clangers_tb), as.data.table(most_clangers_dt))
 ```
 
 :::
 
 ```{r}
+#| echo: false 
 most_clangers_tb |> 
   reactable_themed(
     rowStyle = function(index) {
       most_clangers_tb |> 
         slice(index) |> 
-        pull(afl_tables_game_id) -> row_game_id
+        pull(game_id) -> row_game_id
       if(row_game_id == infamous_game_id) {
         list(background = "blue", color = "yellow")
         }
       },
     columns = list(
-      afl_tables_url = colDef(
+      game_afltables_url = colDef(
         name = "AFL Tables Link",
         sticky = "right",
         cell = function(cell_value, row_index) {
           tags$a(href = cell_value, target = "_blank", "🔗")
           }
         ),
-      season = colDef(show = FALSE),
-      match_round = colDef(
+      Season = colDef(show = FALSE),
+      Round = colDef(
         cell = function(cell_value, row_index) {
           most_clangers_tb |>
             slice(row_index) |>
-            pull(season) -> season
-          paste("match_round", cell_value, season)
+            pull(Season) -> season
+          paste("Round", cell_value, season)
           }
         ),
       rank = colDef(name = "Rank"),
-      disposal_efficiency_game = colDef(
-        name = "Disposal Efficiency",
-        cell = \(cell_value) {
-          scales::percent(cell_value)
-        }
-        ),
+      clangers = colDef(name = "Clangers"),
       Home.team = colDef(name = "Home Team"),
       Away.team = colDef(name = "Away Team"),
-      afl_tables_game_id = colDef(show = FALSE)
+      game_id = colDef(show = FALSE)
       )
     )
 
@@ -1662,8 +1668,7 @@ most_clangers_tb |>
 
 A lot of the games in the top 5 are from very recent years, probably highlighting the more recent trend in teams rolling the dice more with possession (high risk, high reward) as popularised by Richmond and adopted to great success of late by the Magpies. Having spot-checked a few examples, there is also a bit of a pattern of wet weather impacting these games it would seem.
 
-Also notable is one of three games played in Shanghai as part of the AFL's attempt at entering into the Chinese market between 2017 and 2019. While there was some rain about, one might presume from this that the Suns and Port didn't put on a particularly impressive display of our game on that occasion, either that or they were playing the Richmond-inspired high-octane footy before a most other teams had started doing it.
-
+Also notable in the top 5 is one of three games played in Shanghai as part of the AFL's attempt at entering into the Chinese market between 2017 and 2019. While there was some rain about, one might presume from this that the Suns and Port didn't put on a particularly impressive display of our game on that occasion, either that or they were putting on an entertaining show with plenty of high-risk, high-reward plays. The [video highlights](https://www.youtube.com/watch?v=9b2gue45P4k){target="_blank"} appear to be reasonably exciting, so I am going to assume the latter.
 
 
 ### Worst Disposal Efficiency
@@ -1764,6 +1769,7 @@ worst_disposal_efficiency_games_tb |>
         ),
       season = colDef(show = FALSE),
       match_round = colDef(
+        name = "Round",
         cell = function(cell_value, row_index) {
           worst_disposal_efficiency_games_tb |>
             slice(row_index) |>
@@ -1778,6 +1784,7 @@ worst_disposal_efficiency_games_tb |>
           scales::percent(cell_value)
         }
         ),
+      venue_name = colDef(name = "Venue"),
       match_home_team = colDef(name = "Home Team"),
       match_away_team = colDef(name = "Away Team"),
       afl_tables_game_id = colDef(show = FALSE)
@@ -1797,11 +1804,13 @@ Further disjointed musings:
 
 [^roos-optimism]: But far more optimistic due to a combination of Clarko (he returns from his hiatus this week) and promising talent on their list such as Harry Sheezel
 
-* In the 20th century, the use of suburban grounds where the quality of the surface was subpar I am sure lead to far more games with lower disposal efficiency than this (muddy fields were far more common in those days). 
+* In the 20^th^ century, the use of suburban grounds where the quality of the surface was subpar I am sure lead to far more games with lower disposal efficiency than this (muddy fields were far more common in those days). 
 
-* We can't entirely blame the players, given the conditions the conditions. Anyone who has kick a footy around in the wet will know how much heavier and slipperier than usual it can get (it is often described as being like a bar of soap). By looking through old highlights packages of the top several games in this metric, all of them appear to have impacted significantly by weather conditions.
+* We can't entirely blame the players, given the conditions. Anyone who has kicked a footy around in the wet will know how much heavier and slipperier than usual it can get (it is often described as being like a bar of soap). By looking through old highlights packages of the top several games in this metric, all of them appear to have been impacted significantly by weather conditions.
 
 * The Fryzigg data actually has weather conditions as a field on it but it appears to be somewhat unreliable, when I cross referenced the games with match reports and highlights some of the "sunny" games turned out to be played in torrential rain.
+
+* I also checked which players have the highest career kicking efficiency and it appears to be mostly defenders who probably inflate their numbers by getting involved in switches of play and chipping the ball around the back line. So we have to take this kind of metric with a grain of salt, there is a certain difficulty level with executing certain types of disposal (e.g. a kick inside 50) that it does not fully capture.
 
 
 
@@ -1813,26 +1822,36 @@ Our question regarding Norm Smith medallists from above reads:
 > Who was the youngest player to win a Norm Smith Medal?
 
 
-::: {.callout-note collapse="true"}
+::: {.callout-note}
 
-### Background on the Norm Smith
+### Background on the Norm Smith Medal
 
-* The Norm Smith Medal is awarded to the player who is adjusted best on ground in the AFL grand final. 
+* The Norm Smith Medal is awarded to the player who is adjudged best on ground in the AFL grand final. 
+
+
+* The award is named after legendary Melbourne full forward of the 1940's and coach of the 1950's and 1960's, [Norm Smith](https://afltables.com/afl/stats/players/N/Norm_Smith.html){target="_blank"}. In his decorated career, he won a total of 10 premierships, 4 as a player, 6 as coach and all for the Melbourne football club (given Melbourne have only won 13 in their history, quite a feat). At the back end of his playing career, he spent two years as captain-coach (yes that was a thing at the time) of the Fitzroy football club (here they pop up again).
 
 * The Norm Smith medal is usually given to a player on the winning team but very occasionally, players have managed to win the award in a losing side. This has only happened 4 out of 45 times and the last time was Eagles (and Carlton) superstar Chris Judd in 2005.
 
-* The Norm Smith was first instituted in 1979. Prior to this, there was no official award given however the media and fans of the day had their opinions of who the best on ground was in prior grand finals. While [this article](https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979){target="_blank"} lists some "unofficial" best on ground performances in grand finals prior to 1979, I will stick with the official list. As a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons particularly as this data is of dubious reliability.
-
+* The Norm Smith Medal was first instituted in 1979. Prior to this, there was no official award given however the media and fans of the day had their opinions of who the best on ground was in prior grand finals. While [this article](https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979){target="_blank"} lists some "unofficial" best on ground performances in grand finals prior to 1979, I will stick with the official list. As a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons particularly as this data is of dubious reliability.
 
 
 :::
 
-### Data sources
-
-As previously mentioned, norm smith data is not available on FitzRoy, so we will have to scrape it with some of our own bespoke code[^illustrates-fitzroy-point]. The AFL website conveniently has a nice table, listing all the winners since the award began in 1979.
+As previously mentioned, Norm Smith Medal data is not available on `fitzRoy`, so we will have to scrape it with some of our own bespoke code[^illustrates-fitzroy-point]. The AFL website conveniently has a [nice table](https://www.afl.com.au/stats/leaders-awards/norm-smith-medal"){target="_blank"}, listing all the winners since the award began in 1979. We will supplement this with data from `fitzRoy` to figure out the level of experience of each player.
 
 
-[^illustrates-fitzroy-point]: This illustrates the fact that sometimes you need to stray outside of `fitzRoy` but it give most of the footy data you could ever want.
+
+[^illustrates-fitzroy-point]: This illustrates the fact that sometimes you need to stray outside of `fitzRoy` but it gives most of the footy data you could ever want.
+
+::: {.callout-warning}
+
+### No `data.table` code
+
+While all the other code has thus far been written in [both tidyverse and `data.table`](#tidyverse-versus-data.table), I decided to leave it for this one as it was rather intricate and painful to perform the same process twice.
+
+:::
+
 
 
 ```{r}
@@ -1853,18 +1872,147 @@ norm_smith_html |>
       Player == "Billy Duckworth" ~ "Bill Duckworth",
       Player == "Ryan O'Keefe" ~ "Ryan OKeefe",
       TRUE ~ Player 
-    )
+    ),
+    Year = as.integer(str_sub(Year, 1, 4))
   ) -> norm_smith_tb
 
-norm_smith_tb |> 
-  left_join(
-    player_details_tb |> select(Player, Team, Games),
-    by = c("Player" = "Player", "Club" = "Team")
-    ) |> View()
+# get the date of their first game
+player_stats_tb |> 
+  group_by(
+    player_afltables_url, Playing.for
+  ) |> 
+  summarise(
+    first_game_date = min(Date),
+    .groups = "drop"
+  ) -> more_player_details
 
+# get games played to date
+player_stats_tb |> 
+  group_by(ID) |> 
+  arrange(Date) |> 
+  mutate(
+    games_played_to_date = seq_along(ID)
+  ) |> 
+  ungroup() -> 
+  player_stats_tb_games_played
+
+# get grand final information
+player_stats_tb_games_played |>
+  filter(
+    Round == "GF",
+    Season >= 1979
+  ) |>
+  mutate(
+    player_name = paste(First.name, Surname),
+    on_winning_team = (Home.team == Playing.for &  Home.score > Away.score) | (Away.team == Playing.for &  Home.score < Away.score)
+  ) |> 
+  select(ID, player_name, Playing.for, game_afltables_url, player_afltables_url, grand_final_season = Season, grand_final_date = Date, games_played_to_date, on_winning_team) ->
+  grand_final_tb
+
+grand_final_tb |> 
+  select(grand_final_date) |>
+  distinct() |> 
+  arrange(desc(grand_final_date)) |> 
+  pull(grand_final_date) ->
+  grand_final_dates
+  
+player_details_tb |> 
+  mutate(
+    first_year = str_sub(Seasons, 1, 4)
+    ) -> 
+  player_details_tb_joinable
+
+
+norm_smith_tb |> 
+  mutate(Date = grand_final_dates) |> 
+  left_join(
+    grand_final_tb, by = c("Player" = "player_name", "Club" = "Playing.for", "Date" = "grand_final_date") 
+  ) |> 
+  left_join(
+    more_player_details, by = c("player_afltables_url", "Club" = "Playing.for")
+  ) |> 
+  mutate(
+    first_year = format(first_game_date, "%Y")
+  ) |> 
+  left_join(
+    player_details_tb_joinable, by = c("Player", "Club" = "Team", "first_year")
+  ) |>
+  mutate(
+    debut_age_years = as.integer(str_sub(Debut, 1, 2)),
+    debut_age_days = as.integer(str_remove_all(Debut, ".*y |d")),
+    date_of_birth = first_game_date - years(debut_age_years) - days(debut_age_days),
+    age_at_grand_final = as.period(interval(start = date_of_birth, end = Date)),
+    age_at_grand_final_seconds = as.period(interval(start = date_of_birth, end = Date))
+  ) |>
+  arrange(age_at_grand_final ) |>
+  select(
+    Player, Club, Year, on_winning_team, games_played_to_date, age_at_grand_final, age_at_grand_final_seconds, player_afltables_url, game_afltables_url) -> norm_smith_youngest_tb
 
 
 ```
+
+```{r}
+#| echo: false
+
+norm_smith_youngest_tb |> 
+  reactable_themed(
+    columns = list(
+      Player = colDef(
+        cell = \(cell_value, row_index) {
+          player_url <- norm_smith_youngest_tb$player_afltables_url[[row_index]]
+          tags$a(href = player_url, cell_value, target = "_blank")
+        }
+      ),
+      Year = colDef(
+        cell = \(cell_value, row_index) {
+          player_url <- norm_smith_youngest_tb$game_afltables_url[[row_index]]
+          tags$a(href = player_url, cell_value, target = "_blank")
+        }
+      ),
+      on_winning_team = colDef(
+        name = "On Winning Team",
+        cell = \(cell_value) {
+          if(cell_value) {
+            "Yes"
+          } else {
+            "No"
+          }
+        }
+      ),
+      games_played_to_date = colDef(
+        name = "Games played"
+      ),
+      age_at_grand_final_seconds = colDef(
+        name = "Age",
+        cell = \(cell_value, row_index) {
+          age_at_grand_final <- norm_smith_youngest_tb$age_at_grand_final[[row_index]]
+          paste0(age_at_grand_final@year, "y ", age_at_grand_final@month, "m ",
+                 age_at_grand_final@day, "d")
+        }
+        ),
+      age_at_grand_final = colDef(show = FALSE),
+      player_afltables_url = colDef(show = FALSE),
+      game_afltables_url = colDef(show = FALSE)
+    ),
+    filterable  = TRUE
+  )
+
+ 
+```
+
+
+The youngest player on the list is the inaugural winner, Wayne Harmes, who was only 19 years of age when he won the prestigious award.  He is known for a [legendary moment](https://www.youtube.com/watch?v=G6jDAtqEi50){target="_blank"} during this match where, towards the end of the fourth quarter, he ran down his own (errant) kick by sliding along the ground and tapping the ball to keep it in play, sending it into the path of his team mate Ken Sheldon who ran into the open goal. The goal ended up being a decisive one as the Blues came out as victors by only 5 points.
+
+
+```{=html}
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/mZQDQhtEfYM?start=27" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+
+The most inexperienced in terms of games played was Maurice Rioli (father of Maurice Junior who is currently plying his trade at his old man's club), member of the famous [Rioli family](https://en.wikipedia.org/wiki/Rioli_family){target="_blank"} of the Tiwi Islands which has uncannily produced a plethora of great footballers and premiership players. He was the first (and arguably the greatest) Rioli to ever play in the AFL/VFL. One caveat is that while at the time he had only played 21 VFL games, he was 24 years of age and had previously played 6 years of WAFL footy[^wafl-quality] for South Fremantle, so he wasn't your typical 21 game player, he was really in his prime.
+
+
+[^wafl-quality]: At this time (prior to a national competition), WAFL football (as well as the SANFL in South Australia) could be viewed as being at a similar level to the VFL (although VFL did benefit from having the larger population in Victoria as a talent pool). While these days, the WAFL is the tier below the AFL (like the English Championship is the to Premier League), at that time, it could instead be viewed as a competition that was the best within its own region (like Serie A is to La Liga).
 
 
 
@@ -1874,7 +2022,12 @@ norm_smith_tb |>
 ## Closing Remarks
 
 
-Interestingly, the [aforementioned infamous game](#a-concrete-example) isn't the record-holder (or even in the top 5) for any of our questions but it was remarkable enough as only one of `r sum(match_stats_flat_dt$Home.score>=200)+sum(match_stats_flat_dt$Away.score>=200)` games where a team has scored 200 points or more which is notable enough I think, particularly given I had the (mis-)fortune of witnessing it in the flesh. Perhaps we could dig deeper to find a record it holds but I somehow find more satisfaction in it being a thought-provoking enough game to coax these questions out of us without it ever being the *answer*.
+To mention one last record, the margin of 171 in the [infamous game](#a-concrete-example) is actually the equal 4^th^ highest winning margin in a AFL/VFL game. Interestingly, the all-time record in this category comes full circle, being a game between [the Fitzroy Lions and the Melbourne Demons back in 1979](https://afltables.com/afl/stats/games/1979/061119790728.html){target="_blank"}. Fittingly, the victor of this game, was our friends (for whom we owe the greatest gratitude for helping us import data) was the might `fitzRoy` footy club by a whopping 190 points. So while they had their trials and tribulations as a club (some of which we have covered in this post), it is nice to finish with them on a high note.
+
+
+Interestingly, the [aforementioned infamous game](#a-concrete-example) isn't the record-holder (or even in the top 5) for any of our [questions](#question-list)[^failure-to-break-records] but it is only one of `r sum(match_stats_flat_dt$Home.score>=200)+sum(match_stats_flat_dt$Away.score>=200)` games where a team has scored 200 points or more which is notable enough I think, particularly given I had the (mis-)fortune of witnessing such a rare event in the flesh. Perhaps we could dig deeper to find a record it holds (every game is uniquely remarkable in some way if you look hard enough) but I somehow find more satisfaction in it being a thought-provoking enough game to coax these questions out of us without it ever being the *answer*.
+
+[^failure-to-break-records]: the closest it came was in the most multiple goal kickers category at equal 7^th^
 
 ## Notable AFL Stats Figures
 
