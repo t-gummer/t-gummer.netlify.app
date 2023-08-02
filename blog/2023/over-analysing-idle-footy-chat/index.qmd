@@ -16,8 +16,6 @@ reading-time: true
 ---
 
 
-<!-- TODO: if need to change this in any way add a collapseable ammendments section in the form of a collapsable caution callout block with a bullet list with the date, a colon then a description of the change (e.g. fixed typos) -->
-
 ```{r hidden setup}
 #| echo: false
 #| message: false
