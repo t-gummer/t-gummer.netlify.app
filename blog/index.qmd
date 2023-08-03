@@ -9,7 +9,10 @@ listing:
     sort: "date desc"
     categories: true
     fields: [image, date, title, author, reading-time, description, categories]
-# toc-location: right
+    
+toc-title: Year
+toc-location: right
+
 date-format: "D MMMM YYYY"
 code-tools: false
 comments: false
