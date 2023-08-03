@@ -46,7 +46,7 @@ The content of this site will mix and match combinations of some of my particula
 
 # Contents
 
-* [Blog](Blog): articles about my person projects and things that interest me.
+* [Blog](Blog): articles about my personal projects and things that interest me.
 
 * [Goals](Goals): keeping track of my goals (prospective) and achievements (retrospective) as well as failure/road blocks along the way.
 
