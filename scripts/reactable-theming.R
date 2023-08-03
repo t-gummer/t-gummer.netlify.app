@@ -10,6 +10,10 @@ reactableTheme_dark <- function(primary_colour = "#0F0") { # could try pink as a
     groupHeaderStyle = list(
       color = primary_colour,
       "background-color" = "#060708"
+      ),
+    filterInputStyle = list(
+      "background-color" = "#00000000",
+      border = "1px solid rgba(0,255,0,0.5)"
       )
     )
 }
@@ -26,6 +30,10 @@ reactableTheme_light <- function(primary_colour = "#FF7415") { # could try maroo
     groupHeaderStyle = list(
       color = "white",
       "background-color" = primary_colour
+      ),
+    filterInputStyle = list(
+      "background-color" = "#00000000",
+      border = "1px solid rgba(255, 116, 21, 0.5)"
       )
     )
 }
