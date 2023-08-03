@@ -35,7 +35,7 @@ source("../../../scripts/reactable-theming.R")
 
 I have been promising some people that this (my first) post will be "coming soon" for quite some time now. It has finally arrived and the main reasons for my slowness are:
 
-* I am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice, publishable words, it become a bit of a slog.
+* I am a slow writer. I often have all the ideas in my head but when it comes to putting them into nice, publishable words, it has a tendency to become a bit of a slog.
 
 * The scope of this project was overly ambitious and expanded as I kept on branching off from the main mission in order provide additional background (when given free reign, this is my tendency).
 
@@ -241,7 +241,7 @@ fetch_function_cell <-  function(url){
 fitzRoy_sources |> 
   reactable_themed(columns = list( # add conditional formatting
     data_source = colDef(
-      name = "Start Year",
+      name = "Data Source",
       cell = \(cell_value, row_index, column_name) {
         tags$a(target = "_blank", href = fitzRoy_sources[row_index, "URL", drop = TRUE], cell_value)
         
@@ -1026,7 +1026,7 @@ Not that there is already a [page](https://afltables.com/afl/teams/allteams/qh.h
 
 :::
 
-To answer this question, we will first we should begin by creating a reshaped version of the  `match_stats_flat_*` dataset that is structured around quarters.
+To answer this question, we will begin by creating a reshaped version of the  `match_stats_flat_*` dataset that is structured around quarters.
 
 
 ::: {.panel-tabset}

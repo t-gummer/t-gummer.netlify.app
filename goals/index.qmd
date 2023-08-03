@@ -28,7 +28,7 @@ library(scales)
 ::: callout-tip
 ## Non-linearity
 
-I would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some *roadblocks* and *failures* I have experience along the way.
+I would also like to emphasise the non-linearity and compounding nature of personal progress. As such, I have also included some *roadblocks* and *failures* I have experienced along the way.
 
 This is my attempt to run counter to what one might see on a resume or social media (predominately successes and seldom failures). I am also doing this as a reminder that:
 
