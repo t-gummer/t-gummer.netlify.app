@@ -436,7 +436,7 @@ The data we have read in is as at round `r tail(player_stats$Round, 1)` of the `
 
 In the R community, there is an [ongoing power struggle](https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly){target="_blank"} between using the Posit[^previously-RStudio]-backed [tidyverse](https://www.tidyverse.org/){target="_blank"} and the heavily-optimised [`data.table`](https://rdatatable.gitlab.io/data.table/){target="_blank"}.
 
-[^previously-RStudio]: [formally known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
+[^previously-RStudio]: [formerly known as RStudio](https://posit.co/blog/rstudio-is-becoming-posit/){target="_blank"} ([RIP](https://www.youtube.com/watch?v=TtMzTGfs-fc){target="_blank"})
 
 As to not unsettle people who prefer either `dplyr` (and the tidyverse) or `data.table`, I have written code in both packages[^base-r-dig]. Where relevant, I have used a tabbed layout for the convenience of the reader. As my personal preference for readability purposes is the tidyverse[^tidyverse-rationale], I will place this code in the first tab.
 
