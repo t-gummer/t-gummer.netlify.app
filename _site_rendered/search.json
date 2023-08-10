@@ -102,14 +102,14 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Sport\n\n\nAFL\n\n\nR\n\n\nData\n\n\n\n\nThis blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.\n\n\n\n\n\n\n3 August 2023\n\n\nTim Gummer\n\n\n65 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Sport\n\n\nAFL\n\n\nR\n\n\nData\n\n\nFooty Grid\n\n\n\n\nFooty grid has been a phenomanon amongst trivia-loving footy fans in recent weeks. In this post I use AFL data to get disect the most difficult combinations.\n\n\n\n\n\n\n9 August 2023\n\n\nTim Gummer\n\n\n7 min\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nSport\n\n\nAFL\n\n\nR\n\n\nData\n\n\n\n\nThis blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.\n\n\n\n\n\n\n3 August 2023\n\n\nTim Gummer\n\n\n65 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/index.html#section",
     "href": "blog/index.html#section",
     "title": "Blog",
     "section": "",
-    "text": "Sport\n\n\nAFL\n\n\nR\n\n\nData\n\n\n\n\nThis blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.\n\n\n\n\n\n\n3 August 2023\n\n\nTim Gummer\n\n\n65 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Sport\n\n\nAFL\n\n\nR\n\n\nData\n\n\nFooty Grid\n\n\n\n\nFooty grid has been a phenomanon amongst trivia-loving footy fans in recent weeks. In this post I use AFL data to get disect the most difficult combinations.\n\n\n\n\n\n\n9 August 2023\n\n\nTim Gummer\n\n\n7 min\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nSport\n\n\nAFL\n\n\nR\n\n\nData\n\n\n\n\nThis blog post discusses the types of questions one often posits while watching the footy (or indeed any sport). I will use this article as a medium through which I can introduce analysis of AFL data in R.\n\n\n\n\n\n\n3 August 2023\n\n\nTim Gummer\n\n\n65 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "cv/index.html#download",
@@ -159,5 +159,75 @@
     "title": "Tim Gummer",
     "section": "Session info",
     "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-25 15:41:36 AEST\""
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#my-performance-in-the-game",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#my-performance-in-the-game",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "My performance in the game",
+    "text": "My performance in the game\nI would say I am a relatively average2 player at the game. While it varies quite a lot, I would say a solid score for me is when it says I am better than around 40%3 of players according to the game. My attempt for today is below:2 Among a sea of footy tragics, so I don’t take any shame in this3 I will elaborate on why I think the 40th percentile is at least average if not above average below\n\n\n\n\n\n\nSpoilers\n\n\n\n\n\n\n\n\n\nYou will notice that my attempt is missing an answer for the middle square of the grid (Essendon and Collingwood player) and that is because I could not figure out that answer and took a wild stab. As I discovered later on, the most popular player for that question was an obscure player from the late 1990’s and early 2000’s (Andrew Ukovic4) that I am certain most people had to look up or entered on their second attempt when they saw he was most popular.4 perhaps I am too young and he was actually a household name but I somehow highly doubt this given his mediocre career statistics\nThis is why I would say I am average as opposed to below average for being in the 40th percentile, a lot of the scores on there are people attempting the grid multiple times or even cheating5 on their first time. I don’t really care if people do that but for me it’s a lot more fun doing it without any kind of assistance6.5 I have seen varying interpretations of what counts as cheating, but I would certainly say googling the answer and then entering a player you have never heard of is cheating6 and perhaps it also make me feel better when I see my less than stellar percentiles on most days"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#list-of-categories",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#list-of-categories",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "List of Categories",
+    "text": "List of Categories\nBelow is an exhaustive list of all the categories that have appeared in Footy Grid between the 21st of July and the 8th of August 2023 (the dates that are currently visible on the website on the date of writing this):\n\nClub played for 7,8\n\nPlayed in a particular decade9:\n\n80’s\n90’s\n00’s\n\n\n\nSeason stats 10:\n\n&gt;50 goals\n300+ kicks\nAvg. 2+ goals\n\n\n\nCareer stats 11,12:\n\n50 or less games\n200+ games\n250+ goals\n2500+ kicks\n500+ tackles\n\n\nGrand Final Player\nBrownlow Medalist\n\nHeight:\n\nTaller than 195cm\nUnder than 185cm\n\n\n\n7 University and Fitzroy as defunct teams will never appear as a category, although it says in the Footy Grid help page that Fitzroy will be combined in with Brisbane in the future8 The South Melbourne and Sydney swans; the Brisbane Bears and Lions; Footscray and Western Bulldogs are grouped together9 we can probably extend this to played in any decade, these are just the decades we have seen so far10 includes finals11 includes finals12 there are probably different stats and thresholds that will appear in the futureAs it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club13, except for awards where they needed to win the award when playing for the club14.13 e.g. Gary Ablett Jr. counts as a Grand Final player for Gold Coast even though he only ever played in grand finals for Geelong14 e.g. Isaac Smith counts as a Norm Smith Medalist for Geelong but not for Hawthorn"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#technical-details",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#technical-details",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Technical Details",
+    "text": "Technical Details\nIn order to look through the possible combinations, I will use R as I did in my previous post. Likewise, I will also be using the fitzRoy package to obtain my data. Footy Grid has the full history of AFL players, so I will use the fryzigg data. There are also some player details that are needed and for that, I will use the AFL Tables."
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#preliminary-data-manipulations",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#preliminary-data-manipulations",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Preliminary Data Manipulations",
+    "text": "Preliminary Data Manipulations"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#clean-tables",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#clean-tables",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Clean Tables",
+    "text": "Clean Tables"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#my-performance",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#my-performance",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "My Performance",
+    "text": "My Performance\nI would say I am a relatively average2 player at the game. While it varies quite a lot, I would say a solid score for me is when I am better than around 40%3 of players. My attempt for today (the 8thof August) is below:2 Among a sea of footy tragics, so I don’t take any shame in this3 I will elaborate on why I think the 40th percentile is at least average if not above average below\n\n\n\n\n\n\nSpoilers\n\n\n\n\n\n\n\n\n\nYou will notice that my attempt is missing an answer for the middle square of the grid (Essendon and Collingwood player) and that is because I could not figure out that answer and took a wild stab. As I discovered later on, the most popular player for that question was an obscure player from the late 1990’s and early 2000’s (Andrew Ukovic4) that I am certain most people had to look up or entered on their second attempt when they saw he was most popular.4 perhaps I am too young and he was actually a household name but I somehow highly doubt this given his mediocre career statistics\nThis is why I would say I am average as opposed to below average for being in the 40th percentile, a lot of the scores on there are people attempting the grid multiple times or even cheating5 on their first time. I don’t really care if people do that but for me it’s a lot more fun doing it without any kind of assistance6.5 I have seen varying interpretations of what counts as cheating, but I would certainly say googling the answer and then entering a player you have never heard of is cheating6 and perhaps it also make me feel better when I see my less than stellar percentiles on most days"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#technical-details-r",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#technical-details-r",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Technical Details (R)",
+    "text": "Technical Details (R)\nIn order to look through the possible combinations, I will use R as I did in my previous post. Likewise, I will also be using the fitzRoy package to obtain my data. Footy Grid has the full history of AFL players, so I will use the fryzigg data. There are also some player details that are needed and for that, I will use the AFL Tables.\nPreliminary Data Manipulations"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#final-output",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#final-output",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Final Output",
+    "text": "Final Output"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#obtaining-the-data",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#obtaining-the-data",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Obtaining the Data",
+    "text": "Obtaining the Data\nIn order to look through the possible combinations, I will use R as I did in my previous post. Likewise, I will also be using the fitzRoy package to obtain my data. Footy Grid has the full history of AFL players, so I will use the fryzigg data. There are also some player details that are needed and for that, I will use the AFL Tables.\nLet’s begin by loading our required packages.\n\nlibrary(fitzRoy)\n\nlibrary(fst)\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(tidyr)\n\nlibrary(stringr)\n\nWe will get the data using the following code:\n\nif(file.exists(\"data/player_stats_fryzigg.fst\")) {\n  player_stats_fryzigg &lt;- read_fst(\"data/player_stats_fryzigg.fst\") |&gt; as_tibble()\n  \n} else {\n  player_stats_fryzigg &lt;-  fetch_player_stats_fryzigg(season = 1897:2023)\n  write_fst(player_stats_fryzigg, \"data/player_stats_fryzigg.fst\")\n}\n\nif(file.exists(\"data/player_details.fst\")) {\n  player_details &lt;- read_fst(\"data/player_details.fst\") |&gt; as_tibble()\n  \n} else {\n  player_details &lt;- fetch_player_details_afltables()\n  write_fst(player_details, \"data/player_details.fst\")\n}"
+  },
+  {
+    "objectID": "blog/2023/dissecting-footy-grid-combinations/index.html#data-wrangling",
+    "href": "blog/2023/dissecting-footy-grid-combinations/index.html#data-wrangling",
+    "title": "Dissecting Footy Grid Combinations",
+    "section": "Data Wrangling",
+    "text": "Data Wrangling\nUnlike the previous post, I will only use the tidyverse15.15 While the experiment of producing both tidyverse and data.table of the code was an interesting one, I have decided that it is probably too time consuming going forward.\n\nplayer_details |&gt; \n  mutate(\n    player_first_season = as.integer(str_sub(Seasons, 1, 4))\n  ) |&gt; \n  select(\n    player_full_name = Player,\n    player_team = Team,\n    player_first_season,\n    player_height = HT,\n    player_weight = WT,\n  ) -&gt;\n  player_measurements\n\nplayer_stats_fryzigg |&gt; \n  mutate(\n    match_season = as.integer(str_sub(match_date, 1, 4)),\n    match_date = as.Date(match_date, format = \"%Y-%m-%d\"),\n    season_decade = paste0(str_sub(match_season, 1, 3), \"0s\")\n    ) |&gt; \n  group_by(\n    player_id, player_team\n  ) |&gt; \n  mutate(\n    player_first_season = min(match_season)\n  ) |&gt; \n  ungroup() |&gt; \n  group_by(\n    player_id, player_first_name, player_last_name, player_first_season, player_team, \n    match_season, season_decade\n  ) |&gt; \n  summarise(\n    season_disposals = sum(disposals, na.rm = TRUE),\n    season_kicks = sum(kicks, na.rm = TRUE),\n    season_handballs = sum(handballs, na.rm = TRUE),\n    season_marks = sum(marks, na.rm = TRUE),\n    season_goals = sum(goals, na.rm = TRUE),\n    season_behinds = sum(behinds, na.rm = TRUE),\n    season_hitouts = sum(hitouts, na.rm = TRUE),\n    season_tackles = sum(tackles, na.rm = TRUE),\n  )\n\n`summarise()` has grouped output by 'player_id', 'player_first_name',\n'player_last_name', 'player_first_season', 'player_team', 'match_season'. You\ncan override using the `.groups` argument.\n\n\n# A tibble: 57,081 × 15\n# Groups:   player_id, player_first_name, player_last_name,\n#   player_first_season, player_team, match_season [57,081]\n   player_id player_first_name player_last_name player_first_season player_team\n       &lt;int&gt; &lt;chr&gt;             &lt;chr&gt;                          &lt;int&gt; &lt;chr&gt;      \n 1         1 Ivan              Astruc                          1897 Fitzroy    \n 2         2 Tom               Banks                           1897 Fitzroy    \n 3         3 Jack              Dalton                          1897 Fitzroy    \n 4         3 Jack              Dalton                          1897 Fitzroy    \n 5         3 Jack              Dalton                          1897 Fitzroy    \n 6         3 Jack              Dalton                          1897 Fitzroy    \n 7         4 Pat               Descrimes                       1897 Fitzroy    \n 8         4 Pat               Descrimes                       1897 Fitzroy    \n 9         4 Pat               Descrimes                       1897 Fitzroy    \n10         4 Pat               Descrimes                       1897 Fitzroy    \n# ℹ 57,071 more rows\n# ℹ 10 more variables: match_season &lt;int&gt;, season_decade &lt;chr&gt;,\n#   season_disposals &lt;int&gt;, season_kicks &lt;int&gt;, season_handballs &lt;int&gt;,\n#   season_marks &lt;int&gt;, season_goals &lt;int&gt;, season_behinds &lt;int&gt;,\n#   season_hitouts &lt;int&gt;, season_tackles &lt;int&gt;\n\n  # mutate(\n  #   player_full_name = paste(player_first_name, player_last_name),\n  # )\n\n\n# get brownlow\nurl &lt;- \"https://www.afl.com.au/brownlow-medal/history\""
   }
 ]

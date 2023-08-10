@@ -1,0 +1,251 @@
+---
+title: "Dissecting Footy Grid Combinations"
+description: |
+  [Footy grid](https://footygrid.com/){target="_blank"} has been a phenomanon amongst trivia-loving footy fans in recent weeks. In this post I use AFL data to get disect the most difficult combinations.
+date: 2023-08-09
+categories: 
+  - Sport
+  - AFL
+  - R
+  - Data
+  - Footy Grid
+image: footy-grid.jpg
+reference-location: margin
+draft: false
+freeze: true
+reading-time: true
+---
+
+
+```{r hidden setup}
+#| echo: false
+#| message: false
+
+library(reactable)
+library(htmltools)
+source("../../../scripts/reactable-theming.R")
+
+
+```
+
+
+# What is Footy Grid?
+
+[Footy grid](https://footygrid.com/){target="_blank"} is a daily AFL-themed trivia game for testing your knowledge of past and present players. The idea is pick players that intersect between two categories. These categories typically include teams, as well career or best season statistics (goals, kicks etc.), awards (Brownlow, Norm Smith) and other (e.g. height).
+
+You are awarded a rarity score based on what other players of the game have chosen, the lower your score the rarer the player. Given people know this, sometimes a less obvious player is actually more selected than the most obvious. For example, in today's grid [Scotty Lucas](https://afltables.com/afl/stats/players/S/Scott_Lucas.html){target="_blank"} was actually the most popular[^popular] *Essendon player to kick more than 50 goals in a season* over [Matthew Lloyd](https://afltables.com/afl/stats/players/M/Matthew_Lloyd0.html){target="_blank"} (who I would have thought would be the most obvious).
+
+[^popular]: the game allows you to see the most popular selections once you have attempted it
+
+![](todays-grid.png)
+
+
+## My Performance
+
+I would say I am a relatively average[^average-player] player at the game. While it varies quite a lot, I would say a solid score for me is when I am better than around 40%[^why-40-is-average] of players. My attempt for today (the 8^th^of August) is below:
+
+[^average-player]: Among a sea of footy tragics, so I don't take any shame in this
+
+[^why-40-is-average]: I will elaborate on why I think the 40^th^ percentile is at least average if not above average below
+
+::: {.callout-warning collapse="true"}
+
+### Spoilers
+
+![](my-attempt.jpg) 
+
+:::
+
+
+You will notice that my attempt is missing an answer for the middle square of the grid (Essendon and Collingwood player) and that is because I could not figure out that answer and took a wild stab. As I discovered later on, the most popular player for that question was an obscure player from the late 1990's and early 2000's ([Andrew Ukovic](https://afltables.com/afl/stats/players/A/Andrew_Ukovic.html){target="_blank"}[^youth]) that I am certain most people had to look up or entered on their second attempt when they saw he was most popular. 
+
+
+[^youth]: perhaps I am too young and he was actually a household name but I somehow highly doubt this given his mediocre career statistics
+
+This is why I would say I am average as opposed to below average for being in the 40^th^ percentile, a lot of the scores on there are people attempting the grid multiple times or even *cheating*[^definition-of-cheating] on their first time. I don't really care if people do that but for me it's a lot more fun doing it without any kind of assistance[^feel-better].
+
+[^definition-of-cheating]: I have seen varying interpretations of what counts as cheating, but I would certainly say googling the answer and then entering a player you have never heard of is cheating
+
+
+[^feel-better]: and perhaps it also make me feel better when I see my less than stellar percentiles on most days
+
+# Most Diffcult Combinations
+
+## List of Categories
+
+Below is an exhaustive list of all the categories that have appeared in Footy Grid between the 21^st^ of July and the 8^th^ of August 2023 (the dates that are currently visible on the website on the date of writing this):
+
+* Club played for [^university-and-fitzroy]^,^ [^swans-brisbane-bulldogs] 
+
+* Played in a particular decade[^decade]:
+  
+    - 80's 
+    
+    - 90's 
+    
+    - 00's
+
+    
+* Season stats [^season-stats]:
+
+    - \>50 goals
+    
+    - 300+ kicks
+    
+    - Avg. 2+ goals
+    
+* Career stats [^season-stats]^,^[^career-stats]:
+
+    - 50 or less games
+    
+    - 200+ games
+    
+    - 250+ goals
+
+    - 2500+ kicks
+    
+    - 500+ tackles
+    
+
+* Grand Final Player
+
+* Brownlow Medalist
+
+* Height:
+
+    - Taller than 195cm
+    
+    - Under than 185cm
+
+
+[^university-and-fitzroy]: University and Fitzroy as defunct teams will never appear as a category, although it says in the Footy Grid help page that Fitzroy will be combined in with Brisbane in the future
+
+[^swans-brisbane-bulldogs]: The South Melbourne and Sydney swans; the Brisbane Bears and Lions; Footscray and Western Bulldogs are grouped together
+
+[^decade]: we can probably extend this to played in any decade, these are just the decades we have seen so far
+
+[^career-stats]: there are probably different stats and thresholds that will appear in the future
+
+[^season-stats]: includes finals
+
+As it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club[^category-explain1], except for awards where they needed to win the award when playing for the club[^category-explain2].
+
+[^category-explain1]: e.g. [Gary Ablett Jr.](https://afltables.com/afl/stats/players/G/Gary_Ablett1.html) counts as a Grand Final player for Gold Coast even though he only ever played in grand finals for Geelong
+
+[^category-explain2]: e.g. [Isaac Smith](https://afltables.com/afl/stats/players/I/Isaac_Smith.html) counts as a Norm Smith Medalist for Geelong but not for Hawthorn
+
+## Obtaining the Data
+
+In order to look through the possible combinations, I will use R as I did in my [previous post](../over-analysing-idle-footy-chat/index.qmd){target="_blank"}. Likewise, I will also be using the `fitzRoy` package to obtain my data. Footy Grid has the full history of AFL players, so I will use the [fryzigg](https://twitter.com/fryzigg){target="_blank"} data. There are also some player details that are needed and for that, I will use the [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}.
+
+
+Let's begin by loading our required packages.
+
+```{r}
+library(fitzRoy)
+
+library(fst)
+
+library(dplyr)
+library(tidyr)
+
+library(stringr)
+
+
+```
+
+
+We will get the data using the following code:
+
+```{r}
+if(file.exists("data/player_stats_fryzigg.fst")) {
+  player_stats_fryzigg <- read_fst("data/player_stats_fryzigg.fst") |> as_tibble()
+  
+} else {
+  player_stats_fryzigg <-  fetch_player_stats_fryzigg(season = 1897:2023)
+  write_fst(player_stats_fryzigg, "data/player_stats_fryzigg.fst")
+}
+
+if(file.exists("data/player_details.fst")) {
+  player_details <- read_fst("data/player_details.fst") |> as_tibble()
+  
+} else {
+  player_details <- fetch_player_details_afltables()
+  write_fst(player_details, "data/player_details.fst")
+}
+```
+
+
+## Data Wrangling
+
+Unlike the [previous post](../over-analysing-idle-footy-chat/index.qmd#tidyverse-versus-data.table){target="_blank"}, I will only use the tidyverse[^not-data.table].
+
+
+[^not-data.table]: While the experiment of producing both tidyverse and `data.table` of the code was an interesting one, I have decided that it is probably too time consuming going forward.
+
+```{r}
+player_details |> 
+  mutate(
+    player_first_season = as.integer(str_sub(Seasons, 1, 4))
+  ) |> 
+  select(
+    player_full_name = Player,
+    player_team = Team,
+    player_first_season,
+    player_height = HT,
+    player_weight = WT,
+  ) ->
+  player_measurements
+
+player_stats_fryzigg |> 
+  mutate(
+    match_season = as.integer(str_sub(match_date, 1, 4)),
+    match_date = as.Date(match_date, format = "%Y-%m-%d"),
+    season_decade = paste0(str_sub(match_season, 1, 3), "0s")
+    ) |> 
+  group_by(
+    player_id, player_team
+  ) |> 
+  mutate(
+    player_first_season = min(match_season)
+  ) |> 
+  ungroup() |> 
+  group_by(
+    player_id, player_first_name, player_last_name, player_first_season, player_team, 
+    match_season, season_decade
+  ) |> 
+  summarise(
+    season_disposals = sum(disposals, na.rm = TRUE),
+    season_kicks = sum(kicks, na.rm = TRUE),
+    season_handballs = sum(handballs, na.rm = TRUE),
+    season_marks = sum(marks, na.rm = TRUE),
+    season_goals = sum(goals, na.rm = TRUE),
+    season_behinds = sum(behinds, na.rm = TRUE),
+    season_hitouts = sum(hitouts, na.rm = TRUE),
+    season_tackles = sum(tackles, na.rm = TRUE),
+  )
+  # mutate(
+  #   player_full_name = paste(player_first_name, player_last_name),
+  # )
+
+
+
+```
+
+```{r}
+# get brownlow
+url <- "https://www.afl.com.au/brownlow-medal/history"
+```
+
+## Final Output
+
+
+
+# Player Lookup Table
+
+Below I have a lookup table, this table is not for cheating purposes but more done as an exercise and perhaps for looking into who some obscure examples might have been after you have attempted the quiz on the day. I may continue to update this as new categories get introduced, but for now I present it with all the categories that have come about between the 21^st^ of July and the 8^th^ of August 2023.
+
+
+
+
+
