@@ -155,11 +155,6 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 </ul>
 <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -194,7 +189,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Wednesday, 9 August 2023</p>
+        <p class="date">Sunday, 13 August 2023</p>
       </div>
     </div>
     
@@ -369,7 +364,42 @@ Attaching package: 'dplyr'</code></pre>
 </section><section id="data-wrangling" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
 <div class="page-columns page-full"><p>Unlike the <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html#tidyverse-versus-data.table" target="_blank">previous post</a>, I will only use the tidyverse<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn18"><p><sup>18</sup>&nbsp;While the experiment of producing both tidyverse and <code>data.table</code> of the code was an interesting one, I have decided that it is probably too time consuming going forward.</p></li></div></div>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">player_details</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">player_stats_fryzigg</span><span class="op">$</span><span class="va">player_team</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">teams_fryzigg</span></span>
+<span><span class="va">player_details</span><span class="op">$</span><span class="va">Team</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">teams_afl_tables</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">team_name_raw</span>, <span class="op">~</span><span class="va">team_name</span>,</span>
+<span>  <span class="st">"Adelaide"</span>, <span class="st">"Adelaide"</span>,</span>
+<span>  <span class="st">"Brisbane Lions"</span>, <span class="st">"Brisbane Lions"</span>,</span>
+<span>  <span class="st">"Brisbane Bears"</span>, <span class="st">"Brisbane Lions"</span>, <span class="co">#"Brisbane Bears",</span></span>
+<span>  <span class="st">"Carlton"</span>, <span class="st">"Carlton"</span>,</span>
+<span>  <span class="st">"Collingwood"</span>, <span class="st">"Collingwood"</span>,</span>
+<span>  <span class="st">"Essendon"</span>, <span class="st">"Essendon"</span>,</span>
+<span>  <span class="st">"Fitzroy"</span>, <span class="st">"Fitzroy"</span>,</span>
+<span>  <span class="st">"Fremantle"</span>, <span class="st">"Fremantle"</span>,</span>
+<span>  <span class="st">"GWS"</span>, <span class="st">"Greater Western Sydney"</span>,</span>
+<span>  <span class="st">"Greater Western Sydney"</span>, <span class="st">"Greater Western Sydney"</span>,</span>
+<span>  <span class="st">"Geelong"</span>, <span class="st">"Geelong"</span>,</span>
+<span>  <span class="st">"Gold Coast"</span>, <span class="st">"Gold Coast"</span>,</span>
+<span>  <span class="st">"Hawthorn"</span>, <span class="st">"Hawthorn"</span>,</span>
+<span>  <span class="st">"Melbourne"</span>, <span class="st">"Melbourne"</span>,</span>
+<span>  <span class="st">"North Melbourne"</span>, <span class="st">"North Melbourne"</span>,</span>
+<span>  <span class="st">"Port Adelaide"</span>, <span class="st">"Port Adelaide"</span>,</span>
+<span>  <span class="st">"Richmond"</span>, <span class="st">"Richmond"</span>,</span>
+<span>  <span class="st">"St Kilda"</span>, <span class="st">"St Kilda"</span>,</span>
+<span>  <span class="st">"Sydney"</span>, <span class="st">"Sydney"</span>,</span>
+<span>  <span class="st">"West Coast"</span>, <span class="st">"West Coast"</span>,</span>
+<span>  <span class="st">"University"</span>, <span class="st">"University"</span>,</span>
+<span>  <span class="st">"Western Bulldogs"</span>, <span class="st">"Western Bulldogs"</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span></span>
+<span>  <span class="va">team_name_mapping</span></span>
+<span></span>
+<span></span>
+<span><span class="va">player_stats_fryzigg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">player_first_name</span>, <span class="va">player_last_name</span>, <span class="va">match_round</span>, <span class="va">match_date</span>, <span class="va">metres_gained</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">player_details</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    player_first_season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">Seasons</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -401,6 +431,7 @@ Attaching package: 'dplyr'</code></pre>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>    .groups <span class="op">=</span> <span class="st">"drop"</span>,</span>
+<span>    season_games <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    season_disposals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">disposals</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_kicks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kicks</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_handballs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">handballs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -408,31 +439,9 @@ Attaching package: 'dplyr'</code></pre>
 <span>    season_goals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">goals</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_behinds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">behinds</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_hitouts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">hitouts</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    season_tackles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tackles</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 57,081 × 15
-   player_id player_first_name player_last_name player_first_season player_team
-       &lt;int&gt; &lt;chr&gt;             &lt;chr&gt;                          &lt;int&gt; &lt;chr&gt;      
- 1         1 Ivan              Astruc                          1897 Fitzroy    
- 2         2 Tom               Banks                           1897 Fitzroy    
- 3         3 Jack              Dalton                          1897 Fitzroy    
- 4         3 Jack              Dalton                          1897 Fitzroy    
- 5         3 Jack              Dalton                          1897 Fitzroy    
- 6         3 Jack              Dalton                          1897 Fitzroy    
- 7         4 Pat               Descrimes                       1897 Fitzroy    
- 8         4 Pat               Descrimes                       1897 Fitzroy    
- 9         4 Pat               Descrimes                       1897 Fitzroy    
-10         4 Pat               Descrimes                       1897 Fitzroy    
-# ℹ 57,071 more rows
-# ℹ 10 more variables: match_season &lt;int&gt;, season_decade &lt;chr&gt;,
-#   season_disposals &lt;int&gt;, season_kicks &lt;int&gt;, season_handballs &lt;int&gt;,
-#   season_marks &lt;int&gt;, season_goals &lt;int&gt;, season_behinds &lt;int&gt;,
-#   season_hitouts &lt;int&gt;, season_tackles &lt;int&gt;</code></pre>
-</div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>  <span class="co"># mutate(</span></span>
-<span>  <span class="co">#   player_full_name = paste(player_first_name, player_last_name),</span></span>
-<span>  <span class="co"># )</span></span>
+<span>    season_tackles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tackles</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span></span>
@@ -444,8 +453,9 @@ Attaching package: 'dplyr'</code></pre>
 <section id="scraping-the-brownlow-medal-data" class="level3"><h3 class="anchored" data-anchor-id="scraping-the-brownlow-medal-data">Scraping the Brownlow medal data</h3>
 <p>As with the Norm Smith medal in my previous post, the Brownlow medal winners are not available on</p>
 <p>https://afltables.com/afl/brownlow/brownlow_idx.html</p>
+<p>https://en.wikipedia.org/wiki/List_of_Brownlow_Medal_winners#Winners_by_season</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># get brownlow</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># get brownlow</span></span>
 <span><span class="va">brownlow_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.afl.com.au/brownlow-medal/history"</span></span>
 <span></span>
 <span><span class="va">brownlow_url</span> <span class="op">|&gt;</span> </span>

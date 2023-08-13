@@ -34,7 +34,7 @@ website:
   google-analytics: "G-V8P5XXLZK4"
   
   back-to-top-navigation: true
-  reader-mode: true
+  reader-mode: false
   repo-actions: [edit, issue]
   
   search:

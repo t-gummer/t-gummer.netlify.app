@@ -1,7 +1,7 @@
 ---
 title: "Responses to '`blogging.txt`'"
 description: |
-  This is a response to a rather lengthy feedback I have received.
+  This is a response to a rather lengthy feedback document I have received.
 date: 2023-08-13
 categories: 
   - bad
@@ -22,16 +22,27 @@ Duly noted will give it a listen
   
 > do not write "welcome to my blog" on your blog
 
+[Got rid of it](../../index.html){target="_blank"}.
+
 > verbose? hardly
 
-> generalities:
-  toggling reader mode (on desktop) simply collapses (and enables the ability to expand/collapse) the contents tab on the left. if it were to flatten formatting and widen the bounding box to use more screen real estate (as reader modes typically do) as it stands the feature is pointless and likely a stock bit of a package added as a "why not"
+It's all relative isn't it? Business writing (which is what most of the audience are used to, is not).
+
+## generalities
+
+> toggling reader mode (on desktop) simply collapses (and enables the ability to expand/collapse) the contents tab on the left. if it were to flatten formatting and widen the bounding box to use more screen real estate (as reader modes typically do) as it stands the feature is pointless and likely a stock bit of a package added as a "why not"
+
+Yeah I think its a bit pointless too, I was just playing around with all the options I could include. Removed.
 
 > comments section is both not on the contents tab and requires a sign in from a different website, though likely one your readership is likely to have. this is a recipe for 0 feedback. i would have liked to post this entire text document publically and anonymously, and was denied this pleasure. rectify this.
 
 > text used for hyperlinks is not indexed in the search bar (search "boffins" to check this), neither is text in footnotes (search "gadget")
 
+Can't do much about this, I too would like my footnotes to show up because such words are indeed fun but alas.
+
+
 > conversational tone taken throughout has divested your good sense on where to place commas, this will make up the bulk of adjustments. writing style leaves something to be desired but will endeavour to avoid correcting this, we know you have your ways. most of the comma-based corrections will place the comma inside the example text, while wording corrections will explain their placement outside the quotation to preserve easy ctrl-f-ing
+
 
 > though this article has been out for a couple of weeks, it'd be good if you could implement at least some of these changes while it is the only one present on your website. unfortunately, you only get one chance at a first impression, and that time is long past. judging by the views on the BT clip you shared, this article was read (or shared with) by about 10 people, 11 including me. i believe greater readership is possible.
 
