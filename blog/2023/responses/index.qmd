@@ -26,7 +26,7 @@ Duly noted will give it a listen
 
 > verbose? hardly
 
-It's all relative isn't it? Business writing (which is what most of the audience are used to, is not).
+It's all relative isn't it? Business writing (which is what most of the audience are used to) is not like this.
 
 ## generalities
 
@@ -36,15 +36,24 @@ Yeah I think its a bit pointless too, I was just playing around with all the opt
 
 > comments section is both not on the contents tab and requires a sign in from a different website, though likely one your readership is likely to have. this is a recipe for 0 feedback. i would have liked to post this entire text document publically and anonymously, and was denied this pleasure. rectify this.
 
+Add the comments section to the table of contents. Have to use some sort of login as this is a static site (no backend sever/databases are possible)
+
 > text used for hyperlinks is not indexed in the search bar (search "boffins" to check this), neither is text in footnotes (search "gadget")
 
 Can't do much about this, I too would like my footnotes to show up because such words are indeed fun but alas.
 
+> conversational tone taken throughout has divested your good sense on where to place commas, this will make up the bulk of adjustments. writing style leaves something to be desired but will endeavour to avoid correcting this, we know you have your ways. most of the comma-based corrections will place the comma inside the example text, while wording corrections will explain their placement outside the quotation to preserve easy <kbd>ctrl</kbd>-<kbd>f</kbd>-ing
 
-> conversational tone taken throughout has divested your good sense on where to place commas, this will make up the bulk of adjustments. writing style leaves something to be desired but will endeavour to avoid correcting this, we know you have your ways. most of the comma-based corrections will place the comma inside the example text, while wording corrections will explain their placement outside the quotation to preserve easy ctrl-f-ing
+* Love a conversational tone. It is what a lot of people have remarked that they liked about it.
+
+* However the placement of commas is important (I do it by guessing mostly).
+
+* I think the writing style doesn't leave "something to be desired", it is optimally desirable for me. But I would be open to specific examples where you think it could be improved, there is no need to refrain.
 
 
 > though this article has been out for a couple of weeks, it'd be good if you could implement at least some of these changes while it is the only one present on your website. unfortunately, you only get one chance at a first impression, and that time is long past. judging by the views on the BT clip you shared, this article was read (or shared with) by about 10 people, 11 including me. i believe greater readership is possible.
+
+More viewers than this according to analytics, the YouTube clicks aren't the best measure because most people wouldn't bother to click on them.
 
 ## article proper
 
@@ -242,3 +251,5 @@ Can't do much about this, I too would like my footnotes to show up because such 
 > "fitzRoy: as outlined in this article, this R package is the de facto way of sourcing AFL data." is de facto really the phrase you want to use?
 
 > this article is way too long, auto-estimate claims 65 minutes, likely far less if you skip the code portions (as any sane person would) but still labourious. publications with a reputation for "journalistic integrity" only get away with 20 minutes maximum, what hope do you have in the age of subway surfers mmm ice cream so good yesyesyes
+
+# Comments

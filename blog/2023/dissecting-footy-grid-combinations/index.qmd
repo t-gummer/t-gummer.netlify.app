@@ -330,7 +330,4 @@ brownlow_html |>
 
 Below I have a lookup table, this table is not for cheating purposes but more done as an exercise and perhaps for looking into who some obscure examples might have been after you have attempted the quiz on the day. I may continue to update this as new categories get introduced, but for now I present it with all the categories that have come about between the 21^st^ of July and the 8^th^ of August 2023.
 
-
-
-
-
+# Comments

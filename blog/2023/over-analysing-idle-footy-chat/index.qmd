@@ -2041,3 +2041,5 @@ I will conclude by listing some people who are doing interesting work with AFL s
 
 - [DFS Australia](https://dfsaustralia.com/afl-home/){target="_blank"}: has some great data-driven tools that provide insight on advanced stats commonly used in [AFL Fantasy](https://fantasy.afl.com.au/){target="_blank"}.
 
+
+# Comments
