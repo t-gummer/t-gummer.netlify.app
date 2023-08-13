@@ -12,7 +12,7 @@ image: fitzroy-lions-logo.png
 reference-location: margin
 draft: false
 freeze: true
-reading-time: true
+reading-timereading-time: true
 ---
 
 

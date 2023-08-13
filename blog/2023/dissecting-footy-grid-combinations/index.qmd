@@ -2,7 +2,7 @@
 title: "Dissecting Footy Grid Combinations"
 description: |
   [Footy grid](https://footygrid.com/){target="_blank"} has been a phenomanon amongst trivia-loving footy fans in recent weeks. In this post I use AFL data to get disect the most difficult combinations.
-date: 2023-08-09
+date: 2023-08-13
 categories: 
   - Sport
   - AFL
@@ -11,7 +11,7 @@ categories:
   - Footy Grid
 image: footy-grid.jpg
 reference-location: margin
-draft: false
+draft: true
 freeze: true
 reading-time: true
 ---
@@ -75,6 +75,7 @@ This is why I would say I am average as opposed to below average for being in th
 
 Below is an exhaustive list of all the categories that have appeared in Footy Grid between the 21^st^ of July and the 8^th^ of August 2023 (the dates that are currently visible on the website on the date of writing this):
 
+
 * Club played for [^university-and-fitzroy]^,^ [^swans-brisbane-bulldogs] 
 
 * Played in a particular decade[^decade]:
@@ -92,13 +93,24 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     
     - 300+ kicks
     
-    - Avg. 2+ goals
+    - Average 2+ goals
     
+    - Average 25+ disposals
+    
+    - Average 5+ marks
+    
+    - Average 5+ tackles
+
+
 * Career stats [^season-stats]^,^[^career-stats]:
 
+    - 20 or less games
+    
     - 50 or less games
     
     - 200+ games
+    
+    - Never scored a goal
     
     - 250+ goals
 
@@ -109,14 +121,22 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
 
 * Grand Final Player
 
-* Brownlow Medalist
+* Awards:
+
+    - Brownlow Medalist
 
 * Height:
 
     - Taller than 195cm
     
-    - Under than 185cm
+    - Under 185cm
+    
+* Name[^player-name]:
 
+    - First name Jack
+
+
+[^player-name]: there will probably be other names that crop up in the future
 
 [^university-and-fitzroy]: University and Fitzroy as defunct teams will never appear as a category, although it says in the Footy Grid help page that Fitzroy will be combined in with Brisbane in the future
 
@@ -139,7 +159,9 @@ As it is the most prominent category, we will mainly focus on teams in this arti
 In order to look through the possible combinations, I will use R as I did in my [previous post](../over-analysing-idle-footy-chat/index.qmd){target="_blank"}. Likewise, I will also be using the `fitzRoy` package to obtain my data. Footy Grid has the full history of AFL players, so I will use the [fryzigg](https://twitter.com/fryzigg){target="_blank"} data. There are also some player details that are needed and for that, I will use the [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}.
 
 
-Let's begin by loading our required packages.
+Let's begin by loading our required packages[^not-using-data.table].
+
+[^not-using-data.table]: As I outline [below](#data-wrangling), I will only be using tidyverse for data wrangling this time.
 
 ```{r}
 library(fitzRoy)
@@ -151,11 +173,15 @@ library(tidyr)
 
 library(stringr)
 
+library(rvest)
+
 
 ```
 
 
-We will get the data using the following code:
+We will get the data using the following code[^data-import]:
+
+[^data-import]: Note that I am using the [`fst`](https://www.fstpackage.org/){target="blank"} package below to save the data locally instead of using RDS files on suggestion from one of the readers of my previous posts (see the "Being a good citizen" call-out in my [previous post](../over-analysing-idle-footy-chat/index.qmd#importing-the-data){target="_blank"} for more information on why I save the output locally)
 
 ```{r}
 if(file.exists("data/player_stats_fryzigg.fst")) {
@@ -184,6 +210,41 @@ Unlike the [previous post](../over-analysing-idle-footy-chat/index.qmd#tidyverse
 [^not-data.table]: While the experiment of producing both tidyverse and `data.table` of the code was an interesting one, I have decided that it is probably too time consuming going forward.
 
 ```{r}
+player_stats_fryzigg$player_team |> unique() -> teams_fryzigg
+player_details$Team |> unique() -> teams_afl_tables
+
+tribble(
+  ~team_name_raw, ~team_name,
+  "Adelaide", "Adelaide",
+  "Brisbane Lions", "Brisbane Lions",
+  "Brisbane Bears", "Brisbane Lions", #"Brisbane Bears",
+  "Carlton", "Carlton",
+  "Collingwood", "Collingwood",
+  "Essendon", "Essendon",
+  "Fitzroy", "Fitzroy",
+  "Fremantle", "Fremantle",
+  "GWS", "Greater Western Sydney",
+  "Greater Western Sydney", "Greater Western Sydney",
+  "Geelong", "Geelong",
+  "Gold Coast", "Gold Coast",
+  "Hawthorn", "Hawthorn",
+  "Melbourne", "Melbourne",
+  "North Melbourne", "North Melbourne",
+  "Port Adelaide", "Port Adelaide",
+  "Richmond", "Richmond",
+  "St Kilda", "St Kilda",
+  "Sydney", "Sydney",
+  "West Coast", "West Coast",
+  "University", "University",
+  "Western Bulldogs", "Western Bulldogs"
+) ->
+  team_name_mapping
+
+
+player_stats_fryzigg |> 
+  select(player_first_name, player_last_name, match_round, match_date, metres_gained) |> 
+  View()
+
 player_details |> 
   mutate(
     player_first_season = as.integer(str_sub(Seasons, 1, 4))
@@ -215,6 +276,8 @@ player_stats_fryzigg |>
     match_season, season_decade
   ) |> 
   summarise(
+    .groups = "drop",
+    season_games = n(),
     season_disposals = sum(disposals, na.rm = TRUE),
     season_kicks = sum(kicks, na.rm = TRUE),
     season_handballs = sum(handballs, na.rm = TRUE),
@@ -222,19 +285,41 @@ player_stats_fryzigg |>
     season_goals = sum(goals, na.rm = TRUE),
     season_behinds = sum(behinds, na.rm = TRUE),
     season_hitouts = sum(hitouts, na.rm = TRUE),
-    season_tackles = sum(tackles, na.rm = TRUE),
-  )
-  # mutate(
-  #   player_full_name = paste(player_first_name, player_last_name),
-  # )
+    season_tackles = sum(tackles, na.rm = TRUE)
+  ) |> 
+  View()
 
 
+
+player_details |> 
+  filter(is.na(Goals)) |> 
+  arrange(desc(Games)) |> 
+  View()
 
 ```
 
+
+### Scraping the Brownlow medal data
+
+As with the Norm Smith medal in my previous post, the Brownlow medal winners are not available on 
+
+https://afltables.com/afl/brownlow/brownlow_idx.html
+
+https://en.wikipedia.org/wiki/List_of_Brownlow_Medal_winners#Winners_by_season
+
 ```{r}
 # get brownlow
-url <- "https://www.afl.com.au/brownlow-medal/history"
+brownlow_url <- "https://www.afl.com.au/brownlow-medal/history"
+
+brownlow_url |> 
+  read_html() ->
+  brownlow_html
+
+brownlow_html |> 
+  html_table(header = TRUE) |> 
+  _[[1]] |> 
+  View()
+
 ```
 
 ## Final Output

@@ -218,7 +218,12 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
   <ul class="collapse">
 <li><a href="#list-of-categories" id="toc-list-of-categories" class="nav-link" data-scroll-target="#list-of-categories">List of Categories</a></li>
   <li><a href="#obtaining-the-data" id="toc-obtaining-the-data" class="nav-link" data-scroll-target="#obtaining-the-data">Obtaining the Data</a></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a></li>
+  <li>
+<a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a>
+  <ul class="collapse">
+<li><a href="#scraping-the-brownlow-medal-data" id="toc-scraping-the-brownlow-medal-data" class="nav-link" data-scroll-target="#scraping-the-brownlow-medal-data">Scraping the Brownlow medal data</a></li>
+  </ul>
+</li>
   <li><a href="#final-output" id="toc-final-output" class="nav-link" data-scroll-target="#final-output">Final Output</a></li>
   </ul>
 </li>
@@ -274,33 +279,49 @@ Spoilers
 <ul>
 <li><p>&gt;50 goals</p></li>
 <li><p>300+ kicks</p></li>
-<li><p>Avg. 2+ goals</p></li>
+<li><p>Average 2+ goals</p></li>
+<li><p>Average 25+ disposals</p></li>
+<li><p>Average 5+ marks</p></li>
+<li><p>Average 5+ tackles</p></li>
 </ul>
 </li>
 <li>
 <p>Career stats <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a><sup>,</sup><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p>
 <ul>
+<li><p>20 or less games</p></li>
 <li><p>50 or less games</p></li>
 <li><p>200+ games</p></li>
+<li><p>Never scored a goal</p></li>
 <li><p>250+ goals</p></li>
 <li><p>2500+ kicks</p></li>
 <li><p>500+ tackles</p></li>
 </ul>
 </li>
 <li><p>Grand Final Player</p></li>
-<li><p>Brownlow Medalist</p></li>
+<li>
+<p>Awards:</p>
+<ul>
+<li>Brownlow Medalist</li>
+</ul>
+</li>
 <li>
 <p>Height:</p>
 <ul>
 <li><p>Taller than 195cm</p></li>
-<li><p>Under than 185cm</p></li>
+<li><p>Under 185cm</p></li>
+</ul>
+</li>
+<li>
+<p>Name<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>:</p>
+<ul>
+<li>First name Jack</li>
 </ul>
 </li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;University and Fitzroy as defunct teams will never appear as a category, although it says in the Footy Grid help page that Fitzroy will be combined in with Brisbane in the future</p></li><li id="fn8"><p><sup>8</sup>&nbsp;The South Melbourne and Sydney swans; the Brisbane Bears and Lions; Footscray and Western Bulldogs are grouped together</p></li><li id="fn9"><p><sup>9</sup>&nbsp;we can probably extend this to played in any decade, these are just the decades we have seen so far</p></li><li id="fn10"><p><sup>10</sup>&nbsp;includes finals</p></li><li id="fn11"><p><sup>11</sup>&nbsp;includes finals</p></li><li id="fn12"><p><sup>12</sup>&nbsp;there are probably different stats and thresholds that will appear in the future</p></li></div><div class="page-columns page-full"><p>As it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>, except for awards where they needed to win the award when playing for the club<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn13"><p><sup>13</sup>&nbsp;e.g.&nbsp;<a href="https://afltables.com/afl/stats/players/G/Gary_Ablett1.html">Gary Ablett Jr.</a> counts as a Grand Final player for Gold Coast even though he only ever played in grand finals for Geelong</p></li><li id="fn14"><p><sup>14</sup>&nbsp;e.g.&nbsp;<a href="https://afltables.com/afl/stats/players/I/Isaac_Smith.html">Isaac Smith</a> counts as a Norm Smith Medalist for Geelong but not for Hawthorn</p></li></div></div>
-</section><section id="obtaining-the-data" class="level2"><h2 class="anchored" data-anchor-id="obtaining-the-data">Obtaining the Data</h2>
+<div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;University and Fitzroy as defunct teams will never appear as a category, although it says in the Footy Grid help page that Fitzroy will be combined in with Brisbane in the future</p></li><li id="fn8"><p><sup>8</sup>&nbsp;The South Melbourne and Sydney swans; the Brisbane Bears and Lions; Footscray and Western Bulldogs are grouped together</p></li><li id="fn9"><p><sup>9</sup>&nbsp;we can probably extend this to played in any decade, these are just the decades we have seen so far</p></li><li id="fn10"><p><sup>10</sup>&nbsp;includes finals</p></li><li id="fn11"><p><sup>11</sup>&nbsp;includes finals</p></li><li id="fn12"><p><sup>12</sup>&nbsp;there are probably different stats and thresholds that will appear in the future</p></li><li id="fn13"><p><sup>13</sup>&nbsp;there will probably be other names that crop up in the future</p></li></div><div class="page-columns page-full"><p>As it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>, except for awards where they needed to win the award when playing for the club<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn14"><p><sup>14</sup>&nbsp;e.g.&nbsp;<a href="https://afltables.com/afl/stats/players/G/Gary_Ablett1.html">Gary Ablett Jr.</a> counts as a Grand Final player for Gold Coast even though he only ever played in grand finals for Geelong</p></li><li id="fn15"><p><sup>15</sup>&nbsp;e.g.&nbsp;<a href="https://afltables.com/afl/stats/players/I/Isaac_Smith.html">Isaac Smith</a> counts as a Norm Smith Medalist for Geelong but not for Hawthorn</p></li></div></div>
+</section><section id="obtaining-the-data" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="obtaining-the-data">Obtaining the Data</h2>
 <p>In order to look through the possible combinations, I will use R as I did in my <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html" target="_blank">previous post</a>. Likewise, I will also be using the <code>fitzRoy</code> package to obtain my data. Footy Grid has the full history of AFL players, so I will use the <a href="https://twitter.com/fryzigg" target="_blank">fryzigg</a> data. There are also some player details that are needed and for that, I will use the <a href="https://afltables.com/afl/afl_index.html" target="_blank">AFL Tables</a>.</p>
-<p>Let’s begin by loading our required packages.</p>
+<div class="page-columns page-full"><p>Let’s begin by loading our required packages<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn16"><p><sup>16</sup>&nbsp;As I outline <a href="#data-wrangling">below</a>, I will only be using tidyverse for data wrangling this time.</p></li></div></div>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jimmyday12.github.io/fitzRoy/">fitzRoy</a></span><span class="op">)</span></span>
 <span></span>
@@ -323,9 +344,11 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvest.tidyverse.org/">rvest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We will get the data using the following code:</p>
+<div class="page-columns page-full"><p>We will get the data using the following code<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn17"><p><sup>17</sup>&nbsp;Note that I am using the <a href="https://www.fstpackage.org/" target="blank"><code>fst</code></a> package below to save the data locally instead of using RDS files on suggestion from one of the readers of my previous posts (see the “Being a good citizen” call-out in my <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html#importing-the-data" target="_blank">previous post</a> for more information on why I save the output locally)</p></li></div></div>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="st">"data/player_stats_fryzigg.fst"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">player_stats_fryzigg</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://www.fstpackage.org/reference/write_fst.html">read_fst</a></span><span class="op">(</span><span class="st">"data/player_stats_fryzigg.fst"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -344,7 +367,7 @@ Attaching package: 'dplyr'</code></pre>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="data-wrangling" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
-<div class="page-columns page-full"><p>Unlike the <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html#tidyverse-versus-data.table" target="_blank">previous post</a>, I will only use the tidyverse<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn15"><p><sup>15</sup>&nbsp;While the experiment of producing both tidyverse and <code>data.table</code> of the code was an interesting one, I have decided that it is probably too time consuming going forward.</p></li></div></div>
+<div class="page-columns page-full"><p>Unlike the <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html#tidyverse-versus-data.table" target="_blank">previous post</a>, I will only use the tidyverse<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn18"><p><sup>18</sup>&nbsp;While the experiment of producing both tidyverse and <code>data.table</code> of the code was an interesting one, I have decided that it is probably too time consuming going forward.</p></li></div></div>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">player_details</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
@@ -377,6 +400,7 @@ Attaching package: 'dplyr'</code></pre>
 <span>    <span class="va">match_season</span>, <span class="va">season_decade</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    .groups <span class="op">=</span> <span class="st">"drop"</span>,</span>
 <span>    season_disposals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">disposals</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_kicks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kicks</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_handballs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">handballs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -386,15 +410,8 @@ Attaching package: 'dplyr'</code></pre>
 <span>    season_hitouts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">hitouts</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    season_tackles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tackles</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'player_id', 'player_first_name',
-'player_last_name', 'player_first_season', 'player_team', 'match_season'. You
-can override using the `.groups` argument.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 57,081 × 15
-# Groups:   player_id, player_first_name, player_last_name,
-#   player_first_season, player_team, match_season [57,081]
    player_id player_first_name player_last_name player_first_season player_team
        &lt;int&gt; &lt;chr&gt;             &lt;chr&gt;                          &lt;int&gt; &lt;chr&gt;      
  1         1 Ivan              Astruc                          1897 Fitzroy    
@@ -413,15 +430,34 @@ can override using the `.groups` argument.</code></pre>
 #   season_marks &lt;int&gt;, season_goals &lt;int&gt;, season_behinds &lt;int&gt;,
 #   season_hitouts &lt;int&gt;, season_tackles &lt;int&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>  <span class="co"># mutate(</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>  <span class="co"># mutate(</span></span>
 <span>  <span class="co">#   player_full_name = paste(player_first_name, player_last_name),</span></span>
-<span>  <span class="co"># )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="co"># )</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">player_details</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Goals</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">Games</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="scraping-the-brownlow-medal-data" class="level3"><h3 class="anchored" data-anchor-id="scraping-the-brownlow-medal-data">Scraping the Brownlow medal data</h3>
+<p>As with the Norm Smith medal in my previous post, the Brownlow medal winners are not available on</p>
+<p>https://afltables.com/afl/brownlow/brownlow_idx.html</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># get brownlow</span></span>
-<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://www.afl.com.au/brownlow-medal/history"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># get brownlow</span></span>
+<span><span class="va">brownlow_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.afl.com.au/brownlow-medal/history"</span></span>
+<span></span>
+<span><span class="va">brownlow_url</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span></span>
+<span>  <span class="va">brownlow_html</span></span>
+<span></span>
+<span><span class="va">brownlow_html</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_table.html">html_table</a></span><span class="op">(</span>header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="va">_</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="final-output" class="level2"><h2 class="anchored" data-anchor-id="final-output">Final Output</h2>
+</section></section><section id="final-output" class="level2"><h2 class="anchored" data-anchor-id="final-output">Final Output</h2>
 </section></section><section id="player-lookup-table" class="level1"><h1>Player Lookup Table</h1>
 <p>Below I have a lookup table, this table is not for cheating purposes but more done as an exercise and perhaps for looking into who some obscure examples might have been after you have attempted the quiz on the day. I may continue to update this as new categories get introduced, but for now I present it with all the categories that have come about between the 21<sup>st</sup> of July and the 8<sup>th</sup> of August 2023.</p>
 
