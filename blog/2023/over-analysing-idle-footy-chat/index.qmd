@@ -942,6 +942,9 @@ We can then filter the data and present it below in a table below[^table-code-om
 
 [^table-code-omitted]: note that the code to format the table is omitted.
 
+### Match Stats
+
+
 ::: {.panel-tabset}
 
 ### Tidyverse
@@ -961,7 +964,6 @@ match_stats_flat_dt[game_id == infamous_game_id, ]
 
 :::
 
-### Match Stats
 
 ```{r}
 #| echo: false
@@ -1043,7 +1045,7 @@ As listed [above](#question-list), our first question was:
 
 ::: {.callout-info}
 
-Not that there is already a [page](https://afltables.com/afl/teams/allteams/qh.html){target="_blank"} on this topic on AFL Tables, but it is a good one to start with regardless.
+Note that there is already a [page](https://afltables.com/afl/teams/allteams/qh.html){target="_blank"} on this topic on AFL Tables, but it is a good one to start with regardless.
 
 :::
 
@@ -1190,7 +1192,7 @@ top_quarters_reactable <- function(data) {
         score = colDef(name = "Quarter Score"),
         team = colDef(name = "Team"),
         quarter = colDef(name = "Quarter"),
-        opposition = colDef(name = "Opposition"),
+        opposition = colDef(name = "Opposition", width = 120),
         game_id = colDef(show = FALSE)
       )
     )
@@ -1226,7 +1228,7 @@ identical(as.data.frame(top_quarter_scores_q1_tb), as.data.frame(top_quarter_sco
 top_quarters_reactable(top_quarter_scores_q1_tb)
 ```
 
-The record for the highest-scoring first quarter occurred during the bloodbath of an encounter that was the Bombers' first ever clash with the Gary Ablett Junior-led Gold Coast Suns in their inaugural season in the AFL. The Bombers came out of the blocks in a flash and mercilessly obliterated the inexperienced Gold Coast side, notching up a 93 point lead at quarter time. Interestingly, the Sun actually managed to win the second quarter as the Bombers appeared to take there foot off the gas a little to *only* win by 139 points when all was said and done. 
+The record for the highest-scoring first quarter occurred during the bloodbath of an encounter that was the Bombers' first ever clash with the Gary Ablett Jr.-led Gold Coast Suns in their inaugural season in the AFL. The Bombers came out of the blocks in a flash and mercilessly obliterated the inexperienced Gold Coast side, notching up a blistering 93 point lead at quarter time. Interestingly, the Suns actually managed to win the second quarter as the Bombers appeared to take their foot off the accelerator a little to *only* win by 139 points when all was said and done. 
 
 
 ```{=html}
@@ -1234,7 +1236,7 @@ The record for the highest-scoring first quarter occurred during the bloodbath o
 ```
 
 
-Perhaps the Suns' lethargy in the first quarter against the Dons can be explained as a hangover[^sun-festivities] following on from their [first ever win](https://afltables.com/afl/stats/games/2011/132020110423.html){target="_blank"} the previous week[^first-win]. It is exciting to me that this is a game that I can remember watching on the television at the time, it may have even been the first Gold Coast game I ever watched[^gold-coast]. Footy is full of narratives and it fun to spin one around this particular game (the context and stories make footy stats even more fun).
+Perhaps the Suns' lethargy in the first quarter against the Dons can be explained as a hangover[^sun-festivities] following on from their [first ever win](https://afltables.com/afl/stats/games/2011/132020110423.html){target="_blank"} the previous week[^first-win]. It is exciting to me that this is a game that I can remember watching on the television at the time, and it may have even been the first Gold Coast game I ever watched[^gold-coast]. Footy is full of narratives and it fun to spin one around this particular game (the context and stories make footy stats even more fun).
 
 [^sun-festivities]: As a club with an abundance of 18 or 19 year old blokes living out of home for the first time, the Suns were known to [over-indulge](https://youtu.be/Roehqg0Dd5k?t=61){target="_blank"} in the Gold Coast party culture in those days.
 
@@ -1270,9 +1272,9 @@ identical(as.data.frame(top_quarter_scores_q2_tb), as.data.frame(top_quarter_sco
 top_quarters_reactable(top_quarter_scores_q2_tb)
 ```
 
-From one teams' first season, to another's last. It is quite fitting (although a little sad) that the highest scoring second quarter was against a floundering ([aforementioned](#the-fitzroy-package)) `fitzRoy` Football Club (to which we owe the ease with which we obtained this data) en-route to a wooden spoon in their [final season](https://www.youtube.com/watch?v=Ykfsk0pXt9E){target="_blank"} prior to merging with Brisbane Bears to form the Brisbane Lions.
+From one teams' first season, to another's last. It is quite fitting (although sad) that the highest scoring second quarter was against a floundering ([aforementioned](#the-fitzroy-package)) `fitzRoy` Football Club (to which we owe the ease with which we obtained this data) en-route to a wooden spoon in their [final season](https://www.youtube.com/watch?v=Ykfsk0pXt9E){target="_blank"} prior to merging with Brisbane Bears to form the Brisbane Lions.
 
-As I was not yet born, I do not remember the game, but on the video below, the commentator shrewdly points to a strong wind prevailing towards the Crows' goal at the beginning of the second quarter which certainly didn't bode well for the *Lions*.
+As I was not yet born, I do not remember the game, but on the video below, the commentator shrewdly points to a strong wind prevailing towards the Crows' goal at the beginning of the second quarter which certainly didn't bode well for the Lions.
 
 ```{=html}
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/sSKOcl03u3M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -1305,7 +1307,7 @@ identical(as.data.frame(top_quarter_scores_q3_tb), as.data.frame(top_quarter_sco
 top_quarters_reactable(top_quarter_scores_q3_tb)
 ```
 
-The Swans' third quarter appears in 28^th^ position here, which is the best position it gets. The game on top, the Bombers had a very even distribution of goal-kickers and kicked 32 goals so they may appear later in our list of [multiple goal kickers question](#individual).
+The Swans' third quarter appears in 28^th^ position here, which is the best position it gets.
 
 
 ### Fourth Quarter
@@ -1336,7 +1338,7 @@ top_quarters_reactable(top_quarter_scores_q4_tb)
 ```
 
 
-Well this was slightly unexpected, the Bloods[^incorrect-label] came home like a freight train against the woeful Saints in a game that took place over 100 years ago. It is also the only quarter in AFL history that has notched up a ton. Upon seeing this, given it's vintage, I though that perhaps the story of this game might have been lost to time but the Swans have a most [insightful article](https://www.sydneyswans.com.au/news/235004/slaughter-the-true-story-behind-a-record-thats-stood-for-a-century){target="_blank"} up on their website about it. The explanation it provides is that St Kilda were undermanned through a combination of injury and player protest on account of off-field disputes. It is safe to say that the "Bloods" showed them no mercy.
+Well this was slightly unexpected, the Bloods[^incorrect-label] came home like a freight train against the woeful Saints in a game that took place over 100 years ago. It is also the only quarter in AFL history that has notched up a ton. Upon seeing this, given its vintage, I thought that perhaps the story of this game might have been lost to time but the Swans have a most [insightful article](https://www.sydneyswans.com.au/news/235004/slaughter-the-true-story-behind-a-record-thats-stood-for-a-century){target="_blank"} up on their website about it. The explanation in the article claims that St Kilda were undermanned through a combination of injury and player protest on account of off-field disputes. It is safe to say that the "Bloods" showed them no mercy.
 
 [^incorrect-label]: Incorrectly labelled here as "Sydney" in the table above because at the time they resided in South Melbourne (they [relocated to Sydney in 1982](https://en.wikipedia.org/wiki/Sydney_Swans#Swans_move_to_Sydney:_1982.E2.80.931984){target="_blank"}), they were also known as the "Bloods" prior to adopting their current [Swans mascot in 1933](https://en.wikipedia.org/wiki/Sydney_Swans#Club_identity){target="_blank"} due to the number of Western Australians in the side (as a WA boy I couldn't help mentioning this)
 
@@ -1368,8 +1370,9 @@ top_quarters_reactable(top_quarter_scores_tb)
 ```
 
 
-In the infamous game, the Swans' third (premiership) quarter was the only one that reached the top 100 quarters of all time. The fact that no quarter was even close to the the top indicates that the Swans were very consistent through-out the game. To use a cliche, they put in a consistent four-quarter effort and I suppose the Eagles were consistent too (consistently dismal).
+In the infamous game, the Swans' third quarter [^premiership-quarter] was the only one that reached the top 100 quarters of all time. The fact that no quarter was even close to the the top indicates that the Swans were very consistent through-out the game. To use a cliche, they put in a consistent four-quarter effort and I suppose the Eagles were consistent too (consistently dismal).
 
+[^premiership-quarter]: i.e. the [premiership quarter](https://en.wiktionary.org/wiki/premiership_quarter){target="_blank"}
 
 ## Most Goal-kickers
 
@@ -1474,7 +1477,7 @@ top_goal_scorers_reactable <- function(data, goal_kicker_label) {
         rank = colDef(name = "Rank"),
         goal_kickers = colDef(name = goal_kicker_label),
         team = colDef(name = "Team"),
-        opposition = colDef(name = "Opposition"),
+        opposition = colDef(name = "Opposition", width = 120),
         game_id = colDef(show = FALSE)
       )
     )
@@ -1574,7 +1577,7 @@ top_goal_scorers_reactable(top_goal_scorers_bags_tb, "Bags")
 
 Four bags in one game has happened on two occasions, the most recent of which (in 1991) yet again featured the Fitzroy Lions, who were trounced by 157 points by the Hawks in North Hobart. 
 
-The list of bag-getters in this game makes for interesting reading, all were recognisable names (although one more for his family connections that his own merit). As one might expect, one of the bags was courtesy of Hawthorn spearhead Jason Duntall (6 snags), along with 7 apiece from WA boy Ben Allan[^ben-allan] and the three-time premiership player Darren Jarmon. Rounding out the 4 was a contribution of 5 snags from Paul Hudson, who is the son of Tasmanian footy legend Peter Hudson (how fitting that this game was played in Tassie) who averaged more than 5 goals a game himself (an incredible feat).
+The list of bag-getters in this game makes for interesting reading, all were recognisable names (although one more for his family connections that his own merit). As one might expect, one of the bags was courtesy of Hawthorn spearhead Jason Duntall (6 snags), along with 7 apiece from WA boy Ben Allan[^ben-allan] and the three-time premiership player Darren Jarmon. Rounding out the four was a contribution of 5 snags from Paul Hudson, who is the son of Tasmanian footy legend Peter Hudson (how fitting that this game was played in Tassie) who averaged more than 5 goals a game himself (an incredible feat).
 
 [^ben-allan]: Sorry I couldn't help myself, he was also a [Claremont Tiger](https://www.claremontfc.com.au/){target="_blank"} (up the mighty Tiges)
 
@@ -1592,15 +1595,17 @@ These statistics (which we will define below) are more advanced and have only be
 ### Most Clangers
 
 
-A clanger is defined as
+A clanger is defined as:
 
 > an absurd or embarrassing blunder.
 
-Or in more precise football statistics terms
+Or in more precise football statistics terms:
 
-> An error made by a player resulting in a negative result for his side. Disposal clangers are any kick or handball that directly turns the ball over to the opposition. Frees and 50-metre penalties against, No Pressure Errors, Dropped Marks and Debits are all included in clangers.[^source-champion-data]
+> An error made by a player resulting in a negative result for his side. Disposal clangers are any kick or handball that directly turns the ball over to the opposition. Frees and 50-metre penalties against, No Pressure Errors, Dropped Marks and Debits are all included in clangers.
+>
+> Source: [Champion Data](https://www.championdata.com/glossary/afl){target="_blank"}.
 
-[^source-champion-data]: [Source (Champion Data)](https://www.championdata.com/glossary/afl){target="_blank"}
+[^source-champion-data]: 
 
 
 Clanger data is available on  the AFL Tables data from 1998 onwards, so we will have to make do with only recent memory.
@@ -1685,7 +1690,7 @@ most_clangers_tb |>
 ```
 
 
-A lot of the games in the top 5 are from very recent years, probably highlighting the more recent trend in teams rolling the dice more with possession (high risk, high reward) as popularised by Richmond and adopted to great success of late by the Magpies. Having spot-checked a few examples, there is also a bit of a pattern of wet weather impacting these games it would seem.
+A lot of the games in the top 5 are from very recent years, probably highlighting the more recent trend in teams rolling the dice more with possession (high risk, high reward), as popularised by Richmond and adopted to great success of late by the Magpies. Having spot-checked a few examples, there is also a bit of a pattern of wet weather impacting these games it would seem.
 
 Also notable in the top 5 is one of three games played in Shanghai as part of the AFL's attempt at entering into the Chinese market between 2017 and 2019. While there was some rain about, one might presume from this that the Suns and Port didn't put on a particularly impressive display of our game on that occasion, either that or they were putting on an entertaining show with plenty of high-risk, high-reward plays. The [video highlights](https://www.youtube.com/watch?v=9b2gue45P4k){target="_blank"} appear to be reasonably exciting, so I am going to assume the latter.
 
@@ -1814,20 +1819,20 @@ worst_disposal_efficiency_games_tb |>
 
 
 
-The only game with less than 50% disposal efficiency was played in torrid conditions up in Cairns. Looking at the [video highlights](https://www.youtube.com/watch?v=VI4dCyLt82c){target="_blank"}, the players were running through puddles the whole game. I have however seen equal or worse conditions in the past so it is somewhat curious that this was the worst by such a margin. For reference, Gold Coast were very poor that year, coming second last but the Roos came in a respectable ninth position (only one win and percentage outside the top 8), this also points to them probably winning this game if has been played in more favourable conditions but they still would have missed out on finals due to the mammoth percentage of the Cats that year. The "cleanest" player on the day was Jesse Joyce, who's 8 touches came at 75% efficiency (however it was a rather low sample size).
+The only game with less than 50% disposal efficiency was played in torrid conditions up in Cairns. Looking at the [video highlights](https://www.youtube.com/watch?v=VI4dCyLt82c){target="_blank"}, the players were running through puddles the whole game. I have however seen equal or worse conditions in the past, so it is somewhat curious that this was the worst by such a margin. For reference, Gold Coast were very poor that year, coming second last but the Roos came in a respectable ninth position (only one win and percentage outside the top 8), this also points to them probably winning this game if has been played in more favourable conditions, but they still would have missed out on finals due to the mammoth percentage of the Cats that year. The "cleanest" player on the day was Jesse Joyce, whose 8 touches came at 75% efficiency (however it was a rather low sample size).
 
 
 Further disjointed musings:
 
-* Seeing a game in 2018 is also a fun reminder of the last time the Eagles won a premiership which feels a long way off given the current predicament the club is in, in spite of their recent win against the also similarly languishing[^roos-optimism] Roos last Sunday.
+* Seeing a game in 2018 is also a fun reminder of the last time the Eagles won a premiership, which feels a long way off given the current predicament the club is in, in spite of their recent win against the similarly languishing[^roos-optimism] Roos last Sunday.
 
 [^roos-optimism]: But far more optimistic due to a combination of Clarko (he returns from his hiatus this week) and promising talent on their list such as Harry Sheezel
 
-* In the 20^th^ century, the use of suburban grounds where the quality of the surface was subpar I am sure lead to far more games with lower disposal efficiency than this (muddy fields were far more common in those days). 
+* In the 20^th^ century, the use of suburban grounds where the quality of the surface was subpar I am sure led to far more games with lower disposal efficiency than this (muddy fields were far more common in those days). 
 
 * We can't entirely blame the players, given the conditions. Anyone who has kicked a footy around in the wet will know how much heavier and slipperier than usual it can get (it is often described as being like a bar of soap). By looking through old highlights packages of the top several games in this metric, all of them appear to have been impacted significantly by weather conditions.
 
-* The Fryzigg data actually has weather conditions as a field on it but it appears to be somewhat unreliable, when I cross referenced the games with match reports and highlights some of the "sunny" games turned out to be played in torrential rain.
+* The Fryzigg data actually has weather conditions as a field on it but it appears to be somewhat unreliable, when cross referencing the games with match reports and highlights, some of the "sunny" games turned out to be played in torrential rain.
 
 * I also checked which players have the highest career kicking efficiency and it appears to be mostly defenders who probably inflate their numbers by getting involved in switches of play and chipping the ball around the back line. So we have to take this kind of metric with a grain of salt, there is a certain difficulty level with executing certain types of disposal (e.g. a kick inside 50) that it does not fully capture.
 
@@ -1850,9 +1855,9 @@ Our question regarding Norm Smith medallists from above reads:
 
 * The award is named after legendary Melbourne full forward of the 1940's and coach of the 1950's and 1960's, [Norm Smith](https://afltables.com/afl/stats/players/N/Norm_Smith.html){target="_blank"}. In his decorated career, he won a total of 10 premierships, 4 as a player, 6 as coach and all for the Melbourne football club (given Melbourne have only won 13 in their history, quite a feat). At the back end of his playing career, he spent two years as captain-coach (yes that was a thing at the time) of the Fitzroy football club (here they pop up again).
 
-* The Norm Smith medal is usually given to a player on the winning team but very occasionally, players have managed to win the award in a losing side. This has only happened 4 out of 45 times and the last time was Eagles (and Carlton) superstar Chris Judd in 2005.
+* The Norm Smith medal is usually given to a player on the winning team but very occasionally, players have managed to win the award in a losing side, the last time being 4 out of 45 times and the last time was Eagles (and Carlton) superstar Chris Judd in 2005.
 
-* The Norm Smith Medal was first instituted in 1979. Prior to this, there was no official award given however the media and fans of the day had their opinions of who the best on ground was in prior grand finals. While [this article](https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979){target="_blank"} lists some "unofficial" best on ground performances in grand finals prior to 1979, I will stick with the official list. As a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons particularly as this data is of dubious reliability.
+* The Norm Smith Medal was first instituted in 1979. Prior to this, there was no official award given, however the media and fans of the day had their opinions of who the best on ground was in prior grand finals. While [this article](https://themongrelpunt.com/footy-history/2020/04/30/before-the-norm-smith-best-on-ground-prior-to-1979){target="_blank"} lists some "unofficial" best on ground performances in grand finals prior to 1979, I will stick with the official list. As a Western Australian, I would have no qualms with discarding the older, exclusively Victorian seasons particularly as this data is of dubious reliability.
 
 
 :::
@@ -2020,7 +2025,7 @@ norm_smith_youngest_tb |>
 ```
 
 
-The youngest player on the list is the inaugural winner, Wayne Harmes, who was only 19 years of age when he won the prestigious award.  He is known for a [legendary moment](https://www.youtube.com/watch?v=G6jDAtqEi50){target="_blank"} during this match where, towards the end of the fourth quarter, he ran down his own (errant) kick by sliding along the ground and tapping the ball to keep it in play, sending it into the path of his team mate Ken Sheldon who ran into the open goal. The goal ended up being a decisive one as the Blues came out as victors by only 5 points.
+The youngest player on the list is the inaugural winner, Wayne Harmes, who was only 19 years of age when he won the prestigious award.  He is known for a [legendary moment](https://www.youtube.com/watch?v=G6jDAtqEi50){target="_blank"} during this match, where, towards the end of the fourth quarter, he ran down his own (errant) kick by sliding along the ground and tapping the ball to keep it in play, sending it into the path of his team mate Ken Sheldon who ran into the open goal. The goal ended up being a decisive one as the Blues came out as victors by only 5 points.
 
 
 ```{=html}
@@ -2028,7 +2033,7 @@ The youngest player on the list is the inaugural winner, Wayne Harmes, who was o
 ```
 
 
-The most inexperienced in terms of games played was Maurice Rioli (father of Maurice Junior who is currently plying his trade at his old man's club), member of the famous [Rioli family](https://en.wikipedia.org/wiki/Rioli_family){target="_blank"} of the Tiwi Islands which has uncannily produced a plethora of great footballers and premiership players. He was the first (and arguably the greatest) Rioli to ever play in the AFL/VFL. One caveat is that while at the time he had only played 21 VFL games, he was 24 years of age and had previously played 6 years of WAFL footy[^wafl-quality] for South Fremantle, so he wasn't your typical 21 game player, he was really in his prime.
+The most inexperienced in terms of games played was Maurice Rioli (father of Maurice Jr. who is currently plying his trade at his old man's club), member of the famous [Rioli family](https://en.wikipedia.org/wiki/Rioli_family){target="_blank"} of the Tiwi Islands which has uncannily produced a plethora of great footballers and premiership players. He was the first (and arguably the greatest) Rioli to ever play in the AFL/VFL. One caveat is that while at the time he had only played 21 VFL games, he was 24 years of age and had previously played 6 years of WAFL footy[^wafl-quality] for South Fremantle, so he wasn't your typical 21 game player, he was really in his prime.
 
 
 [^wafl-quality]: At this time (prior to a national competition), WAFL football (as well as the SANFL in South Australia) could be viewed as being at a similar level to the VFL (although VFL did benefit from having the larger population in Victoria as a talent pool). While these days, the WAFL is the tier below the AFL (like the English Championship is the to Premier League), at that time, it could instead be viewed as a competition that was the best within its own region (like Serie A is to La Liga).
