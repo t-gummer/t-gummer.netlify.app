@@ -1,0 +1,44 @@
+---
+title: "More AFL Stats"
+description: |
+  Follow ups from my first post (more questions and answers with less fanfair).
+date: 2023-08-03
+categories: 
+  - Sport
+  - AFL
+  - R
+  - Data
+image: fitzroy-lions-logo.png
+reference-location: margin
+draft: true
+freeze: true
+reading-timereading-time: true
+---
+
+
+```{r hidden setup}
+#| echo: false
+#| message: false
+
+library(reactable)
+library(htmltools)
+source("../../../scripts/reactable-theming.R")
+
+
+```
+
+
+# Questions
+
+* Highest goal to mark ratio
+
+* Brownlow medalist with the worst winning record
+
+* Most vowels or constants in a name
+
+
+* most uncontested possession
+
+    - was it leigh montagna with 40 odd?
+
+* most contested possessions

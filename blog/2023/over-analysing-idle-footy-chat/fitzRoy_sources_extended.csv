@@ -1,6 +1,6 @@
 ﻿data_source,other_functions,use_case,has_ladder_function,has_results_function,has_fixture_function,has_player_stats_function,has_lineups_function,has_player_details_function
-AFL website,,More advanced stats such as centre bounce attendances,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
 AFL Tables,,Full AFL history with ability to look at the game on a web page,TRUE,TRUE,FALSE,TRUE,FALSE,TRUE
+AFL website,,More advanced stats such as centre bounce attendances,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
 Footywire,fetch_betting_odds_footywire,More unique data such as historical betting odds,FALSE,TRUE,TRUE,TRUE,FALSE,TRUE
-Squiggle,fetch_squiggle_data,"Fast, live basic results AFL data",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE
 Fryzigg,,Full AFL history with more detailed stats,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+Squiggle,fetch_squiggle_data,"Fast, live basic results AFL data",TRUE,TRUE,TRUE,FALSE,FALSE,FALSE

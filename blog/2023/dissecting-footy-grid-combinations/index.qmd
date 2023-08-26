@@ -42,11 +42,13 @@ You are awarded a rarity score based on what other players of the game have chos
 
 ## My Performance
 
-I would say I am a relatively average[^average-player] player at the game. While it varies quite a lot, I would say a solid score for me is when I am better than around 40%[^why-40-is-average] of players. My attempt for today (the 8^th^of August) is below:
+I would say I am a relatively average[^average-player] player at the game. While it varies quite a lot, I would say a solid score for me is when I am better than around 40%[^why-40-is-average] of players (although I will occasionally score in the 80^th^ or even 90^th^ percentile if it aligns with my area of expertise[^expertise]). My attempt on the 8^th^of August is below:
 
 [^average-player]: Among a sea of footy tragics, so I don't take any shame in this
 
 [^why-40-is-average]: I will elaborate on why I think the 40^th^ percentile is at least average if not above average below
+
+[^expertise]: For example, I tend to be pretty solid at pulling out obscure Eagles and Dockers players from the late 2000's and early 2010's
 
 ::: {.callout-warning collapse="true"}
 
@@ -87,7 +89,7 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     - 00's
 
     
-* Season stats [^season-stats]:
+* Season stats [^season-stats]^,^[^career-stats]:
 
     - \>50 goals
     
@@ -100,6 +102,8 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     - Average 5+ marks
     
     - Average 5+ tackles
+    
+    - Won 15+ games
 
 
 * Career stats [^season-stats]^,^[^career-stats]:
@@ -118,6 +122,11 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     
     - 500+ tackles
     
+* Game stats[^season-stats]^,^[^career-stats]:
+
+    - 5+ goals
+    
+    - 10+ marks
 
 * Grand Final Player
 
@@ -134,7 +143,41 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
 * Name[^player-name]:
 
     - First name Jack
+    
+    
+* Left footers[^footedness]
 
+
+* One-Club Player
+
+
+* Coached by:
+
+    - Ross Lyon
+    
+    - Brad Scott
+    
+    - Leigh Matthews
+
+* Teammate of[^Teammate]:
+
+    - Lance Franklin
+    
+    - Isaac Smith
+    
+    - Nic Naitanui
+    
+    - Andrew Phillips
+    
+    - Scott Pendlebury
+
+* Single digit guernsey number
+
+* All Australian (1991 to present)
+
+[^Teammate]: These ones typically honour retirees
+
+[^footedness]: Data available 2013 onwards
 
 [^player-name]: there will probably be other names that crop up in the future
 
@@ -148,11 +191,10 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
 
 [^season-stats]: includes finals
 
-As it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club[^category-explain1], except for awards where they needed to win the award when playing for the club[^category-explain2].
+As it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club[^category-explain1].
 
 [^category-explain1]: e.g. [Gary Ablett Jr.](https://afltables.com/afl/stats/players/G/Gary_Ablett1.html) counts as a Grand Final player for Gold Coast even though he only ever played in grand finals for Geelong
 
-[^category-explain2]: e.g. [Isaac Smith](https://afltables.com/afl/stats/players/I/Isaac_Smith.html) counts as a Norm Smith Medalist for Geelong but not for Hawthorn
 
 ## Obtaining the Data
 
@@ -201,6 +243,46 @@ if(file.exists("data/player_details.fst")) {
 }
 ```
 
+
+
+## Other Data Sources
+
+While the `fitzRoy` sources provide most of the data we need but some data is still missing.
+
+
+### Brownlow medal data
+
+As with the Norm Smith medal in my previous post, the Brownlow medal winners are not available in the `fitzRoy` data. However they are available on [AFL Tables](https://afltables.com/afl/brownlow/brownlow_idx.html), [Wikipedia](https://en.wikipedia.org/wiki/List_of_Brownlow_Medal_winners#Winners_by_season) and the [official AFL Website](https://www.afl.com.au/brownlow-medal/history). As it turns out, the easiest one to scrape is the AFL website, so that is what we will use.
+
+
+
+
+
+```{r}
+# get brownlow
+brownlow_url <- "https://www.afl.com.au/brownlow-medal/history"
+
+brownlow_url |> 
+  read_html() ->
+  brownlow_html
+
+brownlow_html |> 
+  html_table(header = TRUE) |> 
+  _[[1]] |> 
+  View()
+
+```
+
+
+### All-Australian Data
+
+The official AFL website has a table of all the all players selected in All Australian Teams since 1953 [here](https://www.afl.com.au/all-australian/history)[^pre-1991].
+
+[^pre-1991]: Before 1991 it was either the VFL team of the year or based on the interstate carnival, hence why Footy Grid only considers All Australian from 1991 onwards
+
+```{r}
+"data-Dtbc3.csv"
+```
 
 ## Data Wrangling
 
@@ -256,7 +338,7 @@ player_details |>
     player_height = HT,
     player_weight = WT,
   ) ->
-  player_measurements
+  player_details_modified
 
 player_stats_fryzigg |> 
   mutate(
@@ -298,29 +380,6 @@ player_details |>
 
 ```
 
-
-### Scraping the Brownlow medal data
-
-As with the Norm Smith medal in my previous post, the Brownlow medal winners are not available on 
-
-https://afltables.com/afl/brownlow/brownlow_idx.html
-
-https://en.wikipedia.org/wiki/List_of_Brownlow_Medal_winners#Winners_by_season
-
-```{r}
-# get brownlow
-brownlow_url <- "https://www.afl.com.au/brownlow-medal/history"
-
-brownlow_url |> 
-  read_html() ->
-  brownlow_html
-
-brownlow_html |> 
-  html_table(header = TRUE) |> 
-  _[[1]] |> 
-  View()
-
-```
 
 ## Final Output
 

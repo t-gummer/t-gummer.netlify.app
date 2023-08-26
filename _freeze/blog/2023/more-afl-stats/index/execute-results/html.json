@@ -1,0 +1,14 @@
+{
+  "hash": "4e6cbb08a9a74cf53a67cf9f0c14edd3",
+  "result": {
+    "markdown": "---\ntitle: \"More AFL Stats\"\ndescription: |\n  Follow ups from my first post (more questions and answers with less fanfair).\ndate: 2023-08-03\ncategories: \n  - Sport\n  - AFL\n  - R\n  - Data\nimage: fitzroy-lions-logo.png\nreference-location: margin\ndraft: true\nfreeze: true\nreading-timereading-time: true\n---\n\n::: {.cell}\n\n:::\n\n\n\n# Questions\n\n* Highest goal to mark ratio\n\n* Brownlow medalist with the worst winning record\n\n* Most vowels or constants in a name",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
