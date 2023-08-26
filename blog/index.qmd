@@ -1,6 +1,6 @@
 ---
 title: Blog
-description: "Welcome to my blog. I will be posting articles here about my various interests such as R, footy and data science. Some say I have a rather idiosyncratic writing style, so be prepared for an avalanche of verbose running sentences with multiple asides in them (my high school english teachers are now powerless to stop me)."
+description: "I will be posting articles here about my various interests such as R, footy and data science. Some say I have a rather idiosyncratic writing style, so be prepared for an avalanche of verbose running sentences with multiple asides in them (my high school english teachers are now powerless to stop me)."
 author: ""
 description-meta: "Tim Gummer's blog"
 listing:
@@ -9,7 +9,10 @@ listing:
     sort: "date desc"
     categories: true
     fields: [image, date, title, author, reading-time, description, categories]
-# toc-location: right
+    
+toc-title: Year
+toc-location: right
+
 date-format: "D MMMM YYYY"
 code-tools: false
 comments: false

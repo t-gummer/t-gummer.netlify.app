@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Tim Gummer">
+<meta name="description" content="Associate Actuary (AIAA) | R Enthusiast">
+<title>Tim Gummer - Dissecting Footy Grid Combinations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-V8P5XXLZK4"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
+</script><style>
+
+      .quarto-title-block .quarto-title-banner {
+        background: #4C4C4B;
+      }
+</style>
+</head>
+<body class="floating nav-fixed slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Tim Gummer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../../blog/index.html" rel="" target=""><i class="bi bi-newspaper" role="img">
+</i> 
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../goals/index.html" rel="" target=""><i class="bi bi-fingerprint" role="img">
+</i> 
+ <span class="menu-text">Goals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv/index.html" rel="" target=""><i class="bi bi-file-earmark-person" role="img">
+</i> 
+ <span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/t-gummer" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/timothy-gummer/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:mail.timothy.gummer@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+<div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Dissecting Footy Grid Combinations</h1>
+                  <div>
+        <div class="description">
+          <p><a href="https://footygrid.com/" target="_blank">Footy grid</a> has been a phenomanon amongst trivia-loving footy fans in recent weeks. In this post I use AFL data to get disect the most difficult combinations.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Sport</div>
+                <div class="quarto-category">AFL</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Data</div>
+                <div class="quarto-category">Footy Grid</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://t-gummer.netlify.app/">Tim Gummer</a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Sunday, 13 August 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#what-is-footy-grid" id="toc-what-is-footy-grid" class="nav-link active" data-scroll-target="#what-is-footy-grid">What is Footy Grid?</a>
+  <ul class="collapse">
+<li><a href="#my-performance" id="toc-my-performance" class="nav-link" data-scroll-target="#my-performance">My Performance</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#most-diffcult-combinations" id="toc-most-diffcult-combinations" class="nav-link" data-scroll-target="#most-diffcult-combinations">Most Diffcult Combinations</a>
+  <ul class="collapse">
+<li><a href="#list-of-categories" id="toc-list-of-categories" class="nav-link" data-scroll-target="#list-of-categories">List of Categories</a></li>
+  <li><a href="#obtaining-the-data" id="toc-obtaining-the-data" class="nav-link" data-scroll-target="#obtaining-the-data">Obtaining the Data</a></li>
+  <li>
+<a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a>
+  <ul class="collapse">
+<li><a href="#scraping-the-brownlow-medal-data" id="toc-scraping-the-brownlow-medal-data" class="nav-link" data-scroll-target="#scraping-the-brownlow-medal-data">Scraping the Brownlow medal data</a></li>
+  </ul>
+</li>
+  <li><a href="#final-output" id="toc-final-output" class="nav-link" data-scroll-target="#final-output">Final Output</a></li>
+  </ul>
+</li>
+  <li><a href="#player-lookup-table" id="toc-player-lookup-table" class="nav-link" data-scroll-target="#player-lookup-table">Player Lookup Table</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/t-gummer/t-gummer.netlify.app/edit/master/blog/2023/dissecting-footy-grid-combinations/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/t-gummer/t-gummer.netlify.app/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full column-body" id="quarto-document-content"><div class="cell">
+
+</div>
+<section id="what-is-footy-grid" class="level1 page-columns page-full"><h1>What is Footy Grid?</h1>
+<p><a href="https://footygrid.com/" target="_blank">Footy grid</a> is a daily AFL-themed trivia game for testing your knowledge of past and present players. The idea is pick players that intersect between two categories. These categories typically include teams, as well career or best season statistics (goals, kicks etc.), awards (Brownlow, Norm Smith) and other (e.g.&nbsp;height).</p>
+<div class="page-columns page-full"><p>You are awarded a rarity score based on what other players of the game have chosen, the lower your score the rarer the player. Given people know this, sometimes a less obvious player is actually more selected than the most obvious. For example, in today’s grid <a href="https://afltables.com/afl/stats/players/S/Scott_Lucas.html" target="_blank">Scotty Lucas</a> was actually the most popular<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <em>Essendon player to kick more than 50 goals in a season</em> over <a href="https://afltables.com/afl/stats/players/M/Matthew_Lloyd0.html" target="_blank">Matthew Lloyd</a> (who I would have thought would be the most obvious).</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;the game allows you to see the most popular selections once you have attempted it</p></li></div></div>
+<p><img src="todays-grid.png" class="img-fluid"></p>
+<section id="my-performance" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="my-performance">My Performance</h2>
+<div class="page-columns page-full"><p>I would say I am a relatively average<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> player at the game. While it varies quite a lot, I would say a solid score for me is when I am better than around 40%<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> of players. My attempt for today (the 8<sup>th</sup>of August) is below:</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Among a sea of footy tragics, so I don’t take any shame in this</p></li><li id="fn3"><p><sup>3</sup>&nbsp;I will elaborate on why I think the 40<sup>th</sup> percentile is at least average if not above average below</p></li></div></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Spoilers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><img src="my-attempt.jpg" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>You will notice that my attempt is missing an answer for the middle square of the grid (Essendon and Collingwood player) and that is because I could not figure out that answer and took a wild stab. As I discovered later on, the most popular player for that question was an obscure player from the late 1990’s and early 2000’s (<a href="https://afltables.com/afl/stats/players/A/Andrew_Ukovic.html" target="_blank">Andrew Ukovic</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>) that I am certain most people had to look up or entered on their second attempt when they saw he was most popular.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;perhaps I am too young and he was actually a household name but I somehow highly doubt this given his mediocre career statistics</p></li></div></div>
+<div class="page-columns page-full"><p>This is why I would say I am average as opposed to below average for being in the 40<sup>th</sup> percentile, a lot of the scores on there are people attempting the grid multiple times or even <em>cheating</em><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> on their first time. I don’t really care if people do that but for me it’s a lot more fun doing it without any kind of assistance<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;I have seen varying interpretations of what counts as cheating, but I would certainly say googling the answer and then entering a player you have never heard of is cheating</p></li><li id="fn6"><p><sup>6</sup>&nbsp;and perhaps it also make me feel better when I see my less than stellar percentiles on most days</p></li></div></div>
+</section></section><section id="most-diffcult-combinations" class="level1 page-columns page-full"><h1>Most Diffcult Combinations</h1>
+<section id="list-of-categories" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="list-of-categories">List of Categories</h2>
+<p>Below is an exhaustive list of all the categories that have appeared in Footy Grid between the 21<sup>st</sup> of July and the 8<sup>th</sup> of August 2023 (the dates that are currently visible on the website on the date of writing this):</p>
+<ul>
+<li><p>Club played for <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a><sup>,</sup><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p></li>
+<li>
+<p>Played in a particular decade<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>:</p>
+<ul>
+<li><p>80’s</p></li>
+<li><p>90’s</p></li>
+<li><p>00’s</p></li>
+</ul>
+</li>
+<li>
+<p>Season stats <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>:</p>
+<ul>
+<li><p>&gt;50 goals</p></li>
+<li><p>300+ kicks</p></li>
+<li><p>Average 2+ goals</p></li>
+<li><p>Average 25+ disposals</p></li>
+<li><p>Average 5+ marks</p></li>
+<li><p>Average 5+ tackles</p></li>
+</ul>
+</li>
+<li>
+<p>Career stats <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a><sup>,</sup><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p>
+<ul>
+<li><p>20 or less games</p></li>
+<li><p>50 or less games</p></li>
+<li><p>200+ games</p></li>
+<li><p>Never scored a goal</p></li>
+<li><p>250+ goals</p></li>
+<li><p>2500+ kicks</p></li>
+<li><p>500+ tackles</p></li>
+</ul>
+</li>
+<li><p>Grand Final Player</p></li>
+<li>
+<p>Awards:</p>
+<ul>
+<li>Brownlow Medalist</li>
+</ul>
+</li>
+<li>
+<p>Height:</p>
+<ul>
+<li><p>Taller than 195cm</p></li>
+<li><p>Under 185cm</p></li>
+</ul>
+</li>
+<li>
+<p>Name<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>:</p>
+<ul>
+<li>First name Jack</li>
+</ul>
+</li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;University and Fitzroy as defunct teams will never appear as a category, although it says in the Footy Grid help page that Fitzroy will be combined in with Brisbane in the future</p></li><li id="fn8"><p><sup>8</sup>&nbsp;The South Melbourne and Sydney swans; the Brisbane Bears and Lions; Footscray and Western Bulldogs are grouped together</p></li><li id="fn9"><p><sup>9</sup>&nbsp;we can probably extend this to played in any decade, these are just the decades we have seen so far</p></li><li id="fn10"><p><sup>10</sup>&nbsp;includes finals</p></li><li id="fn11"><p><sup>11</sup>&nbsp;includes finals</p></li><li id="fn12"><p><sup>12</sup>&nbsp;there are probably different stats and thresholds that will appear in the future</p></li><li id="fn13"><p><sup>13</sup>&nbsp;there will probably be other names that crop up in the future</p></li></div><div class="page-columns page-full"><p>As it is the most prominent category, we will mainly focus on teams in this article but some of the other categories may appear as well. Also note that generally, according the the rules, when a team category intersects with a non-team category, the player need not have satisfied the category whilst playing at the club<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>, except for awards where they needed to win the award when playing for the club<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn14"><p><sup>14</sup>&nbsp;e.g.&nbsp;<a href="https://afltables.com/afl/stats/players/G/Gary_Ablett1.html">Gary Ablett Jr.</a> counts as a Grand Final player for Gold Coast even though he only ever played in grand finals for Geelong</p></li><li id="fn15"><p><sup>15</sup>&nbsp;e.g.&nbsp;<a href="https://afltables.com/afl/stats/players/I/Isaac_Smith.html">Isaac Smith</a> counts as a Norm Smith Medalist for Geelong but not for Hawthorn</p></li></div></div>
+</section><section id="obtaining-the-data" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="obtaining-the-data">Obtaining the Data</h2>
+<p>In order to look through the possible combinations, I will use R as I did in my <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html" target="_blank">previous post</a>. Likewise, I will also be using the <code>fitzRoy</code> package to obtain my data. Footy Grid has the full history of AFL players, so I will use the <a href="https://twitter.com/fryzigg" target="_blank">fryzigg</a> data. There are also some player details that are needed and for that, I will use the <a href="https://afltables.com/afl/afl_index.html" target="_blank">AFL Tables</a>.</p>
+<div class="page-columns page-full"><p>Let’s begin by loading our required packages<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn16"><p><sup>16</sup>&nbsp;As I outline <a href="#data-wrangling">below</a>, I will only be using tidyverse for data wrangling this time.</p></li></div></div>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jimmyday12.github.io/fitzRoy/">fitzRoy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.fstpackage.org">fst</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvest.tidyverse.org/">rvest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="page-columns page-full"><p>We will get the data using the following code<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn17"><p><sup>17</sup>&nbsp;Note that I am using the <a href="https://www.fstpackage.org/" target="blank"><code>fst</code></a> package below to save the data locally instead of using RDS files on suggestion from one of the readers of my previous posts (see the “Being a good citizen” call-out in my <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html#importing-the-data" target="_blank">previous post</a> for more information on why I save the output locally)</p></li></div></div>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="st">"data/player_stats_fryzigg.fst"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">player_stats_fryzigg</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://www.fstpackage.org/reference/write_fst.html">read_fst</a></span><span class="op">(</span><span class="st">"data/player_stats_fryzigg.fst"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="va">player_stats_fryzigg</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://jimmyday12.github.io/fitzRoy/reference/fetch_player_stats.html">fetch_player_stats_fryzigg</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">1897</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="http://www.fstpackage.org/reference/write_fst.html">write_fst</a></span><span class="op">(</span><span class="va">player_stats_fryzigg</span>, <span class="st">"data/player_stats_fryzigg.fst"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="st">"data/player_details.fst"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">player_details</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://www.fstpackage.org/reference/write_fst.html">read_fst</a></span><span class="op">(</span><span class="st">"data/player_details.fst"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="va">player_details</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://jimmyday12.github.io/fitzRoy/reference/fetch_player_details.html">fetch_player_details_afltables</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="http://www.fstpackage.org/reference/write_fst.html">write_fst</a></span><span class="op">(</span><span class="va">player_details</span>, <span class="st">"data/player_details.fst"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="data-wrangling" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
+<div class="page-columns page-full"><p>Unlike the <a href="../../../blog/2023/over-analysing-idle-footy-chat/index.html#tidyverse-versus-data.table" target="_blank">previous post</a>, I will only use the tidyverse<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn18"><p><sup>18</sup>&nbsp;While the experiment of producing both tidyverse and <code>data.table</code> of the code was an interesting one, I have decided that it is probably too time consuming going forward.</p></li></div></div>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">player_stats_fryzigg</span><span class="op">$</span><span class="va">player_team</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">teams_fryzigg</span></span>
+<span><span class="va">player_details</span><span class="op">$</span><span class="va">Team</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">teams_afl_tables</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">team_name_raw</span>, <span class="op">~</span><span class="va">team_name</span>,</span>
+<span>  <span class="st">"Adelaide"</span>, <span class="st">"Adelaide"</span>,</span>
+<span>  <span class="st">"Brisbane Lions"</span>, <span class="st">"Brisbane Lions"</span>,</span>
+<span>  <span class="st">"Brisbane Bears"</span>, <span class="st">"Brisbane Lions"</span>, <span class="co">#"Brisbane Bears",</span></span>
+<span>  <span class="st">"Carlton"</span>, <span class="st">"Carlton"</span>,</span>
+<span>  <span class="st">"Collingwood"</span>, <span class="st">"Collingwood"</span>,</span>
+<span>  <span class="st">"Essendon"</span>, <span class="st">"Essendon"</span>,</span>
+<span>  <span class="st">"Fitzroy"</span>, <span class="st">"Fitzroy"</span>,</span>
+<span>  <span class="st">"Fremantle"</span>, <span class="st">"Fremantle"</span>,</span>
+<span>  <span class="st">"GWS"</span>, <span class="st">"Greater Western Sydney"</span>,</span>
+<span>  <span class="st">"Greater Western Sydney"</span>, <span class="st">"Greater Western Sydney"</span>,</span>
+<span>  <span class="st">"Geelong"</span>, <span class="st">"Geelong"</span>,</span>
+<span>  <span class="st">"Gold Coast"</span>, <span class="st">"Gold Coast"</span>,</span>
+<span>  <span class="st">"Hawthorn"</span>, <span class="st">"Hawthorn"</span>,</span>
+<span>  <span class="st">"Melbourne"</span>, <span class="st">"Melbourne"</span>,</span>
+<span>  <span class="st">"North Melbourne"</span>, <span class="st">"North Melbourne"</span>,</span>
+<span>  <span class="st">"Port Adelaide"</span>, <span class="st">"Port Adelaide"</span>,</span>
+<span>  <span class="st">"Richmond"</span>, <span class="st">"Richmond"</span>,</span>
+<span>  <span class="st">"St Kilda"</span>, <span class="st">"St Kilda"</span>,</span>
+<span>  <span class="st">"Sydney"</span>, <span class="st">"Sydney"</span>,</span>
+<span>  <span class="st">"West Coast"</span>, <span class="st">"West Coast"</span>,</span>
+<span>  <span class="st">"University"</span>, <span class="st">"University"</span>,</span>
+<span>  <span class="st">"Western Bulldogs"</span>, <span class="st">"Western Bulldogs"</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span></span>
+<span>  <span class="va">team_name_mapping</span></span>
+<span></span>
+<span></span>
+<span><span class="va">player_stats_fryzigg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">player_first_name</span>, <span class="va">player_last_name</span>, <span class="va">match_round</span>, <span class="va">match_date</span>, <span class="va">metres_gained</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">player_details</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    player_first_season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">Seasons</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    player_full_name <span class="op">=</span> <span class="va">Player</span>,</span>
+<span>    player_team <span class="op">=</span> <span class="va">Team</span>,</span>
+<span>    <span class="va">player_first_season</span>,</span>
+<span>    player_height <span class="op">=</span> <span class="va">HT</span>,</span>
+<span>    player_weight <span class="op">=</span> <span class="va">WT</span>,</span>
+<span>  <span class="op">)</span> <span class="op">-&gt;</span></span>
+<span>  <span class="va">player_measurements</span></span>
+<span></span>
+<span><span class="va">player_stats_fryzigg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    match_season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">match_date</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    match_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">match_date</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span>,</span>
+<span>    season_decade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">match_season</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"0s"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span></span>
+<span>    <span class="va">player_id</span>, <span class="va">player_team</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    player_first_season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">match_season</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span></span>
+<span>    <span class="va">player_id</span>, <span class="va">player_first_name</span>, <span class="va">player_last_name</span>, <span class="va">player_first_season</span>, <span class="va">player_team</span>, </span>
+<span>    <span class="va">match_season</span>, <span class="va">season_decade</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    .groups <span class="op">=</span> <span class="st">"drop"</span>,</span>
+<span>    season_games <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    season_disposals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">disposals</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_kicks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kicks</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_handballs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">handballs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_marks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">marks</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_goals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">goals</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_behinds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">behinds</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_hitouts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">hitouts</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    season_tackles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tackles</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">player_details</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Goals</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">Games</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="scraping-the-brownlow-medal-data" class="level3"><h3 class="anchored" data-anchor-id="scraping-the-brownlow-medal-data">Scraping the Brownlow medal data</h3>
+<p>As with the Norm Smith medal in my previous post, the Brownlow medal winners are not available on</p>
+<p>https://afltables.com/afl/brownlow/brownlow_idx.html</p>
+<p>https://en.wikipedia.org/wiki/List_of_Brownlow_Medal_winners#Winners_by_season</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># get brownlow</span></span>
+<span><span class="va">brownlow_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.afl.com.au/brownlow-medal/history"</span></span>
+<span></span>
+<span><span class="va">brownlow_url</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span></span>
+<span>  <span class="va">brownlow_html</span></span>
+<span></span>
+<span><span class="va">brownlow_html</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_table.html">html_table</a></span><span class="op">(</span>header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="va">_</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="final-output" class="level2"><h2 class="anchored" data-anchor-id="final-output">Final Output</h2>
+</section></section><section id="player-lookup-table" class="level1"><h1>Player Lookup Table</h1>
+<p>Below I have a lookup table, this table is not for cheating purposes but more done as an exercise and perhaps for looking into who some obscure examples might have been after you have attempted the quiz on the day. I may continue to update this as new categories get introduced, but for now I present it with all the categories that have come about between the 21<sup>st</sup> of July and the 8<sup>th</sup> of August 2023.</p>
+
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://giscus.app/client.js" data-repo="t-gummer/t-gummer.netlify.app" data-repo-id="R_kgDOJykPlA" data-category="Announcements" data-category-id="DIC_kwDOJykPlM4CYD4I" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="dark_dimmed" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left"><span class="faux-block"><i class="fa-regular fa-copyright" aria-label="copyright"></i> 2023 Tim Gummer</span> <span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app" target="_blank"><i class="fa-brands fa-github" aria-label="github"></i> Source Code</a></span></div>   
+    <div class="nav-footer-center"><span class="faux-block light-mode">Click the <a href="" class="" onclick="window.quartoToggleColorScheme(); return false;" title="Initiate hacker mode!"><i class="fa-solid fa-toggle-off"></i></a> icon in the navigation bar</span> <span class="faux-block light-mode"> to initiate dark (hacker) mode 😁</span> <span class="faux-block dark-mode">Click the <a href="" class="" onclick="window.quartoToggleColorScheme(); return false;" title="Return to normie mode?"><i class="fa-solid fa-toggle-on"></i></a> icon in the navigation bar</span> <span class="faux-block dark-mode"> to return to light (normie) mode 😞</span></div>
+    <div class="nav-footer-right"><span class="faux-block"> Designed with <i class="fa-solid fa-heart" aria-label="heart"></i> using</span> <span class="faux-block"> <a href="https://www.r-project.org" target="_blank"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> and <a href="https://quarto.org" target="_blank">Quarto</a></span></div>
+  </div>
+</footer>
+
+
+</body></html>

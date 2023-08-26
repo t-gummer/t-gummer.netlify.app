@@ -1,0 +1,14 @@
+{
+  "hash": "f3cc3d2d6b36991f0f0e2e3d00cf04bc",
+  "result": {
+    "markdown": "---\ntitle: \"Footy Grid Combinations\"\ndescription: |\n  Footy grid has been a phenomanon amongst trivia-loving footy fans.\ndate: 2023-08-30\ncategories: \n  - Sport\n  - AFL\n  - R\n  - Data\nimage: footy-grid.jpg\nreference-location: margin\ndraft: true\nfreeze: true\nreading-time: true\n---\n\n::: {.cell}\n\n:::\n\n\n\n# What is footy grid\n\n\n# Most diffcult combinations\n\n## Factoring in recency\n\n(can I plot these things in some way)\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
