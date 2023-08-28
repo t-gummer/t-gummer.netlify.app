@@ -201,7 +201,7 @@ So let's begin by loading the `fitzRoy` package and while we're at it, we will a
 library(fitzRoy)
 
 # Note that I generally avoid mixing dplyr and data.table at the same time
-#   but the reason I have done with will become apparent later
+#   but the reason I have done this with will become apparent later
 library(dplyr)
 library(data.table)
 
@@ -1236,7 +1236,7 @@ The record for the highest-scoring first quarter occurred during the bloodbath o
 ```
 
 
-Perhaps the Suns' lethargy in the first quarter against the Dons can be explained as a hangover[^sun-festivities] following on from their [first ever win](https://afltables.com/afl/stats/games/2011/132020110423.html){target="_blank"} the previous week[^first-win]. It is exciting to me that this is a game that I can remember watching on the television at the time, and it may have even been the first Gold Coast game I ever watched[^gold-coast]. Footy is full of narratives and it fun to spin one around this particular game (the context and stories make footy stats even more fun).
+Perhaps the Suns' lethargy in the first quarter against the Dons can be explained as a hangover[^sun-festivities] following on from their [first ever win](https://afltables.com/afl/stats/games/2011/132020110423.html){target="_blank"} the previous week[^first-win]. It is exciting to me that this is a game that I can remember watching on the television at the time, and it may have even been the first Gold Coast game I ever watched[^gold-coast]. Footy is full of narratives and it is fun to spin one around this particular game (the context and stories make footy stats even more fun).
 
 [^sun-festivities]: As a club with an abundance of 18 or 19 year old blokes living out of home for the first time, the Suns were known to [over-indulge](https://youtu.be/Roehqg0Dd5k?t=61){target="_blank"} in the Gold Coast party culture in those days.
 
@@ -1513,7 +1513,7 @@ top_goal_scorers_reactable(top_goal_scorers_single_tb, "Individual Goal Kickers"
 
 The record for most goal kickers is actually tied by multiple teams. The most recent time this happened was in the Bulldogs' 101 point drubbing of the Eagles last year[^eagles-bad]. The [infamous game](#a-concrete-example) is a bit off the pace in 238^th^ but 12 goal-kickers is still double a starting forward line.
 
-[^eagles-bad]: Yet another example of how poorly the Eagles have been done in 2022 and 2023
+[^eagles-bad]: Yet another example of how poorly the Eagles have performed in 2022 and 2023
 
 
 
