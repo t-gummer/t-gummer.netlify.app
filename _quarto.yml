@@ -48,11 +48,14 @@ website:
         icon: newspaper
         href: blog/index.qmd
       - text: Goals
-        icon: fingerprint
+        icon: hourglass-split
         href: goals/index.qmd    
       - text: CV
         icon: file-earmark-person
         href: cv/index.qmd    
+      - text: Projects
+        icon: box-fill
+        href: projects/index.qmd    
     right:
       - icon: github
         href: https://github.com/t-gummer
@@ -60,7 +63,7 @@ website:
         href: https://www.linkedin.com/in/timothy-gummer/
       - icon: envelope
         aria-label: email
-        href: "mailto:mail.timothy.gummer@gmail.com"
+        href: "mailto:timothy.gummer@gmail.com"
     
   page-footer: 
     left: |
@@ -95,5 +98,7 @@ format:
     reference-location: margin
     footnotes-hover: true
     highlight-style: monokai
+    link-external-icon: true
+    link-external-newwindow: true
     
 editor: source

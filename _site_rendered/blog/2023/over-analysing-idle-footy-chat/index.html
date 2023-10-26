@@ -132,7 +132,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../goals/index.html" rel="" target=""><i class="bi bi-fingerprint" role="img">
+    <a class="nav-link" href="../../../goals/index.html" rel="" target=""><i class="bi bi-hourglass-split" role="img">
 </i> 
  <span class="menu-text">Goals</span></a>
   </li>  
@@ -141,6 +141,11 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 </i> 
  <span class="menu-text">CV</span></a>
   </li>  
+  <li class="dropdown-header">
+<i class="bi bi-box-fill" role="img">
+</i> 
+ <span class="menu-text">Projects</span>
+</li>
 </ul>
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item compact">
@@ -154,7 +159,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:mail.timothy.gummer@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:timothy.gummer@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -2232,6 +2237,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp("https:\/\/t-gummer\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
 });
 </script><script src="https://giscus.app/client.js" data-repo="t-gummer/t-gummer.netlify.app" data-repo-id="R_kgDOJykPlA" data-category="Announcements" data-category-id="DIC_kwDOJykPlM4CYD4I" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="dark_dimmed" data-lang="en" crossorigin="anonymous" async="">
 </script>

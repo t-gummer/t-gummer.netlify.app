@@ -1,0 +1,20 @@
+---
+title: "Projects"
+execute:
+  echo: false
+# freeze: true
+listing:
+  - id: projects-list
+    categories: true
+    contents: projects.yaml
+    type: grid
+    filter-ui: [title, categories]
+    fields: [title, description, categories]
+---
+
+  
+Below is a list of my personal projects.
+
+:::{#projects-list}
+:::
+

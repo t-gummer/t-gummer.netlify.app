@@ -159,5 +159,12 @@
     "title": "Tim Gummer",
     "section": "Session info",
     "text": "Session info\n\nsessionInfo()\n\nR version 4.3.1 (2023-06-16 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 11 x64 (build 22621)\n\nMatrix products: default\n\n\nlocale:\n[1] LC_COLLATE=English_Australia.utf8  LC_CTYPE=English_Australia.utf8   \n[3] LC_MONETARY=English_Australia.utf8 LC_NUMERIC=C                      \n[5] LC_TIME=English_Australia.utf8    \n\ntime zone: Australia/Sydney\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.3.1    fastmap_1.1.1     cli_3.6.1        \n [5] tools_4.3.1       htmltools_0.5.5   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.22    knitr_1.43        jsonlite_1.8.5    xfun_0.39        \n[13] digest_0.6.31     rlang_1.1.1       evaluate_0.21    \n\nSys.time()\n\n[1] \"2023-07-25 15:41:36 AEST\""
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Below is a list of my personal projects.\n\n\n    \n      \n      \n    \n\n\n\n\n\n\n\nRADins R package\n\n\n\nR\n\n\nAutomation\n\n\n\nAn R package containing a collection of RStudio add-ins. This includes one to paste file paths in R by replacing backslashes with forward slashes.\n\n\n\n\n\n\n\n\n\n\nbit in that\n\n\n\nR\n\n\nFooty\n\n\nStats\n\n\nFantasy\n\n\n\nA website dedicated to AFL Stats. The content on the website is predominately AFLW Fantasy but I will look to expand it in the future.\n\n\n\n\n\n\n\nNo matching items\n\n\n\n\n\n\n Back to top"
   }
 ]

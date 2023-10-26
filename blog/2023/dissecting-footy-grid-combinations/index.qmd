@@ -69,13 +69,13 @@ This is why I would say I am average as opposed to below average for being in th
 [^definition-of-cheating]: I have seen varying interpretations of what counts as cheating, but I would certainly say googling the answer and then entering a player you have never heard of is cheating
 
 
-[^feel-better]: and perhaps it also make me feel better when I see my less than stellar percentiles on most days
+[^feel-better]: and perhaps it also make me feel better when I see my less than stellar percentiles
 
 # Most Diffcult Combinations
 
 ## List of Categories
 
-Below is an exhaustive list of all the categories that have appeared in Footy Grid between the 21^st^ of July and the 8^th^ of August 2023 (the dates that are currently visible on the website on the date of writing this):
+Below is an exhaustive list of all the categories that have appeared in Footy Grid between the 21^st^ of July and the 29^th^ of August 2023 (the dates that are currently visible on the website on the date of writing this):
 
 
 * Club played for [^university-and-fitzroy]^,^ [^swans-brisbane-bulldogs] 
@@ -103,36 +103,66 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     
     - Average 5+ tackles
     
+    - Average 100+ fantasy points
+    
     - Won 15+ games
+    
+    - Lost 15+ games
 
 
 * Career stats [^season-stats]^,^[^career-stats]:
 
-    - 20 or less games
+    - Played 20 or less games
     
-    - 50 or less games
+    - Played 50 or less games
     
-    - 200+ games
+    - Played 200 or more games
     
     - Never scored a goal
     
     - 250+ goals
+    
+    - 250+ games
 
     - 2500+ kicks
     
     - 500+ tackles
+    
+    - All Time Top 50 Goal Kicker
     
 * Game stats[^season-stats]^,^[^career-stats]:
 
     - 5+ goals
     
     - 10+ marks
+    
+    - 10+ tackles
+    
+    - 30+ disposals
+    
+    - 40+ disposals
+    
+    - 25+ disposals in a final
 
 * Grand Final Player
+
+* One Club Player
+
+* Top 10 Draft Pick
+
+* AFL Players Association MVP
 
 * Awards:
 
     - Brownlow Medalist
+    
+    - Club Best and Fairest (1980 onwards)
+    
+    - Colman Medalist
+    
+    - Rising Star Nomination
+    
+    - Norm Smith Medalist
 
 * Height:
 
@@ -158,6 +188,7 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     - Brad Scott
     
     - Leigh Matthews
+    
 
 * Teammate of[^Teammate]:
 
@@ -170,8 +201,32 @@ Below is an exhaustive list of all the categories that have appeared in Footy Gr
     - Andrew Phillips
     
     - Scott Pendlebury
+    
+    - Jack Riewoldt
+    
+    - Jack Ziebell
+    
+    - Brodie Grundy
+    
+    - Dustin Fletcher
+    
+    - Luke Shuey
+    
+    - Tom Rockliff
+    
+    - Phil Davis
+    
+    - Stephen Coniglio
+    
+    - Dylan Buckley
+    
+    - Daniel Gorringe
 
-* Single digit guernsey number
+* Guernsey number: 
+
+    - Single digit 
+    
+    - Double digit 
 
 * All Australian (1991 to present)
 
@@ -201,20 +256,17 @@ As it is the most prominent category, we will mainly focus on teams in this arti
 In order to look through the possible combinations, I will use R as I did in my [previous post](../over-analysing-idle-footy-chat/index.qmd){target="_blank"}. Likewise, I will also be using the `fitzRoy` package to obtain my data. Footy Grid has the full history of AFL players, so I will use the [fryzigg](https://twitter.com/fryzigg){target="_blank"} data. There are also some player details that are needed and for that, I will use the [AFL Tables](https://afltables.com/afl/afl_index.html){target="_blank"}.
 
 
-Let's begin by loading our required packages[^not-using-data.table].
+I will begin by loading our required packages[^not-using-data.table].
 
 [^not-using-data.table]: As I outline [below](#data-wrangling), I will only be using tidyverse for data wrangling this time.
 
 ```{r}
+#| message: false
 library(fitzRoy)
-
 library(fst)
-
 library(dplyr)
 library(tidyr)
-
 library(stringr)
-
 library(rvest)
 
 
@@ -256,8 +308,6 @@ As with the Norm Smith medal in my previous post, the Brownlow medal winners are
 
 
 
-
-
 ```{r}
 # get brownlow
 brownlow_url <- "https://www.afl.com.au/brownlow-medal/history"
@@ -283,6 +333,10 @@ The official AFL website has a table of all the all players selected in All Aust
 ```{r}
 "data-Dtbc3.csv"
 ```
+
+### Norm Smith Data
+
+Obtained in the same way as previous article.
 
 ## Data Wrangling
 
