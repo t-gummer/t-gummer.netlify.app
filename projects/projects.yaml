@@ -1,0 +1,15 @@
+- title: <code>RADins</code> R package
+  # path: "https://github.com/t-gummer/RADins"
+  description: An R package containing a collection of RStudio add-ins. This includes one to paste windows file paths in R by replacing backslashes with forward slashes.
+  categories:
+  - R
+  - Automation
+
+- title: bit in that
+  # path: "https://github.com/t-gummer/RADins"
+  description: A website dedicated to AFL Stats. The content on the website is predominately AFLW Fantasy-related but I will look to expand it in the future.
+  categories:
+  - R
+  - Footy
+  - Stats
+  - Fantasy

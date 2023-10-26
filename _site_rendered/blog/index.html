@@ -139,7 +139,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../goals/index.html" rel="" target=""><i class="bi bi-fingerprint" role="img">
+    <a class="nav-link" href="../goals/index.html" rel="" target=""><i class="bi bi-hourglass-split" role="img">
 </i> 
  <span class="menu-text">Goals</span></a>
   </li>  
@@ -148,6 +148,9 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 </i> 
  <span class="menu-text">CV</span></a>
   </li>  
+  <li class="dropdown-header"><i class="bi bi-box-fill" role="img">
+</i> 
+ <span class="menu-text">Projects</span></li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -161,7 +164,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:mail.timothy.gummer@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:timothy.gummer@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -217,7 +220,7 @@ gtag('config', 'G-V8P5XXLZK4', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="section">2023</h2>
 <div id="listing-posts_2023" class="quarto-listing quarto-listing-container-default">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Sport,AFL,R,Data" data-listing-date-sort="1690984800000" data-listing-file-modified-sort="1693069043481" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="66">
+<div class="quarto-post image-right" data-index="0" data-categories="Sport,AFL,R,Data" data-listing-date-sort="1690984800000" data-listing-file-modified-sort="1693195065349" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="66">
 <div class="thumbnail">
 <p><a href="../blog/2023/over-analysing-idle-footy-chat/index.html"> <img src="../blog/2023/over-analysing-idle-footy-chat/fitzroy-lions-logo.png" class="thumbnail-image"> </a></p>
 </div>
@@ -621,6 +624,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp("https:\/\/t-gummer\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
 });
 </script>
 </div> <!-- /content -->
