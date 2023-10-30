@@ -1,5 +1,6 @@
 ---
 title: "Projects"
+description: "Below is a list of my personal projects."
 execute:
   echo: false
 # freeze: true
@@ -11,9 +12,6 @@ listing:
     filter-ui: [title, categories]
     fields: [title, description, categories]
 ---
-
-  
-Below is a list of my personal projects.
 
 :::{#projects-list}
 :::
