@@ -79,7 +79,7 @@ website:
       <span class="faux-block"> <a href="https://www.r-project.org" target="_blank">{{< fa brands r-project >}}</a> and <a href="https://quarto.org" target="_blank">Quarto</a></span>
 
 execute:
-  freeze: true    
+  freeze: false    
 
 format:
   html:
