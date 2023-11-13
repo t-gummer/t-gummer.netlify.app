@@ -1,12 +1,12 @@
+name: Quarto Publish
+# Render quarto (including R code execution) and publish site to netlify 
+
 on:
   workflow_dispatch:
   push:
     branches: main
   schedule:
     - cron: "0 0 * * *" # automatically at midnight every day (UTC)
-
-name: Quarto Publish
-# Render quarto (including R code execution) and publish site to netlify 
 
 jobs:
   build-deploy:
