@@ -4,7 +4,7 @@ name: Quarto Publish
 on:
   workflow_dispatch:
   push:
-    branches: main
+    branches: master
   schedule:
     - cron: "0 0 * * *" # automatically at midnight every day (UTC)
 
