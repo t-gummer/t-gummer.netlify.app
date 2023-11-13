@@ -1,0 +1,41 @@
+name: Quarto Publish
+# Render quarto (including R code execution) and publish site to netlify 
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+  schedule:
+    - cron: "0 0 * * *" # automatically at midnight every day (UTC)
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Australian Locale
+        run: |
+          sudo locale-gen en_AU
+          sudo locale-gen en_AU.utf8
+          sudo update-locale 
+        
+      - name: Check out repository
+        uses: actions/checkout@v3 
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3.1'
+      
+      - name: Install R Dependencies 
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 1
+      
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: netlify
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
