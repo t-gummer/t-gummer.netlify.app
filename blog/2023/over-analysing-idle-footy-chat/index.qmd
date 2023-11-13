@@ -11,7 +11,6 @@ categories:
 image: fitzroy-lions-logo.png
 reference-location: margin
 draft: false
-freeze: true
 reading-timereading-time: true
 ---
 

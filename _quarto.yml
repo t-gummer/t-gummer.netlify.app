@@ -4,8 +4,6 @@ engine: knitr
 
 project:
   type: website
-  output-dir: _site_rendered
-  
   
   resources:
     - "img/**"
