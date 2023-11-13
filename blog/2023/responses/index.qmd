@@ -8,7 +8,6 @@ categories:
 image: bt.jfif
 reference-location: margin
 draft: true
-freeze: true
 reading-time: true
 ---
 

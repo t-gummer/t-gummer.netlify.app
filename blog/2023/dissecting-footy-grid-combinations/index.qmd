@@ -12,7 +12,6 @@ categories:
 image: footy-grid.jpg
 reference-location: margin
 draft: true
-freeze: true
 reading-time: true
 ---
 
