@@ -45,9 +45,9 @@ website:
       - text: Blog
         icon: newspaper
         href: blog/index.qmd
-      - text: Goals
-        icon: hourglass-split
-        href: goals/index.qmd    
+      # - text: Goals
+      #   icon: hourglass-split
+      #   href: goals/index.qmd    
       - text: CV
         icon: file-earmark-person
         href: cv/index.qmd    
