@@ -8,3 +8,4 @@ renv::snapshot()
 
 renv::restore()
 
+renv::status()
