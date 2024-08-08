@@ -65,7 +65,7 @@ website:
     
   page-footer: 
     left: |
-      <span class="faux-block">{{< fa regular copyright >}} 2023 Tim Gummer</span>
+      <span class="faux-block">{{< fa regular copyright >}} 2024 Tim Gummer</span>
       <span class="faux-block"><a href="https://github.com/t-gummer/t-gummer.netlify.app" target="_blank">{{< fa brands github >}} Source Code</a></span>
     center: |
       <span class="faux-block light-mode">Click the <a href = "" class = "" onclick="window.quartoToggleColorScheme(); return false;" title="Initiate hacker mode!"><i class="fa-solid fa-toggle-off"></i></a> icon in the navigation bar</span>
