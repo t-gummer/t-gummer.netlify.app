@@ -11,7 +11,8 @@ cv:
 ---
 
 
-```{r copy cv from github}
+```{r copy cv from github, eval=FALSE}
+# THIS CURRENTLY DOESN"T WORK BECAUSE OF THE GITHUB TOKEN, NEED TO CHANGE IT BUT DON'T KNOW HOW!
 #| echo: FALSE
 #| warning: FALSE
 # https://support.posit.co/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf
